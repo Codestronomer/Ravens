@@ -1,0 +1,21 @@
+.auth {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.userInput {
+  border: none;
+  height: 40px;
+  border-radius: 5px;
+  padding: 5px;
+  outline: 0px;
+}
+
+.userSubmit {
+  background-color: purple;
+  border-radius: 5px;
+  border: none;
+  font-size: 10px;
+  height: 40px;
+}
