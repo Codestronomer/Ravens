@@ -9,3 +9,5 @@ const Chats: React.FC<ChatProps> = ({ children }) => {
     <div>chats</div>
   );
 }
+
+export default Chats;
