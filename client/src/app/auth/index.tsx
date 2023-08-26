@@ -1,36 +1,41 @@
 'use client'
+import { AuthContext, User, AuthContextType } from '@/context/authContext';
 import styles from './auth.module.css';
 import { useRouter } from 'next/navigation';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Dispatch, SetStateAction } from 'react';
 
 interface userNameProps {
+  userInfo: User
   handleSubmit: Function,
-  setUsername: Dispatch<SetStateAction<string>>
+  setUsername: Function,
   setIsValid: Dispatch<SetStateAction<boolean>>
 }
 
-interface passwordNameProps {
+interface passwordProps {
+  userInfo: User
   handleSubmit: Function,
-  setPassword: Dispatch<SetStateAction<string>>
+  setPassword: Function,
 }
 
 export function Login(): React.FunctionComponentElement<HTMLBodyElement> {
   const router = useRouter();
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
   const [isValid, setIsValid] = useState(false);
+  const authContext = useContext(AuthContext);
 
-
-  const handleSubmit = () => {
-    router.push('/chat');
+  if (!authContext) {
+    throw new Error('AuthContext must be used within AuthContext.Provider');
   }
 
-  const handleNext = () => {
-    if (!username.length) {
-      console.log("Input a valid username");
-    }
+  const { userInfo, updateUserInfo, registerUser, registerError } = authContext;
 
+  const handleSubmit = () => {
+    registerUser(userInfo);
+    router.push('/chat');
+  }
+  
+  // Switch to next route
+  const handleNext = () => {
     setIsValid(true);
   }
 
@@ -40,12 +45,14 @@ export function Login(): React.FunctionComponentElement<HTMLBodyElement> {
 
   return (
     <div>
-      {!isValid ? <GetUsername 
-        setUsername={setUsername}
+      {!isValid ? <GetUsername
+        userInfo={userInfo}
+        setUsername={updateUserInfo}
         setIsValid={setIsValid}
         handleSubmit={handleNext}
         /> : <GetPassword
-          setPassword={setPassword}
+          userInfo={userInfo}
+          setPassword={updateUserInfo}
           handleSubmit={handleSubmit}
         />
       }
@@ -53,19 +60,19 @@ export function Login(): React.FunctionComponentElement<HTMLBodyElement> {
   )
 }
 
-const GetUsername: React.FC<userNameProps> = ({ handleSubmit, setUsername }) => {
+const GetUsername: React.FC<userNameProps> = ({ handleSubmit, setUsername, userInfo }) => {
 
-  const handleUsername = (e) => {
-    e.preventDefault();
-
-    setUsername(e.target.value);
+  const handleUsername = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setUsername({ ...userInfo, username: e.target.value });
   }
 
   return <div className={styles.auth}>
+    <p className={styles.description}>Set a username to get started</p>
     <input 
-      className={styles.userInput} 
+      className={styles.userInput}
+      required={true}
       placeholder='Username'
-      onChange={(handleUsername)}
+      onChange={(e) => handleUsername(e)}
     >
     </input>
     <button className={styles.userSubmit} onClick={() => handleSubmit()}>Enter</button>
@@ -73,19 +80,20 @@ const GetUsername: React.FC<userNameProps> = ({ handleSubmit, setUsername }) => 
 
 }
 
-const GetPassword: React.FC<passwordNameProps> = ({ handleSubmit, setPassword }) => {
+const GetPassword: React.FC<passwordProps> = ({ handleSubmit, setPassword, userInfo }) => {
 
-  const handlePassword = (e) => {
-    e.preventDefault();
-    setPassword(e.target.value)
+  const handlePassword = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPassword({...userInfo, password: e.target.value});
   }
 
   return (
     <div className={styles.auth}>
+      <p className={styles.description}>Enter a strong password to continue</p>
       <form>
         <input
         className={styles.userInput}
         placeholder='Password'
+        required={true}
         type='password'
         onChange={handlePassword}
         />

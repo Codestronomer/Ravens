@@ -1,7 +1,6 @@
 import './globals.css'
 import type { Metadata } from 'next'
 import { Inter, Montserrat, Bree_Serif } from 'next/font/google'
-import Nav from '@/components/nav';
 
 const montserrat = Montserrat({ subsets: ['latin']});
 const bree_Serif = Bree_Serif({ weight: "400", subsets: ['latin']});
@@ -18,7 +17,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={bree_Serif.className}>{children}</body>
+      <body className={bree_Serif.className}>
+          {children}
+      </body>
     </html>
   )
 }

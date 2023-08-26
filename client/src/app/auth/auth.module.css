@@ -5,6 +5,17 @@
   width: 280px;
 }
 
+.description {
+  display: inherit;
+  justify-content: inherit;
+  align-items: inherit;
+  font-size: 0.85rem;
+  max-width: var(--max-width);
+  width: 100%;
+  z-index: 2;
+  font-family: var(--font-mono);
+}
+
 .userInput {
   border: none;
   height: 40px;
