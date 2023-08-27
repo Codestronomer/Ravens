@@ -4,6 +4,7 @@ import styles from './auth.module.css';
 import { useRouter } from 'next/navigation';
 import React, { useState, useEffect, useContext } from 'react';
 import { Dispatch, SetStateAction } from 'react';
+import ErrorModal from '@/components/nav/ErrorModal';
 
 interface userNameProps {
   userInfo: User
@@ -14,8 +15,9 @@ interface userNameProps {
 
 interface passwordProps {
   userInfo: User
-  handleSubmit: Function,
+  registerUser: Function,
   setPassword: Function,
+  isLoading: boolean,
 }
 
 export function Login(): React.FunctionComponentElement<HTMLBodyElement> {
@@ -23,24 +25,25 @@ export function Login(): React.FunctionComponentElement<HTMLBodyElement> {
   const [isValid, setIsValid] = useState(false);
   const authContext = useContext(AuthContext);
 
-  if (!authContext) {
-    throw new Error('AuthContext must be used within AuthContext.Provider');
-  }
-
-  const { userInfo, updateUserInfo, registerUser, registerError } = authContext;
-
-  const handleSubmit = () => {
-    registerUser(userInfo);
-    router.push('/chat');
-  }
+  const {
+    userInfo,
+    updateUserInfo,
+    registerUser,
+    registerError,
+    isLoading,
+    setRegisterError,
+  } = authContext;
   
   // Switch to next route
   const handleNext = () => {
     setIsValid(true);
   }
 
+   const handleCloseError = () => {
+    setRegisterError({ error: false, message: ''});
+  };
+
   useEffect(() => {
-    console.log('Hey');
   }, [isValid]);
 
   return (
@@ -53,8 +56,14 @@ export function Login(): React.FunctionComponentElement<HTMLBodyElement> {
         /> : <GetPassword
           userInfo={userInfo}
           setPassword={updateUserInfo}
-          handleSubmit={handleSubmit}
+          registerUser={registerUser}
+          isLoading={isLoading}
         />
+      }
+
+      {
+        registerError && registerError?.error && 
+        <ErrorModal onClose={handleCloseError} errorMessage={registerError?.message} />
       }
     </div>
   )
@@ -63,42 +72,58 @@ export function Login(): React.FunctionComponentElement<HTMLBodyElement> {
 const GetUsername: React.FC<userNameProps> = ({ handleSubmit, setUsername, userInfo }) => {
 
   const handleUsername = (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
     setUsername({ ...userInfo, username: e.target.value });
-  }
+  };
 
-  return <div className={styles.auth}>
-    <p className={styles.description}>Set a username to get started</p>
-    <input 
-      className={styles.userInput}
-      required={true}
-      placeholder='Username'
-      onChange={(e) => handleUsername(e)}
-    >
-    </input>
-    <button className={styles.userSubmit} onClick={() => handleSubmit()}>Enter</button>
-  </div>
+  const handleFormSubmit = (e: React.FormEvent) => {
+    e?.preventDefault(); // Prevents the default form submission behavior
+    handleSubmit();
+  };
+
+  return <>
+    <form onSubmit={handleFormSubmit} className={styles.auth}>
+      <label className={styles.description}>Enter a username to get started</label>
+      <input 
+        className={styles.userInput}
+        required={true}
+        placeholder='Username'
+        onChange={(e) => handleUsername(e)}
+      >
+      </input>
+      <button className={styles.userSubmit} type='submit'>Enter</button>
+    </form>
+  </>
 
 }
 
-const GetPassword: React.FC<passwordProps> = ({ handleSubmit, setPassword, userInfo }) => {
+const GetPassword: React.FC<passwordProps> = ({ registerUser, setPassword, userInfo, isLoading }) => {
 
   const handlePassword = (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
     setPassword({...userInfo, password: e.target.value});
   }
 
+  const handleFormSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    registerUser();
+  }
+
   return (
-    <div className={styles.auth}>
-      <p className={styles.description}>Enter a strong password to continue</p>
-      <form>
+    <>
+      <form onSubmit={handleFormSubmit} className={styles.auth}>
+        <label className={styles.description}>Password</label>
         <input
         className={styles.userInput}
-        placeholder='Password'
+        placeholder='Enter a strong password'
         required={true}
         type='password'
+        autoComplete='new-password'
+        aria-autocomplete='list'
         onChange={handlePassword}
         />
+        <button className={styles.userSubmit} type='submit'>{isLoading ? 'Creating Your Account' : 'Create Account'}</button>
       </form>
-      <button className={styles.userSubmit} onClick={() => handleSubmit()}>Create Account</button>
-    </div>
+    </>
   )
 }

@@ -139,3 +139,11 @@
     transform: rotate(0deg);
   }
 }
+
+
+.errorSvg {
+  position: absolute;
+  top: 40%;
+  left: 40%;
+  margin: auto;
+}

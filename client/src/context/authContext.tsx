@@ -1,5 +1,5 @@
 'use client'
-import { axiosPost } from '@/services/backend';
+import { axiosPost, baseUrl } from '@/services/backend';
 import React, { 
   useState,
   useCallback,
@@ -14,12 +14,19 @@ export interface User {
   password: string
 }
 
+interface errorType {
+  error: boolean
+  message: string
+}
+
 // Define the auth context type
 export interface AuthContextType {
   userInfo: User
   updateUserInfo: Function
   registerUser: Function
-  registerError: Dispatch<SetStateAction<string>> | null
+  setRegisterError: Dispatch<SetStateAction<errorType>> | Dispatch<SetStateAction<null>>
+  registerError: errorType | null
+  isLoading: Boolean
 }
 
 // Define auth context
@@ -42,15 +49,19 @@ export const AuthContextProvider = (
   }, []);
 
   // function to register user
-  const registerUser = useCallback(async (info: User) => {
+  const registerUser = useCallback(async () => {
     setIsLoading(true);
     setRegisterError(null);
-    const response = await axiosPost('/api/login', JSON.stringify(info));
 
+    const response = await axiosPost(`${baseUrl}/login`, userInfo);
     // if request returned an error
     if (response?.error) {
-      return setRegisterError(response.error);
+      return setRegisterError(response);
     }
+
+    setIsLoading(false);
+
+    console.log(response);
     
     // save user information
     localStorage.setItem('user', JSON.stringify(response));
@@ -59,9 +70,11 @@ export const AuthContextProvider = (
 
   const contextValue: AuthContextType = {
     userInfo,
-    updateUserInfo,
+    isLoading,
     registerUser,
     registerError,
+    updateUserInfo,
+    setRegisterError,
   }
 
   return (

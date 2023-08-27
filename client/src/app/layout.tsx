@@ -17,7 +17,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={bree_Serif.className}>
+      <body className={bree_Serif.className} suppressHydrationWarning={true}>
           {children}
       </body>
     </html>

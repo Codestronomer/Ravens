@@ -81,8 +81,8 @@ html,
 body {
   max-width: 100vw;
   overflow-x: hidden;
-  background: rgb(8,8,8);
-  background: linear-gradient(90deg, rgba(8,8,8,1) 0%, rgba(65,67,68,1) 100%);
+  background-color: #000000;
+  background-image: url('../../public/Sprinkle.svg');
 }
 
 body {
@@ -99,3 +99,27 @@ a {
     color-scheme: dark;
   }
 }
+
+svg#freepik_stories-503-error-service-unavailable:not(.animated) .animable {
+  opacity: 0;
+}
+svg#freepik_stories-503-error-service-unavailable.animated #freepik--Text--inject-13 {
+  animation: 1.5s Infinite  linear floating;animation-delay: 0s;
+}
+svg#freepik_stories-503-error-service-unavailable.animated #freepik--Character--inject-13 {
+  animation: 1.5s Infinite  linear floating;animation-delay: 0s;
+}
+
+@keyframes floating {
+  0% {
+    opacity: 1;
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0px);
+  }
+}        

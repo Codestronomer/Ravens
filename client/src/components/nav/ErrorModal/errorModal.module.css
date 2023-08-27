@@ -1,0 +1,86 @@
+.backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: fadeInBackdrop 0.3s ease-in-out, fadeOutBackdrop 0.3s ease-in-out reverse forwards;
+}
+
+.modal {
+  background-color: rgb(28, 28, 28);
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.25);
+  text-align: center;
+  z-index: 2;
+  animation: fadeInModal 0.3s ease-in-out, fadeOutModal 0.3s ease-in-out reverse forwards;
+}
+
+.modal h2 {
+  margin-bottom: 0.5rem;
+}
+
+.modal button {
+  padding: 0.5rem 1rem;
+  margin-top: 10px;
+  background-color: #7E57C2;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.backdrop {
+  /* ... other styles ... */
+  animation: fadeInBackdrop 0.3s ease-in-out;
+}
+
+.modal {
+  /* ... other styles ... */
+  animation: fadeInModal 0.3s ease-in-out;
+}
+
+@keyframes fadeInBackdrop {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOutBackdrop {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes fadeInModal {
+  from {
+    transform: translateY(-50%) scale(0.8);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(-50%) scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOutModal {
+  from {
+    transform: translateY(-50%) scale(1);
+    opacity: 1;
+  }
+  to {
+    transform: translateY(-50%) scale(0.8);
+    opacity: 0;
+  }
+}
