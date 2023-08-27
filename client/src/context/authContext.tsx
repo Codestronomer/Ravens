@@ -14,7 +14,7 @@ export interface User {
   password: string
 }
 
-interface errorType {
+export interface errorType {
   error: boolean
   message: string
 }
@@ -26,7 +26,7 @@ export interface AuthContextType {
   registerUser: Function
   setRegisterError: Dispatch<SetStateAction<errorType>> | Dispatch<SetStateAction<null>>
   registerError: errorType | null
-  isLoading: Boolean
+  isLoading: boolean
 }
 
 // Define auth context

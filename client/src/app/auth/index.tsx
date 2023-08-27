@@ -1,5 +1,5 @@
 'use client'
-import { AuthContext, User, AuthContextType } from '@/context/authContext';
+import { AuthContext, User, AuthContextType, errorType } from '@/context/authContext';
 import styles from './auth.module.css';
 import { useRouter } from 'next/navigation';
 import React, { useState, useEffect, useContext } from 'react';
@@ -23,7 +23,7 @@ interface passwordProps {
 export function Login(): React.FunctionComponentElement<HTMLBodyElement> {
   const router = useRouter();
   const [isValid, setIsValid] = useState(false);
-  const authContext = useContext(AuthContext);
+  const authContext = useContext(AuthContext) as AuthContextType;
 
   const {
     userInfo,
@@ -40,7 +40,7 @@ export function Login(): React.FunctionComponentElement<HTMLBodyElement> {
   }
 
    const handleCloseError = () => {
-    setRegisterError({ error: false, message: ''});
+    setRegisterError(null as any);
   };
 
   useEffect(() => {
