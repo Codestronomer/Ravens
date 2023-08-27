@@ -7,4 +7,13 @@
   margin: auto;
   padding: 10px;
   border-radius: 5px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.navRight {
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
 }

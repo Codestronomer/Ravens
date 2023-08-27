@@ -4,7 +4,7 @@ import styles from './auth.module.css';
 import { useRouter } from 'next/navigation';
 import React, { useState, useEffect, useContext } from 'react';
 import { Dispatch, SetStateAction } from 'react';
-import ErrorModal from '@/components/nav/ErrorModal';
+import ErrorModal from '@/components/ErrorModal';
 
 interface userNameProps {
   userInfo: User

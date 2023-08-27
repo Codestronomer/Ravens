@@ -66,7 +66,7 @@ export const AuthContextProvider = (
     // save user information
     localStorage.setItem('user', JSON.stringify(response));
     setUser(response);
-  }, []);
+  }, [userInfo]);
 
   const contextValue: AuthContextType = {
     userInfo,
