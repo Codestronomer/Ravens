@@ -5,6 +5,7 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import connectDB from '../server/config/db.js';
 import UserRouter from '../server/routes/user.routes.js';
+import ChatRouter from '../server/routes/chat.routes.js';
 
 dotenv.config();
 
@@ -29,6 +30,7 @@ app.get('/', (req, res) => {
 });
 
 app.use('/', UserRouter);
+app.use('/chat', ChatRouter);
 
 // Start Http server
 const port = process.env.PORT || 5000;

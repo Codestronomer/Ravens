@@ -32,27 +32,27 @@ async function getUser(req, res) {
 
 async function register(req, res) {
   try {
-    const { username, email, password } = req.body;
+    const { username, password } = req.body;
 
-    let user = UserModel.findOne({ email });
+    let user = UserModel.findOne({ username });
 
     if (user) {
-      return res.status(400).json({ message: 'User with the given email already exists!' });
+      return res.status(400).json({ message: 'User with the given username already exists!' });
     }
 
-    if (!name || !email || !password) {
+    if (!username || !password) {
       return res.status(400).json({ message: 'All fields are required!'});
     }
 
-    if (!validator.isEmail(email)) {
-      return res.status(400).json({ message: 'Input valid email address!'});
-    }
+    // if (!validator.isEmail(email)) {
+    //   return res.status(400).json({ message: 'Input valid email address!'});
+    // }
 
     if (!validator.isStrongPassword(password)) {
       return res.status(400).json({ message: 'Weak game, input a strong password!'});
     }
 
-    user = new UserModel({ username, email, password });
+    user = new UserModel({ username, password });
 
     await user.save();
 
@@ -67,12 +67,12 @@ async function register(req, res) {
 
 async function login(req, res) {
   try {
-    const { email, password } = req.body;
+    const { username, password } = req.body;
 
     // get user with the provided email from the database
-    const user = await UserModel.findOne({ email });
+    const user = await UserModel.findOne({ username });
 
-    // validate email or password
+    // validate username or password
     if (!user || !(await user.comparePassword(password, user.password))) {
       return res.status(400).json({ message: 'Invalid Email or Password'});
     }
