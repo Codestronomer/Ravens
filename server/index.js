@@ -6,6 +6,7 @@ import bodyParser from 'body-parser';
 import connectDB from '../server/config/db.js';
 import UserRouter from '../server/routes/user.routes.js';
 import ChatRouter from '../server/routes/chat.routes.js';
+import MessageRouter from '../server/routes/message.routes.js';
 
 dotenv.config();
 
@@ -31,6 +32,7 @@ app.get('/', (req, res) => {
 
 app.use('/', UserRouter);
 app.use('/chat', ChatRouter);
+app.use('/message', MessageRouter);
 
 // Start Http server
 const port = process.env.PORT || 5000;
