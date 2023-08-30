@@ -10,6 +10,12 @@ import React, {
 
 // Define user type
 export interface User {
+  _id: string
+  username: string
+  token: string
+}
+
+export interface UserInfo {
   username: string
   password: string
 }
@@ -21,7 +27,8 @@ export interface errorType {
 
 // Define the auth context type
 export interface AuthContextType {
-  userInfo: User
+  user: User
+  userInfo: UserInfo
   updateUserInfo: Function
   registerUser: Function
   setRegisterError: Dispatch<SetStateAction<errorType>> | Dispatch<SetStateAction<null>>
@@ -35,16 +42,20 @@ export const AuthContext: React.Context<AuthContextType | {}> = createContext({}
 export const AuthContextProvider = (
     { children }: { children: React.ReactNode}
   ) => {
-  const [user, setUser] = useState<User | {}>({});
+  const [user, setUser] = useState<User>({
+    _id: "",
+    token: "",
+    username: "",
+  });
   const [registerError, setRegisterError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [userInfo, setUserInfo] = useState<User>({
+  const [userInfo, setUserInfo] = useState<UserInfo>({
     username: "",
     password: ""
   });
 
   // update user info state
-  const updateUserInfo = useCallback((info: User) => {
+  const updateUserInfo = useCallback((info: UserInfo) => {
     setUserInfo(info);
   }, []);
 
@@ -69,6 +80,7 @@ export const AuthContextProvider = (
   }, [userInfo]);
 
   const contextValue: AuthContextType = {
+    user,
     userInfo,
     isLoading,
     registerUser,

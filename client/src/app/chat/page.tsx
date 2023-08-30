@@ -1,13 +1,17 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { ChatList } from './chatList';
 import styles from './chat.module.css';
 import ChatBox from './chatBox';
+import { ChatContext } from '@/context/chatContext';
 
 interface ChatProps {
   children: React.FC;
 };
 
-const Chats: React.FC<ChatProps> = ({ children }) => {
+const Chat: React.FC<ChatProps> = ({ children }) => {
+  const { userChats, isChatLoading, chatError } = useContext(ChatContext);
+
+  console.log(userChats);
   return (
   <>
     <div className={styles.chats}>
@@ -27,4 +31,4 @@ const Chats: React.FC<ChatProps> = ({ children }) => {
   );
 }
 
-export default Chats;
+export default Chat;
