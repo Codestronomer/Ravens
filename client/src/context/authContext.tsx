@@ -10,7 +10,7 @@ import React, {
 
 // Define user type
 export interface User {
-  _id: string
+  id: string
   username: string
   token: string
 }
@@ -43,7 +43,7 @@ export const AuthContextProvider = (
     { children }: { children: React.ReactNode}
   ) => {
   const [user, setUser] = useState<User>({
-    _id: "",
+    id: "",
     token: "",
     username: "",
   });
@@ -64,7 +64,7 @@ export const AuthContextProvider = (
     setIsLoading(true);
     setRegisterError(null);
 
-    const response = await axiosPost(`${baseUrl}/login`, userInfo);
+    const response = await axiosPost(`${baseUrl}/register`, userInfo);
     // if request returned an error
     if (response?.error) {
       return setRegisterError(response);

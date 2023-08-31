@@ -9,19 +9,15 @@ import { useContext } from 'react'
 
 
 export default function Home() {
-
-  const { user } = useContext(AuthContext) as AuthContextType;
   return (
     <AuthContextProvider>
-      <ChatContextProvider user={user}>
-        <main className={styles.main}>
-          <Nav />
-          <div className={styles.home}>
-            <h1 className={styles.welcome}>Welcome 👋</h1>
-            <Login></Login>
-          </div>
-        </main>
-      </ChatContextProvider>
+      <main className={styles.main}>
+        <Nav />
+        <div className={styles.home}>
+          <h1 className={styles.welcome}>Welcome 👋</h1>
+          <Login></Login>
+        </div>
+      </main>
     </AuthContextProvider>
   )
 }

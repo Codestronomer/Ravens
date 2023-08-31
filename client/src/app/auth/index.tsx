@@ -1,5 +1,5 @@
 'use client'
-import { AuthContext, User, AuthContextType, errorType } from '@/context/authContext';
+import { AuthContext, User, AuthContextType, errorType, UserInfo } from '@/context/authContext';
 import styles from './auth.module.css';
 import { useRouter } from 'next/navigation';
 import React, { useState, useEffect, useContext } from 'react';
@@ -7,21 +7,20 @@ import { Dispatch, SetStateAction } from 'react';
 import ErrorModal from '@/components/ErrorModal';
 
 interface userNameProps {
-  userInfo: User
+  userInfo: UserInfo
   handleSubmit: Function,
   setUsername: Function,
   setIsValid: Dispatch<SetStateAction<boolean>>
 }
 
 interface passwordProps {
-  userInfo: User
+  userInfo: UserInfo
   registerUser: Function,
   setPassword: Function,
   isLoading: boolean,
 }
 
 export function Login(): React.FunctionComponentElement<HTMLBodyElement> {
-  const router = useRouter();
   const [isValid, setIsValid] = useState(false);
   const authContext = useContext(AuthContext) as AuthContextType;
 
@@ -98,6 +97,7 @@ const GetUsername: React.FC<userNameProps> = ({ handleSubmit, setUsername, userI
 }
 
 const GetPassword: React.FC<passwordProps> = ({ registerUser, setPassword, userInfo, isLoading }) => {
+  const router = useRouter();
 
   const handlePassword = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
@@ -107,6 +107,7 @@ const GetPassword: React.FC<passwordProps> = ({ registerUser, setPassword, userI
   const handleFormSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     registerUser();
+    router.push("/chat");
   }
 
   return (
