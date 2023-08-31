@@ -9,12 +9,6 @@ const UserSchema = new mongoose.Schema({
     maxLength: 30,
     minLength: 4,
   },
-  email: {
-    type: String,
-    required: true,
-    minLength: 5,
-    maxLength: 300,
-  },
   password: {
     type: String,
     required: true,
@@ -24,7 +18,7 @@ const UserSchema = new mongoose.Schema({
 }, { timestamps: true }, { toJSON: {virtuals: true }}, { toObject: {virtuals: true }});
 
 // bcrypt salt rounds
-const saltRounds = process.env.salt || '8';
+const saltRounds = process.env.salt || 8;
 
 UserSchema.pre('save', async function (next) {
   const user = this;

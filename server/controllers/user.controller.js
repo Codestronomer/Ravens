@@ -34,7 +34,7 @@ async function register(req, res) {
   try {
     const { username, password } = req.body;
 
-    let user = UserModel.findOne({ username });
+    let user = await UserModel.findOne({ username });
 
     if (user) {
       return res.status(400).json({ message: 'User with the given username already exists!' });
@@ -48,8 +48,8 @@ async function register(req, res) {
     //   return res.status(400).json({ message: 'Input valid email address!'});
     // }
 
-    if (!validator.isStrongPassword(password)) {
-      return res.status(400).json({ message: 'Weak game, input a strong password!'});
+    if (password.length < 5) {
+      return res.status(400).json({ message: 'Weak password, input a strong password!'});
     }
 
     user = new UserModel({ username, password });
@@ -58,7 +58,7 @@ async function register(req, res) {
 
     const token = signJwt(_.omit(user.toObject(), 'password'));
 
-    return res.status(200).json({ user: _.omit(user.toObject(), 'password'), token });
+    return res.status(200).json({ username: user.username, id: user._id, token });
   } catch(error) {
     console.log(error.message);
     return res.status(500).json({ message: error.message });
