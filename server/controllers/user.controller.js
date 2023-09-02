@@ -80,7 +80,7 @@ async function login(req, res) {
     // create auth token
     const token = signJwt(_.omit(user.toObject(), 'password'));
 
-    return res.status(200).json({ user: _.omit(user.toObject(), 'passwprd'), token });
+    return res.status(200).json({ username: user.username, id: user._id, token });
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }
