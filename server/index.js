@@ -30,7 +30,7 @@ app.get('/', (req, res) => {
   });
 });
 
-app.use('/', UserRouter);
+app.use('/user', UserRouter);
 app.use('/chat', ChatRouter);
 app.use('/message', MessageRouter);
 
