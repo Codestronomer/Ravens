@@ -31,8 +31,11 @@ export interface AuthContextType {
   userInfo: UserInfo
   updateUserInfo: Function
   registerUser: Function
+  loginUser: Function
+  setLoginError: Dispatch<SetStateAction<errorType>> | Dispatch<SetStateAction<null>>
   setRegisterError: Dispatch<SetStateAction<errorType>> | Dispatch<SetStateAction<null>>
   registerError: errorType | null
+  loginError: errorType | null
   isLoading: boolean
 }
 
@@ -48,6 +51,7 @@ export const AuthContextProvider = (
     username: "",
   });
   const [registerError, setRegisterError] = useState(null);
+  const [loginError, setLoginError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [userInfo, setUserInfo] = useState<UserInfo>({
     username: "",
@@ -64,7 +68,7 @@ export const AuthContextProvider = (
     setIsLoading(true);
     setRegisterError(null);
 
-    const response = await axiosPost(`${baseUrl}/register`, userInfo);
+    const response = await axiosPost(`${baseUrl}/user/register`, userInfo);
     // if request returned an error
     if (response?.error) {
       return setRegisterError(response);
@@ -79,12 +83,34 @@ export const AuthContextProvider = (
     setUser(response);
   }, [userInfo]);
 
+  // function to login user
+  const loginUser = useCallback(async () => {
+    setIsLoading(true);
+    setLoginError(null);
+
+    const response = await axiosPost(`${baseUrl}/user/login`, userInfo);
+
+    // if request returned an error
+    if (response?.error) {
+      return setLoginError(response);
+    }
+
+    setIsLoading(false);
+    
+    // save user information
+    localStorage.setItem('user', JSON.stringify(response));
+    setUser(response);
+  }, [userInfo])
+
   const contextValue: AuthContextType = {
     user,
     userInfo,
     isLoading,
+    loginUser,
+    loginError,
     registerUser,
     registerError,
+    setLoginError,
     updateUserInfo,
     setRegisterError,
   }

@@ -14,6 +14,7 @@ const Chat: React.FC<ChatProps> = ({ children }) => {
   const { user } = useContext(AuthContext) as AuthContextType;
   const { userChats, isChatLoading, chatError } = useContext(ChatContext) as ChatContextType;
   
+  console.log(userChats);
   return (
   <>
     <ChatContextProvider user={user}>

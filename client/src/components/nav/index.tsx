@@ -13,7 +13,7 @@ export default function Nav() {
         Ravens
       </h1>
       <div className={styles.navRight}>
-        {user ? <>
+        {user && user.username ? <>
           <h3>{user.username}</h3>
           <h2>Logout</h2> 
         </>

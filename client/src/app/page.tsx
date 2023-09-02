@@ -1,11 +1,11 @@
 import Image from 'next/image'
-import styles from './page.module.css'
-import { AppProps } from 'next/app'
-import { Login } from './auth'
-import Nav from '@/components/nav'
-import { AuthContext, AuthContextProvider, AuthContextType } from '@/context/authContext'
-import { ChatContextProvider } from '@/context/chatContext'
 import { useContext } from 'react'
+import { AppProps } from 'next/app'
+import { Auth } from './auth'
+import Nav from '@/components/nav'
+import styles from './page.module.css'
+import { ChatContextProvider } from '@/context/chatContext'
+import { AuthContext, AuthContextProvider, AuthContextType } from '@/context/authContext'
 
 
 export default function Home() {
@@ -15,7 +15,7 @@ export default function Home() {
         <Nav />
         <div className={styles.home}>
           <h1 className={styles.welcome}>Welcome 👋</h1>
-          <Login></Login>
+          <Auth />
         </div>
       </main>
     </AuthContextProvider>

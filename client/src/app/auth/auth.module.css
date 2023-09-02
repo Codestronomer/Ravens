@@ -32,3 +32,23 @@
   width: 90%;
   height: 40px;
 }
+
+.authSwitch {
+  font-size: 13px;
+  text-decoration: underline;
+  margin: 15px;
+  opacity: 70%;
+  cursor: pointer;
+}
+
+.auth-container {
+  transition: opacity 3s ease-in-out;
+  opacity: 1; /* Initially set to fully visible */
+  max-height: 500px; /* Set a maximum height to allow for transitions */
+  overflow: hidden; /* Hide content outside the container */
+}
+
+.auth-container.inactive {
+  opacity: 0; /* Fade out when the "inactive" class is applied */
+  max-height: 0; /* Collapse the container when inactive */
+}
