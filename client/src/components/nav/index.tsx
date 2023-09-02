@@ -1,11 +1,12 @@
 'use client'
-import React from 'react';
+import React, { useContext, useEffect, useRef } from 'react';
 import styles from './nav.module.css';
+import { AuthContext, AuthContextType } from '@/context/authContext';
 
 export default function Nav() {
-  const user = localStorage.getItem('user');
-  console.log(user);
-  
+
+  const { user } = useContext(AuthContext) as AuthContextType;
+
   return (
     <div className={styles.nav}>
       <h1>
@@ -13,7 +14,7 @@ export default function Nav() {
       </h1>
       <div className={styles.navRight}>
         {user ? <>
-          <h3>{JSON.parse(user).username}</h3>
+          <h3>{user.username}</h3>
           <h2>Logout</h2> 
         </>
           : <>
