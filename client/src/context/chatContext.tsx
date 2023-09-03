@@ -25,15 +25,13 @@ export const ChatContextProvider = ({ children, user }: {
     }
   }
 
-  console.log(user);
-
   useEffect(() => {
       const getUserChats = async () => {
-        if (user && user.id !== "") {
+        if (user && user.id) {
 
           setIsChatLoading(true);
           setChatError(null);
-          const response = await axiosGet(`${baseUrl}/chats/${user.id}`);
+          const response = await axiosGet(`${baseUrl}/chat/${user.id}`);
 
           setIsChatLoading(false);
           if (response.error) {
@@ -44,8 +42,8 @@ export const ChatContextProvider = ({ children, user }: {
         }
       }
       getUserChats();
-    }, [])
-  
+    }, []);
+
   return (
     <ChatContext.Provider value = {{
       userChats,
