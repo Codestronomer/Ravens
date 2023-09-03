@@ -34,7 +34,9 @@ async function register(req, res) {
   try {
     const { username, password } = req.body;
 
-    let user = await UserModel.findOne({ username });
+    const cleanUser = sanitizeUser(username, password);
+
+    let user = await UserModel.findOne({ username: cleanUser.username });
 
     if (user) {
       return res.status(400).json({ message: 'User with the given username already exists!' });
@@ -52,7 +54,7 @@ async function register(req, res) {
       return res.status(400).json({ message: 'Weak password, input a strong password!'});
     }
 
-    user = new UserModel({ username, password });
+    user = new UserModel({ username: cleanUser.username, password: cleanUser.password });
 
     await user.save();
 
@@ -69,11 +71,13 @@ async function login(req, res) {
   try {
     const { username, password } = req.body;
 
+    const cleanUser = sanitizeUser(username, password);
+
     // get user with the provided email from the database
-    const user = await UserModel.findOne({ username });
+    const user = await UserModel.findOne({ username: cleanUser.username });
 
     // validate username or password
-    if (!user || !(await user.comparePassword(password, user.password))) {
+    if (!user || !(await user.comparePasswords(cleanUser.password, user.password))) {
       return res.status(400).json({ message: 'Invalid Email or Password'});
     }
 
@@ -82,9 +86,17 @@ async function login(req, res) {
 
     return res.status(200).json({ username: user.username, id: user._id, token });
   } catch (error) {
+    console.log(error);
     return res.status(500).json({ message: error.message });
   }
 }
+
+const sanitizeUser = (username, password) => {
+  username = username.toLowerCase();
+  password = username.toLowerCase()
+
+  return { username, password };
+};
 
 export {
   login,

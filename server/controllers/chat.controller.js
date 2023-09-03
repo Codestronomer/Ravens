@@ -31,7 +31,7 @@ const getUserChats = async (req, res) => {
   try {
     const chats = await ChatModel.find({
       members: {$in: [userId]}
-    });
+    }).populate('members');
 
     res.status(200).json(chats);
   } catch (error) {
