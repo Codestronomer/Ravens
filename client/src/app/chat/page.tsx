@@ -26,7 +26,7 @@ const Chat: React.FC<ChatProps> = ({ children }) => {
         <div className={styles.chatLeft}>
           <h1>Chats</h1>
           <div className={styles.chatList}>
-            <ChatList chats={userChats} />
+            <ChatList />
           </div>
         </div>
         <div className={styles.chatRight}>
