@@ -1,4 +1,6 @@
 import { ChatModel } from '../models/chat.model.js';
+import pkg from 'lodash';
+const { omit } = pkg;
 
 // createChat
 const createChat = async (req, res) => {
@@ -33,7 +35,18 @@ const getUserChats = async (req, res) => {
       members: {$in: [userId]}
     }).populate('members');
 
-    res.status(200).json(chats);
+    const sanitizedChat = chats.map((chat) => {
+      const sanitizedMembers = chat.toObject().members.map((member) => {
+        return omit(member, ['password', '__v']);
+      });
+
+      return {
+        ...chat.toObject(), // Keep other properties of the chat object
+        members: sanitizedMembers, // Replace the members array with the sanitized version
+      };
+    });
+
+    res.status(200).json(sanitizedChat);
   } catch (error) {
     console.log(error);
     res.status(500).json({message: error.message});
