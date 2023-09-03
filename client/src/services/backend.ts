@@ -64,7 +64,7 @@ export async function axiosPost(url: string, body: any) {
     }
 
     return response.data;
-  } catch (error) {
-    return { error: true, message: 'An error occurred.' };
+  } catch (error: any) {
+    return { error: true, message: error?.message };
   }
 }

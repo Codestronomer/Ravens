@@ -11,12 +11,21 @@ export interface ChatContextType {
 
 export const ChatContext = createContext({});
 
-export const ChatContextProvider = ({ children, user}: {
-  children: React.ReactNode, user: User
+export const ChatContextProvider = ({ children, user }: {
+  children: React.ReactNode, user: User | null
 }) => {
   const [userChats, setUserChats] = useState(null);
   const [isChatLoading, setIsChatLoading] = useState(false);
   const [chatError, setChatError] = useState(null);
+
+  if (!user) {
+    const userString = localStorage.getItem('user');
+    if (userString) {
+      user = JSON.parse(userString);
+    }
+  }
+
+  console.log(user);
 
   useEffect(() => {
       const getUserChats = async () => {
@@ -30,11 +39,12 @@ export const ChatContextProvider = ({ children, user}: {
           if (response.error) {
               return setChatError(response);
           }
-        }
-    }
 
-    getUserChats();
-  }, [user])
+          setUserChats(response);
+        }
+      }
+      getUserChats();
+    }, [])
   
   return (
     <ChatContext.Provider value = {{

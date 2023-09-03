@@ -1,16 +1,21 @@
 .main {
+  display: grid;
+  place-items: center;
+  height: 100vh;
 }
 
 .home {
   display: flex;
   flex-direction: column;
-  position: absolute;
-  top: 40%;
-  left: 40%;
   margin: auto;
   gap: 5px;
-  align-items: left;
-  text-align: left;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background-color: black;
+  border-radius: 8px;
+  padding: 10px;
+  box-shadow: 2px 2px 5px white;
 }
 
 .description a {

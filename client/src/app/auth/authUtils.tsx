@@ -69,7 +69,6 @@ export const GetPassword: React.FC<passwordProps> = ({
   const handleFormSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     handleUser();
-    router.push("/chat");
   }
 
   return (
