@@ -16,7 +16,7 @@ export interface ChatType {
 export const ChatList = () => {
 
   const { user } = useContext(AuthContext) as AuthContextType;
-  const { userChats, isChatLoading, chatError } = useContext(ChatContext) as ChatContextType;
+  const { userChats, isChatLoading, chatError, publicChats } = useContext(ChatContext) as ChatContextType;
 
   console.log("userChats", userChats);
   console.log("chatLoading", isChatLoading);
@@ -40,8 +40,16 @@ export const ChatList = () => {
           />
         </div>
         <div className={styles.chatInfo}>
-          <h3>Teepee</h3>
-          <p>Yo!</p>
+          <div className={styles.chatInfoChild}>
+            <h3>Teepee</h3>
+            <p>Yo!</p>
+          </div>
+          <div className={styles.chatInfoChild}>
+            <p>12/2/2022</p>
+            <div className={styles.chatNotification}>
+              <span>2</span>
+            </div>
+          </div>
         </div>
       </div>
     </>
