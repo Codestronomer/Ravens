@@ -1,17 +1,10 @@
-'use client'
 import React, { useContext, useEffect, useState } from 'react';
 import { ChatList } from './chatList';
 import styles from './chat.module.css';
 import ChatBox from './chatBox';
-import { axiosGet, baseUrl } from '@/services/backend';
-import { AuthContext, AuthContextType } from '@/context/authContext';
 import { ChatContext, ChatContextType } from '@/context/chatContext';
 
-interface ChatProps {
-  children: React.FC;
-};
-
-const Chat: React.FC<ChatProps> = ({ children }) => {
+const Chat = ({ children } : { children: React.ReactNode }) => {
 
   const { userChats, isChatLoading, chatError } = useContext(ChatContext) as ChatContextType;
 

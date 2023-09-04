@@ -15,7 +15,7 @@ export interface ChatContextType {
   userChats: any
   isChatLoading: boolean
   chatError: boolean
-  publicChats: Array<Chat>
+  publicChats: Array<User>
 }
 
 // Create a context for chat-related data

@@ -5,6 +5,7 @@ import ProfileImage2 from '@/../public/teepee.jpg';
 import { AuthContext, AuthContextType, User } from '@/context/authContext';
 import { ChatContext, ChatContextType } from '@/context/chatContext';
 import ChatItem from './ChatItem';
+import ChatPopUp from './chatPopUp';
 
 export interface ChatType {
   _id: string
@@ -23,6 +24,9 @@ export const ChatList = () => {
   console.log("chatError", chatError);
   return (
     <>
+      { publicChats && publicChats.map((user) => {
+        <ChatPopUp key={user.id} user={user} />
+      })}
       { isChatLoading && <div> ....Loading chats</div>}
       { userChats && userChats.map((chat: ChatType) => {
         return (
