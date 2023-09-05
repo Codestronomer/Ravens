@@ -3,6 +3,9 @@ import bcrypt from 'bcrypt';
 
 // defined User schema
 const UserSchema = new mongoose.Schema({
+  id: {
+    type: mongoose.Schema.Types.ObjectId
+  },
   username: { 
     type: String,
     required: true,

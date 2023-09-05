@@ -8,7 +8,11 @@ async function getUsers(req, res) {
     // get users from database
     const users = await UserModel.find();
 
-    return res.status(200).json(users);
+    const updatedUsers = users.map((user) => {
+      return { ...user.toObject(), id: user._id }; // Add 'id' property
+    });
+
+    return res.status(200).json(updatedUsers);
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }
