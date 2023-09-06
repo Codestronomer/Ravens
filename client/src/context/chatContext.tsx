@@ -1,11 +1,10 @@
 'use client'
-import React, { createContext, useCallback, useState, useEffect } from 'react';
+import React, { createContext, useCallback, useState, useEffect, useRef } from 'react';
 import { useChat, axiosPost, baseUrl, axiosGet } from '@/services/backend';
 import { User } from './authContext';
-import { ChatType } from '@/app/chat/chatList';
 
-interface Chat {
-  _id: string;
+export interface Chat {
+  id: string;
   members: User[];
   createdAt: string;
   updatedAt: string;
@@ -16,6 +15,8 @@ export interface ChatContextType {
   isChatLoading: boolean
   chatError: boolean
   publicChats: Array<User>
+  updateCurrentChat: (chat: Chat) => void;
+  createChat: (firstId: string, secondId: string) => void;
 }
 
 // Create a context for chat-related data
@@ -25,23 +26,72 @@ export const ChatContextProvider = ({ children, user }: {
   children: React.ReactNode, user: User | null
 }) => {
   // State for user chats, chat loading status, chat errors, and public chats
-  const [userChats, setUserChats] = useState([]);
+  const [userChats, setUserChats] = useState<Chat[]>([]);
   const [isChatLoading, setIsChatLoading] = useState(false);
   const [chatError, setChatError] = useState(null);
   const [publicChats, setPublicChats] = useState([]);
+  const [currentChat, setCurrentChat] = useState<Chat | null>(null);
+  const [messages, setMessages] = useState(null);
+  const [isMessagesLoading, setMessagesLoading] = useState(false);
+  const [messagesError, setMessagesError] = useState(null);
 
-  // If the user is not provided, try to retrieve it from local storage
-  if (!user) {
-    const userString = localStorage.getItem('user');
-    if (userString) {
-      user = JSON.parse(userString);
+  console.log("message", messages);
+  console.log("message loading", isMessagesLoading);
+  console.log("message error", messagesError);
+
+  // Get persisted user data from local storage when the component mounts
+  useEffect(() => {
+    const persistedUser = localStorage.getItem('user');
+    if (persistedUser) {
+      user = JSON.parse(persistedUser);
     }
-  }
+  }, []);
+
+  // Get user chats when the component mounts and the user is available
+  useEffect(() => {
+    const getUserChats = async () => {
+      if (user?.id) {
+        setIsChatLoading(true);
+        setChatError(null);
+        const response = await axiosGet(`${baseUrl}/chat/${user?.id}`);
+        console.log("response", response);
+
+        setIsChatLoading(false);
+        if (response.error) {
+            return setChatError(response);
+        }
+
+        setUserChats(response);
+      }
+    }
+    getUserChats();
+  }, [user]);
+
+  useEffect(() => {
+    if (currentChat) {
+      const getMessages = async () => {
+        setMessagesLoading(true);
+        setMessagesError(null);
+
+        const response = await axiosGet(`${baseUrl}/messages/${currentChat?.id}`);
+        console.log("m response", response);
+        setMessagesLoading(false);
+
+        if (response.error) {
+          return setMessagesError(response);
+        }
+
+        setMessages(response);
+      }
+
+      getMessages();
+    }
+  }, [currentChat]);
 
   // Get public chats when the component mounts
   useEffect(() => {
     const getPublicChats = async () => {
-      const response = await axiosGet(`${baseUrl}/user/users`);
+      const response = await axiosGet(`${baseUrl}/users/`);
 
       if (response.error) {
         return console.log('Error fetching users', response);
@@ -63,28 +113,24 @@ export const ChatContextProvider = ({ children, user }: {
     }
 
     getPublicChats();
+  }, [user, userChats]);
+
+
+  const updateCurrentChat = useCallback((chat: Chat) => {
+    setCurrentChat(chat)
   }, []);
   
 
-  // Get user chats when the component mounts and the user is available
-  useEffect(() => {
-    const getUserChats = async () => {
-      if (user && user.id) {
 
-        setIsChatLoading(true);
-        setChatError(null);
-        const response = await axiosGet(`${baseUrl}/chat/${user.id}`);
+  const createChat = useCallback(async (firstId: string, secondId: string) => {
+    const response = await axiosPost(`${baseUrl}/chat/`, { firstId, secondId });
 
-        setIsChatLoading(false);
-        if (response.error) {
-            return setChatError(response);
-        }
-
-        setUserChats(response);
-      }
+    if (response.error) {
+      return setChatError(response);
     }
-    getUserChats();
-  }, []);
+
+    setUserChats((prev) => [...prev, response]);
+  }, [])
 
   // Provide chat related data through the context
   return (
@@ -93,6 +139,8 @@ export const ChatContextProvider = ({ children, user }: {
       isChatLoading,
       chatError,
       publicChats,
+      updateCurrentChat,
+      createChat,
     }}>
       {children}
     </ChatContext.Provider>

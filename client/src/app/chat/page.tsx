@@ -6,12 +6,6 @@ import { ChatContext, ChatContextType } from '@/context/chatContext';
 
 const Chat = ({ children } : { children: React.ReactNode }) => {
 
-  const { userChats, isChatLoading, chatError } = useContext(ChatContext) as ChatContextType;
-
-  console.log("userChats", userChats);
-  console.log("chatLoading", isChatLoading);
-  console.log("chatError", chatError);
-  
   return (
   <>
     <div className={styles.chats}>

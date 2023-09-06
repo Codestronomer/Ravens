@@ -1,36 +1,39 @@
+'use client'
 import React, { useContext } from 'react';
 import styles from './chat.module.css'
 import Image from 'next/image';
 import ProfileImage2 from '@/../public/teepee.jpg';
 import { AuthContext, AuthContextType, User } from '@/context/authContext';
-import { ChatContext, ChatContextType } from '@/context/chatContext';
+import { ChatContext, ChatContextType, Chat } from '@/context/chatContext';
 import ChatItem from './ChatItem';
 import ChatPopUp from './chatPopUp';
-
-export interface ChatType {
-  _id: string
-  members: Array<User>
-  createdAt: Date
-  updatedAt: Date
-}
 
 export const ChatList = () => {
 
   const { user } = useContext(AuthContext) as AuthContextType;
-  const { userChats, isChatLoading, chatError, publicChats } = useContext(ChatContext) as ChatContextType;
-
-  console.log("userChats", userChats);
-  console.log("chatLoading", isChatLoading);
+  const {
+    userChats,
+    isChatLoading,
+    chatError,
+    publicChats,
+    createChat,
+    updateCurrentChat,
+  } = useContext(ChatContext) as ChatContextType;
   console.log("chatError", chatError);
+  console.log("publicChats", publicChats);
   return (
     <>
-      { publicChats && publicChats.map((user) => {
-        <ChatPopUp key={user.id} user={user} />
-      })}
+      <div className={styles.publicChats}>
+        {publicChats && publicChats.map((chat) => {
+          return <ChatPopUp key={chat.id} chat={chat} user={user} createChat={createChat} />
+        })}
+      </div>
       { isChatLoading && <div> ....Loading chats</div>}
-      { userChats && userChats.map((chat: ChatType) => {
+      { userChats && userChats.map((chat: Chat) => {
         return (
-          <ChatItem chat={chat} user={user} key={chat._id} />
+          <div key={chat.id} onClick={() => updateCurrentChat(chat)}>
+            <ChatItem chat={chat} user={user} key={chat.id} />
+          </div>
         )
       }
     )}

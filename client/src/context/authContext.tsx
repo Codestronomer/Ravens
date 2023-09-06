@@ -2,6 +2,7 @@
 import { axiosPost, baseUrl } from '@/services/backend';
 import React, { 
   useState,
+  useEffect,
   useCallback,
   createContext,
   SetStateAction,
@@ -68,7 +69,7 @@ export const AuthContextProvider = (
     setIsLoading(true);
     setRegisterError(null);
 
-    const response = await axiosPost(`${baseUrl}/user/register`, userInfo);
+    const response = await axiosPost(`${baseUrl}/users/register`, userInfo);
     // if request returned an error
     if (response?.error) {
       return setRegisterError(response);
@@ -88,7 +89,7 @@ export const AuthContextProvider = (
     setIsLoading(true);
     setLoginError(null);
 
-    const response = await axiosPost(`${baseUrl}/user/login`, userInfo);
+    const response = await axiosPost(`${baseUrl}/users/login`, userInfo);
 
     // if request returned an error
     if (response?.error) {
@@ -100,7 +101,15 @@ export const AuthContextProvider = (
     // save user information
     localStorage.setItem('user', JSON.stringify(response));
     setUser(response);
-  }, [userInfo])
+  }, [userInfo]);
+
+  // Get persisted user data from local storage when the component mounts
+  useEffect(() => {
+    const persistedUser = localStorage.getItem('user');
+    if (persistedUser) {
+      setUser(JSON.parse(persistedUser));
+    }
+  }, []);
 
   const contextValue: AuthContextType = {
     user,
