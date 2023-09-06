@@ -10,13 +10,22 @@ export interface Chat {
   updatedAt: string;
   __v: number;
 }
+
+interface errorType {
+  error: boolean
+  message: string
+}
 export interface ChatContextType {
   userChats: any
   isChatLoading: boolean
-  chatError: boolean
+  chatError: errorType
   publicChats: Array<User>
+  currentChat: Chat
   updateCurrentChat: (chat: Chat) => void;
   createChat: (firstId: string, secondId: string) => void;
+  isMessagesLoading: boolean
+  messagesError: errorType
+  messages: {}[]
 }
 
 // Create a context for chat-related data
@@ -135,12 +144,16 @@ export const ChatContextProvider = ({ children, user }: {
   // Provide chat related data through the context
   return (
     <ChatContext.Provider value = {{
+      messages,
       userChats,
-      isChatLoading,
       chatError,
-      publicChats,
-      updateCurrentChat,
       createChat,
+      publicChats,
+      currentChat,
+      isChatLoading,
+      messagesError,
+      updateCurrentChat,
+      isMessagesLoading,
     }}>
       {children}
     </ChatContext.Provider>

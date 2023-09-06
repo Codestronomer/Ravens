@@ -1,13 +1,13 @@
-import { ChatType } from '@/app/chat/chatList';
 import { User } from '@/context/authContext';
+import { Chat } from '@/context/chatContext';
 import { axiosGet, baseUrl } from '@/services/backend';
 import React, { useState, useEffect } from 'react';
 
-const useFetchRecipient = (chat: ChatType, user: User) => {
+const useFetchRecipient = (chat: Chat, user: User) => {
   const [recipient, setRecipient] = useState(null);
   const [error, setError] = useState(null);
 
-  const recipientUser = chat.members.find((member) => member.id !== user.id);
+  const recipientUser = chat.members.find((member: User) => member.id !== user.id);
 
   useEffect(() => {
     const getUser = async () => {

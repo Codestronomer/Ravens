@@ -20,9 +20,6 @@
 
 .chatRight {
   margin: 40px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
   width: 60%;
 }
 
@@ -199,4 +196,18 @@
   padding: 7px;
   border-radius: 8px;
   border: none;
+}
+
+.conversation {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.noConversation {
+  text-align: center;
+}
+.chatBoxImg {
+  width: 70%;
 }

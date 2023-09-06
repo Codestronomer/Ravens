@@ -8,7 +8,7 @@ import { Chat } from '@/context/chatContext';
 
 const ChatItem = ({ chat, user }: { chat: Chat, user: User }) => {
 
-  const recipientUser = chat.members.find((member: User) => member.id !== user.id);
+  const recipientUser = chat.members?.find((member: User) => member.id !== user.id);
 
   return (
     <div className={styles.chat}>
