@@ -32,7 +32,7 @@ app.get('/', (req, res) => {
 
 app.use('/users', UserRouter);
 app.use('/chat', ChatRouter);
-app.use('/message', MessageRouter);
+app.use('/messages', MessageRouter);
 
 // Start Http server
 const port = process.env.PORT || 5000;
