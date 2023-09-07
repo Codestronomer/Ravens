@@ -1,7 +1,7 @@
-import { configDotenv } from "dotenv";
+import dotenv from "dotenv";
 import mongoose from "mongoose";
 
-configDotenv();
+dotenv.config();
 
 async function connectDB() {
   const mongo_uri = process.env.MONGO_URI || 'mongodb://localhost:27017/ravens';
