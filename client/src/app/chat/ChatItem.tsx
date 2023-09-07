@@ -1,17 +1,20 @@
-import React from 'react';
+'use client'
 import Image from 'next/image';
-import ProfileImage from '@/../public/John.jpg';
-import ProfileImage2 from '@/../public/teepee.jpg';
+import React, { useContext } from 'react';
 import styles from './chat.module.css';
 import { User } from '@/context/authContext';
-import { Chat } from '@/context/chatContext';
+import { Chat, ChatContext, ChatContextType } from '@/context/chatContext';
+import ProfileImage from '@/../public/John.jpg';
+import ProfileImage2 from '@/../public/teepee.jpg';
 
 const ChatItem = ({ chat, user }: { chat: Chat, user: User }) => {
 
-  const recipientUser = chat.members?.find((member: User) => member.id !== user.id);
+  const { currentChat } = useContext(ChatContext) as ChatContextType;
+
+  const recipientUser = chat.members?.find((member: User) => member.id !== user?.id);
 
   return (
-    <div className={styles.chat}>
+    <div className={currentChat?.id == chat?.id ? styles.chatActive : styles.chat}>
       <div className={styles.chatImg}>
         <Image
           src={ProfileImage}
@@ -27,9 +30,11 @@ const ChatItem = ({ chat, user }: { chat: Chat, user: User }) => {
         </div>
         <div className={styles.chatInfoChild}>
           <p>12/2/2022</p>
-          <div className={styles.chatNotification}>
-            <span>2</span>
-          </div>
+          {currentChat?.id !== chat?.id && 
+            <div className={styles.chatNotification}>
+              <span>2</span>
+            </div>
+          }
         </div>
       </div>
     </div>

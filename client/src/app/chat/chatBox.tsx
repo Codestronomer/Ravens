@@ -4,7 +4,7 @@ import Image from 'next/image';
 import styles from './chat.module.css';
 import { ChatContext, ChatContextType } from '@/context/chatContext';
 import { AuthContext, AuthContextType, User } from '@/context/authContext';
-import ChatImage from '../../../public/undraw/undraw_to_the_moon_re_q21i.svg'
+import ChatImage from '../../../public/undraw/undraw_new_message_re_fp03.svg';
 
 const ChatBox = () => {
   const { user } = useContext(AuthContext) as AuthContextType;
@@ -38,7 +38,7 @@ const ChatBox = () => {
           alt="start a new message"
           className={styles.chatBoxImg}
         />
-        <h1>Start a new message</h1>
+        <p>Click the &quot;+&quot; icon to start a conversation with someone</p>
       </div>
     }
     </>
