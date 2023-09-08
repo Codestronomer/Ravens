@@ -15,6 +15,16 @@ interface errorType {
   error: boolean
   message: string
 }
+
+export interface message {
+    senderId: string
+    text: string
+    id: string,
+    createdAt: string
+    updatedAt: string
+    __v: number
+}
+
 export interface ChatContextType {
   userChats: any
   isChatLoading: boolean
@@ -25,7 +35,7 @@ export interface ChatContextType {
   createChat: (firstId: string, secondId: string) => void;
   isMessagesLoading: boolean
   messagesError: errorType
-  messages: {}[]
+  messages: message[]
 }
 
 // Create a context for chat-related data
@@ -83,7 +93,6 @@ export const ChatContextProvider = ({ children, user }: {
         setMessagesError(null);
 
         const response = await axiosGet(`${baseUrl}/messages/${currentChat?.id}`);
-        console.log("m response", response);
         setMessagesLoading(false);
 
         if (response.error) {

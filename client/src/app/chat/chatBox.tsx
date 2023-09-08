@@ -1,6 +1,7 @@
 'use client'
-import React, { useContext } from 'react';
+import moment from 'moment';
 import Image from 'next/image';
+import React, { useContext }   from 'react';
 import styles from './chat.module.css';
 import { ChatContext, ChatContextType } from '@/context/chatContext';
 import { AuthContext, AuthContextType, User } from '@/context/authContext';
@@ -18,12 +19,17 @@ const ChatBox = () => {
           <h3>{ recipientUser?.username}</h3>
         </div>
         <div className={styles.messages}>
-          <div className={styles.messageLeft}>
-            <p> Hello !</p>
-          </div>
-          <div className={styles.messageRight}>
-            <p>How are you?</p>
-          </div>
+          {messages && messages.map((message) => {
+            return (
+            <div key={message.id} className={
+              message.senderId !== recipientUser.id
+              ?
+              styles.messageLeft : styles.messageRight}>
+              <p>{message?.text}</p>
+              <span className={styles.messageDate}>{moment(message?.createdAt).calendar()}</span>
+            </div>)
+          })
+          }
         </div>
         <form className={styles.messageForm}>
           <input className={styles.textInput}
