@@ -150,6 +150,10 @@ export const ChatContextProvider = ({ children, user }: {
     setUserChats((prev) => [...prev, response]);
   }, [])
 
+  const sendMessage = useCallback(async ({ message, sender, currentChatId, setMessage }) => {
+    if (!message) return console.log("You must type something...")
+  }, []);
+
   // Provide chat related data through the context
   return (
     <ChatContext.Provider value = {{
