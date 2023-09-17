@@ -68,6 +68,7 @@ export const GetPassword: React.FC<passwordProps> = ({
 
   const handleFormSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    console.log(typeof handleUser);
     handleUser();
   }
 

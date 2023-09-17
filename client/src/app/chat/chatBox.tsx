@@ -12,7 +12,7 @@ import ChatImage from '../../../public/undraw/undraw_new_message_re_fp03.svg';
 const ChatBox = () => {
   const [message, setMessage] = useState("");
   const { user } = useContext(AuthContext) as AuthContextType;
-  const { messages, isMessagesLoading, messagesError, currentChat } = useContext(ChatContext) as ChatContextType;
+  const { messages, isMessagesLoading, messagesError, currentChat, sendMessage } = useContext(ChatContext) as ChatContextType;
   const recipientUser = currentChat?.members?.find((member: User) => member.id !== user.id);
   return (
     <>
@@ -27,7 +27,7 @@ const ChatBox = () => {
             <div key={message.id} className={
               message.senderId !== recipientUser.id
               ?
-              styles.messageLeft : styles.messageRight}>
+              styles.messageRight : styles.messageLeft}>
               <p>{message?.text}</p>
               <span className={styles.messageDate}>{moment(message?.createdAt).calendar()}</span>
             </div>)
@@ -41,7 +41,14 @@ const ChatBox = () => {
               onChange={setMessage}
               fontFamily='nunito'
               borderColor='#5E4291' />
-          <button type='submit' className={styles.messageButton}>
+          <button 
+            type='submit' 
+            className={styles.messageButton}
+            onClick={(e) => {
+              e.preventDefault();
+              sendMessage(message, user, currentChat.id, setMessage)
+            }}
+          >
             <Image src={SendIcon}
               alt="send"
               className={styles.messageIcon}

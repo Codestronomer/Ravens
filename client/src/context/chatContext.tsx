@@ -27,15 +27,21 @@ export interface MessageType {
 
 export interface ChatContextType {
   userChats: any
-  isChatLoading: boolean
-  chatError: errorType
-  publicChats: Array<User>
   currentChat: Chat
-  updateCurrentChat: (chat: Chat) => void;
-  createChat: (firstId: string, secondId: string) => void;
-  isMessagesLoading: boolean
-  messagesError: errorType
+  chatError: errorType
+  isChatLoading: boolean
   messages: MessageType[]
+  publicChats: Array<User>
+  messagesError: errorType
+  isMessagesLoading: boolean
+  updateCurrentChat: (chat: Chat) => void;
+  sendMessage: (
+    message: string,
+    sender: User,
+    currentChatId: string,
+    setMessage: (message: string) => void,
+  ) => void;
+  createChat: (firstId: string, secondId: string) => void;
 }
 
 // Create a context for chat-related data
@@ -152,17 +158,12 @@ export const ChatContextProvider = ({ children, user }: {
     setUserChats((prev) => [...prev, response]);
   }, [])
 
-  const sendMessage = useCallback(async ({ 
-    message,
-    sender,
-    currentChatId,
-    setMessage
-  } : {
+  const sendMessage = useCallback(async (
     message: string,
     sender: User,
     currentChatId: string,
-    setMessage: (message: string) => void;
-  }) => {
+    setMessage: (message: string) => void
+  ) => {
     if (!message) return console.log("You must type something...")
 
     const response = await axiosPost(`${baseUrl}/messages/`, {
@@ -190,8 +191,9 @@ export const ChatContextProvider = ({ children, user }: {
       createChat,
       publicChats,
       currentChat,
-      isChatLoading,
+      sendMessage,
       messagesError,
+      isChatLoading,
       updateCurrentChat,
       isMessagesLoading,
     }}>

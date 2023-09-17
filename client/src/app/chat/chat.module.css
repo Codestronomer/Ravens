@@ -165,7 +165,7 @@
 .messages {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: space-evenly;
   gap: 5px;
 }
 
@@ -200,9 +200,9 @@
   background-color: gray;
   height: auto;
   padding: 10px;
+  width: fit-content;
   border-radius: 5px;
   margin-left: 80%;
-  width: fit-content;
 }
 
 .messageDate {
