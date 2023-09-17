@@ -13,10 +13,10 @@ export interface Chat {
 
 interface errorType {
   error: boolean
-  message: string
+  MessageType: string
 }
 
-export interface message {
+export interface MessageType {
     senderId: string
     text: string
     id: string,
@@ -35,7 +35,7 @@ export interface ChatContextType {
   createChat: (firstId: string, secondId: string) => void;
   isMessagesLoading: boolean
   messagesError: errorType
-  messages: message[]
+  messages: MessageType[]
 }
 
 // Create a context for chat-related data
@@ -50,13 +50,15 @@ export const ChatContextProvider = ({ children, user }: {
   const [chatError, setChatError] = useState(null);
   const [publicChats, setPublicChats] = useState([]);
   const [currentChat, setCurrentChat] = useState<Chat | null>(null);
-  const [messages, setMessages] = useState(null);
+  const [messages, setMessages] = useState<MessageType[]>([]);
   const [isMessagesLoading, setMessagesLoading] = useState(false);
   const [messagesError, setMessagesError] = useState(null);
+  const [sendMessageError, setSendMessageError] = useState(null);
+  const [newMessage, setNewMessage] = useState(null);
 
-  console.log("message", messages);
-  console.log("message loading", isMessagesLoading);
-  console.log("message error", messagesError);
+  console.log("MessageType", messages);
+  console.log("MessageType loading", isMessagesLoading);
+  console.log("MessageType error", messagesError);
 
   // Get persisted user data from local storage when the component mounts
   useEffect(() => {
@@ -150,8 +152,33 @@ export const ChatContextProvider = ({ children, user }: {
     setUserChats((prev) => [...prev, response]);
   }, [])
 
-  const sendMessage = useCallback(async ({ message, sender, currentChatId, setMessage }) => {
+  const sendMessage = useCallback(async ({ 
+    message,
+    sender,
+    currentChatId,
+    setMessage
+  } : {
+    message: string,
+    sender: User,
+    currentChatId: string,
+    setMessage: (message: string) => void;
+  }) => {
     if (!message) return console.log("You must type something...")
+
+    const response = await axiosPost(`${baseUrl}/messages/`, {
+      text: message,
+      chatId: currentChatId,
+      senderId: sender?.id
+    });
+
+    if (response.error) {
+      return setSendMessageError(response);
+    }
+
+    setNewMessage(response);
+    setMessages((prev) => [...prev, response ]);
+    setMessage("");
+
   }, []);
 
   // Provide chat related data through the context
