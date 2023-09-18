@@ -13,63 +13,72 @@ const ChatBox = () => {
   const [message, setMessage] = useState("");
   const { user } = useContext(AuthContext) as AuthContextType;
   const { messages, isMessagesLoading, messagesError, currentChat, sendMessage } = useContext(ChatContext) as ChatContextType;
-  const recipientUser = currentChat?.members?.find((member: User) => member.id !== user.id);
+  const recipientUsers = currentChat?.members?.filter((member: User) => member.id !== user.id);
   return (
     <>
-    {recipientUser ?
-      <div className={styles.conversation}>
-        <div className={styles.messageNav}>
-          <h3>{ recipientUser?.username}</h3>
-        </div>
-        <div className={styles.messages}>
-          {messages && messages.map((message) => {
-            return (
-            <div key={message.id} className={
-              message.senderId !== recipientUser.id
-              ?
-              styles.messageRight : styles.messageLeft}>
-              <p>{message?.text}</p>
-              <span className={styles.messageDate}>{moment(message?.createdAt).calendar()}</span>
-            </div>)
-          })
-          }
-        </div>
-        <form className={styles.messageForm}>
-          {/* className={styles.textInput} */}
+      {recipientUsers && recipientUsers.length > 0 ? (
+        <div className={styles.conversation}>
+          <div className={styles.messageNav}>
+            {/* Display the names of all recipients */}
+            <h3>
+              {recipientUsers.map((recipientUser) => recipientUser.username).join(", ")}
+            </h3>
+          </div>
+          <div className={styles.messages}>
+            {messages &&
+              messages.map((message) => {
+                const isOwnMessage = message.senderId === user.id;
+                return (
+                  <div
+                    key={message.id}
+                    className={
+                      isOwnMessage ? styles.messageRight : styles.messageLeft
+                    }
+                  >
+                    <p>{message?.text}</p>
+                    <span className={styles.messageDate}>
+                      {moment(message?.createdAt).calendar()}
+                    </span>
+                  </div>
+                );
+              })}
+          </div>
+          <form className={styles.messageForm}>
+            {/* className={styles.textInput} */}
             <InputEmoji
               value={message}
               onChange={setMessage}
-              fontFamily='nunito'
-              borderColor='#5E4291' />
-          <button 
-            type='submit' 
-            className={styles.messageButton}
-            onClick={(e) => {
-              e.preventDefault();
-              sendMessage(message, user, currentChat.id, setMessage)
-            }}
-          >
-            <Image src={SendIcon}
-              alt="send"
-              className={styles.messageIcon}
+              fontFamily="nunito"
+              borderColor="#5E4291"
             />
-          </button>
-        </form>
-      </div>
-      :
-      <div className={styles.noConversation}>
-        <Image 
-          src={ChatImage}
-          alt="start a new message"
-          className={styles.chatBoxImg}
-        />
-        <p>Click the &quot;+&quot; icon to start a conversation with someone</p>
-      </div>
-    }
+            <button
+              type="submit"
+              className={styles.messageButton}
+              onClick={(e) => {
+                e.preventDefault();
+                sendMessage(message, user, currentChat.id, setMessage);
+              }}
+            >
+              <Image
+                src={SendIcon}
+                alt="send"
+                className={styles.messageIcon}
+              />
+            </button>
+          </form>
+        </div>
+      ) : (
+        <div className={styles.noConversation}>
+          <Image
+            src={ChatImage}
+            alt="start a new message"
+            className={styles.chatBoxImg}
+          />
+          <p>Click the &quot;+&quot; icon to start a conversation with someone</p>
+        </div>
+      )}
     </>
-  )
-}
-
-ChatBox.propTypes = {}
+  );
+};
 
 export default ChatBox;

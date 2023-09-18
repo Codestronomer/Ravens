@@ -3,14 +3,14 @@ import React from 'react';
 import styles from './chat.module.css'
 import Image from 'next/image';
 import ProfileImage2 from '@/../public/teepee.jpg';
-import { User, errorType } from '@/context/authContext';
-import { Chat } from '@/context/chatContext';
+import { User } from '@/context/authContext';
+import { Chat, errorType } from '@/context/chatContext';
 import ChatItem from './ChatItem';
 
 interface ChatListProps {
   user: User
   userChats: Chat[]
-  chatError: errorType
+  chatError: errorType | null
   isChatLoading: boolean
   updateCurrentChat: (chat: Chat) => void
 }

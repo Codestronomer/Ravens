@@ -5,9 +5,8 @@ import { UserInfo } from '@/context/authContext';
 
 interface userNameProps {
   userInfo: UserInfo
-  handleSubmit: Function
+  setIsValid: Function
   setUsername: Function
-  setIsValid: Dispatch<SetStateAction<boolean>>
   isRegister: boolean
 }
 
@@ -19,7 +18,7 @@ interface passwordProps {
   isRegister: boolean
 }
 
-export const GetUsername: React.FC<userNameProps> = ({ handleSubmit, setUsername, userInfo, isRegister }) => {
+export const GetUsername: React.FC<userNameProps> = ({ setIsValid, setUsername, userInfo, isRegister }) => {
 
   const handleUsername = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
@@ -28,7 +27,7 @@ export const GetUsername: React.FC<userNameProps> = ({ handleSubmit, setUsername
 
   const handleFormSubmit = (e: React.FormEvent) => {
     e?.preventDefault(); // Prevents the default form submission behavior
-    handleSubmit();
+    setIsValid();
   };
 
   return <>
@@ -43,7 +42,7 @@ export const GetUsername: React.FC<userNameProps> = ({ handleSubmit, setUsername
         className={styles.userInput}
         required={true}
         placeholder='Username'
-        onChange={(e) => handleUsername(e)}
+        onChange={handleUsername}
       >
       </input>
       <button className={styles.userSubmit} type='submit'>Enter</button>
@@ -59,7 +58,6 @@ export const GetPassword: React.FC<passwordProps> = ({
     isLoading,
     isRegister
   }) => {
-  const router = useRouter();
 
   const handlePassword = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
@@ -68,29 +66,25 @@ export const GetPassword: React.FC<passwordProps> = ({
 
   const handleFormSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log(typeof handleUser);
     handleUser();
   }
 
   return (
     <>
       <form onSubmit={handleFormSubmit} className={styles.auth}>
-        <label className={styles.description}>Password</label>
-        <input
+      <label className={styles.description}>Password</label>
+      <input
         className={styles.userInput}
-        placeholder='Enter a strong password'
+        placeholder="Enter a strong password"
         required={true}
-        type='password'
-        autoComplete='new-password'
-        aria-autocomplete='list'
+        type="password"
+        autoComplete="new-password"
+        aria-autocomplete="list"
         onChange={handlePassword}
-        />
-        {
-          isRegister ?
-            <button className={styles.userSubmit} type='submit'>{isLoading ? 'Creating Your Account' : 'Create Account'}</button>
-          :
-          <button className={styles.userSubmit} type='submit'>{isLoading ? 'Logging In' : 'Login in'}</button>
-        }
+      />
+      <button className={styles.userSubmit} type="submit">
+          {isLoading ? (isRegister ? 'Creating Your Account' : 'Logging In') : isRegister ? 'Create Account' : 'Login In'}
+        </button>
       </form>
     </>
   )

@@ -11,8 +11,10 @@ const ChatItem = ({ chat, user }: { chat: Chat, user: User }) => {
 
   const { currentChat } = useContext(ChatContext) as ChatContextType;
 
-  const recipientUser = chat.members?.find((member: User) => member.id !== user?.id);
-
+ const recipientUser = chat.members
+  ?.filter((member: User) => member.username !== user?.username)
+  .find(Boolean); // Find the first non-null member
+  console.log("user", recipientUser);
   return (
     <div className={currentChat?.id == chat?.id ? styles.chatActive : styles.chat}>
       <div className={styles.chatImg}>

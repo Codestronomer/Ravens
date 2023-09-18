@@ -5,9 +5,7 @@ import React, {
   useEffect,
   useCallback,
   createContext,
-  SetStateAction,
-  Dispatch
-  } from 'react';
+} from 'react';
 
 // Define user type
 export interface User {
@@ -33,8 +31,8 @@ export interface AuthContextType {
   updateUserInfo: Function
   registerUser: Function
   loginUser: Function
-  setLoginError: Dispatch<SetStateAction<errorType>> | Dispatch<SetStateAction<null>>
-  setRegisterError: Dispatch<SetStateAction<errorType>> | Dispatch<SetStateAction<null>>
+  setLoginError: (error: errorType | null) => void;
+  setRegisterError: (error: errorType | null) => void;
   registerError: errorType | null
   loginError: errorType | null
   isLoading: boolean
@@ -51,8 +49,8 @@ export const AuthContextProvider = (
     token: "",
     username: "",
   });
-  const [registerError, setRegisterError] = useState(null);
-  const [loginError, setLoginError] = useState(null);
+  const [registerError, setRegisterError] = useState<errorType | null>(null);
+  const [loginError, setLoginError] = useState<errorType | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [userInfo, setUserInfo] = useState<UserInfo>({
     username: "",
@@ -93,14 +91,15 @@ export const AuthContextProvider = (
 
     // if request returned an error
     if (response?.error) {
+      setIsLoading(false);
       return setLoginError(response);
     }
 
-    setIsLoading(false);
     
     // save user information
     localStorage.setItem('user', JSON.stringify(response));
     setUser(response);
+    setIsLoading(false);
   }, [userInfo]);
 
   // Get persisted user data from local storage when the component mounts

@@ -23,32 +23,38 @@ export function Login(): React.FunctionComponentElement<HTMLBodyElement> {
   }
 
    const handleCloseError = () => {
-    setLoginError(null as any);
+    setLoginError(null);
   };
+
+  const handleUser = () => {
+    loginUser();
+  }
 
   useEffect(() => {
   }, [isValid]);
 
   return (
     <div>
-      {!isValid ? <GetUsername
-        userInfo={userInfo}
-        setUsername={updateUserInfo}
-        setIsValid={setIsValid}
-        handleSubmit={handleNext}
-        isRegister={false}
-        /> : <GetPassword
+      {!isValid ? (
+        <GetUsername
+          userInfo={userInfo}
+          setUsername={updateUserInfo}
+          setIsValid={handleNext}
+          isRegister={false}
+        />
+      ) : (
+        <GetPassword
           userInfo={userInfo}
           setPassword={updateUserInfo}
-          handleUser={loginUser}
+          handleUser={handleUser}
           isRegister={false}
           isLoading={isLoading}
         />
-      }
+      )}
 
       {
-        loginError && loginError?.error && 
-        <ErrorModal onClose={handleCloseError} errorMessage={loginError?.message} />
+        loginError && loginError.error && 
+        <ErrorModal onClose={handleCloseError} errorMessage={loginError.message} />
       }
     </div>
   )

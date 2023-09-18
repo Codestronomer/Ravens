@@ -11,7 +11,7 @@ export interface Chat {
   __v: number;
 }
 
-interface errorType {
+export interface errorType {
   error: boolean
   MessageType: string
 }
@@ -28,7 +28,7 @@ export interface MessageType {
 export interface ChatContextType {
   userChats: any
   currentChat: Chat
-  chatError: errorType
+  chatError: errorType | null
   isChatLoading: boolean
   messages: MessageType[]
   publicChats: Array<User>
@@ -47,14 +47,15 @@ export interface ChatContextType {
 // Create a context for chat-related data
 export const ChatContext = createContext({});
 
-export const ChatContextProvider = ({ children, user }: {
+export const ChatContextProvider = ({ children }: {
   children: React.ReactNode, user: User | null
 }) => {
   // State for user chats, chat loading status, chat errors, and public chats
+  const [user, setUser] = useState<User | null>(null);
   const [userChats, setUserChats] = useState<Chat[]>([]);
   const [isChatLoading, setIsChatLoading] = useState(false);
-  const [chatError, setChatError] = useState(null);
-  const [publicChats, setPublicChats] = useState([]);
+  const [chatError, setChatError] = useState<errorType | null>(null);
+  const [publicChats, setPublicChats] = useState<User[]>([]);
   const [currentChat, setCurrentChat] = useState<Chat | null>(null);
   const [messages, setMessages] = useState<MessageType[]>([]);
   const [isMessagesLoading, setMessagesLoading] = useState(false);
@@ -70,7 +71,7 @@ export const ChatContextProvider = ({ children, user }: {
   useEffect(() => {
     const persistedUser = localStorage.getItem('user');
     if (persistedUser) {
-      user = JSON.parse(persistedUser);
+      setUser(JSON.parse(persistedUser));
     }
   }, []);
 

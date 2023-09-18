@@ -1,6 +1,6 @@
 'use client'
 import { AuthContext, User, AuthContextType } from '@/context/authContext';
-import React, { useState, useEffect, useContext, SetStateAction } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import ErrorModal from '@/components/ErrorModal';
 import { GetUsername, GetPassword } from './authUtils';
 import styles from './auth.module.css';
@@ -24,7 +24,7 @@ export function Register(): React.FunctionComponentElement<HTMLBodyElement> {
   }
 
    const handleCloseError = () => {
-    setRegisterError(null as any);
+    setRegisterError(null);
   };
 
   useEffect(() => {
@@ -32,23 +32,26 @@ export function Register(): React.FunctionComponentElement<HTMLBodyElement> {
 
   return (
     <div>
-      {!isValid ? <GetUsername
-        userInfo={userInfo}
-        setUsername={updateUserInfo}
-        setIsValid={setIsValid}
-        handleSubmit={handleNext}
-        isRegister={true}
-        /> : <GetPassword
+      {!isValid ? (
+        <GetUsername
+          userInfo={userInfo}
+          setUsername={updateUserInfo}
+          setIsValid={handleNext}
+          isRegister={true}
+        />
+      ) : (
+        <GetPassword
+          isRegister={true}
           userInfo={userInfo}
           setPassword={updateUserInfo}
-          registerUser={registerUser}
+          handleUser={registerUser}
           isLoading={isLoading}
         />
-      }
+      )}
 
       {
-        registerError && registerError?.error && 
-        <ErrorModal onClose={handleCloseError} errorMessage={registerError?.message} />
+        registerError && registerError.error && 
+        <ErrorModal onClose={handleCloseError} errorMessage={registerError.message} />
       }
     </div>
   )
