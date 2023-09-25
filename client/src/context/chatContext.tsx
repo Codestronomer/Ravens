@@ -1,48 +1,17 @@
 'use client'
-import React, { createContext, useCallback, useState, useEffect, useRef } from 'react';
-import { useChat, axiosPost, baseUrl, axiosGet } from '@/services/backend';
+import React, { createContext, useCallback, useState, useEffect } from 'react';
+import { io, Socket } from 'socket.io-client';
 import { User } from './authContext';
+import { axiosPost, baseUrl, axiosGet } from '@/services/backend';
+import {
+  Chat,
+  errorType,
+  MessageType,
+  ChatContextType,
+  ClientToServerEvents,
+  ServerToClientEvents,
+} from '.';
 
-export interface Chat {
-  id: string;
-  members: User[];
-  createdAt: string;
-  updatedAt: string;
-  __v: number;
-}
-
-export interface errorType {
-  error: boolean
-  MessageType: string
-}
-
-export interface MessageType {
-    senderId: string
-    text: string
-    id: string,
-    createdAt: string
-    updatedAt: string
-    __v: number
-}
-
-export interface ChatContextType {
-  userChats: any
-  currentChat: Chat
-  chatError: errorType | null
-  isChatLoading: boolean
-  messages: MessageType[]
-  publicChats: Array<User>
-  messagesError: errorType
-  isMessagesLoading: boolean
-  updateCurrentChat: (chat: Chat) => void;
-  sendMessage: (
-    message: string,
-    sender: User,
-    currentChatId: string,
-    setMessage: (message: string) => void,
-  ) => void;
-  createChat: (firstId: string, secondId: string) => void;
-}
 
 // Create a context for chat-related data
 export const ChatContext = createContext({});
@@ -51,17 +20,46 @@ export const ChatContextProvider = ({ children }: {
   children: React.ReactNode, user: User | null
 }) => {
   // State for user chats, chat loading status, chat errors, and public chats
+
+  // user state
   const [user, setUser] = useState<User | null>(null);
+
+  // chat states
   const [userChats, setUserChats] = useState<Chat[]>([]);
   const [isChatLoading, setIsChatLoading] = useState(false);
-  const [chatError, setChatError] = useState<errorType | null>(null);
   const [publicChats, setPublicChats] = useState<User[]>([]);
   const [currentChat, setCurrentChat] = useState<Chat | null>(null);
+  const [chatError, setChatError] = useState<errorType | null>(null);
+
+  // messages states
   const [messages, setMessages] = useState<MessageType[]>([]);
   const [isMessagesLoading, setMessagesLoading] = useState(false);
   const [messagesError, setMessagesError] = useState(null);
   const [sendMessageError, setSendMessageError] = useState(null);
   const [newMessage, setNewMessage] = useState(null);
+
+  // web socket state
+  const [socket, setSocket] = useState<Socket | null>(null);
+  const [onlineUsers, setOnlineUsers] = useState([]);
+
+  console.log("online", onlineUsers);
+
+  useEffect(() => {
+    const newSocket: Socket<ServerToClientEvents, ClientToServerEvents> = io("http://localhost:4000");
+    setSocket(newSocket);
+
+    return () => {
+      newSocket.disconnect();
+    }
+  }, [user]);
+
+  useEffect(() => {
+    if (socket == null) return;
+    socket?.emit('addNewUser', user?.id);
+    socket.on('getOnlineUsers', (res) => {
+      setOnlineUsers(res);
+    })
+  }, [socket, user]);
 
   console.log("MessageType", messages);
   console.log("MessageType loading", isMessagesLoading);
@@ -190,6 +188,7 @@ export const ChatContextProvider = ({ children }: {
       userChats,
       chatError,
       createChat,
+      onlineUsers,
       publicChats,
       currentChat,
       sendMessage,

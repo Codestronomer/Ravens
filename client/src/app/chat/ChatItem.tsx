@@ -3,11 +3,11 @@ import Image from 'next/image';
 import React, { useContext } from 'react';
 import styles from './chat.module.css';
 import { User } from '@/context/authContext';
-import { Chat, ChatContext, ChatContextType } from '@/context/chatContext';
+import { Chat, ChatContextType } from '@/context';
+import { ChatContext } from '@/context/chatContext';
 import ProfileImage from '@/../public/John.jpg';
-import ProfileImage2 from '@/../public/teepee.jpg';
 
-const ChatItem = ({ chat, user }: { chat: Chat, user: User }) => {
+const ChatItem = ({ chat, user, isOnline }: { chat: Chat, user: User, isOnline: boolean }) => {
 
   const { currentChat } = useContext(ChatContext) as ChatContextType;
 
