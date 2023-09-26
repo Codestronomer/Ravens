@@ -10,12 +10,13 @@ io.on('connection', (socket) => {
 
   // listen for new connection
   socket.on('addNewUser', (userId) => {
-    !onlineUsers.some((user) => user.userId == userId) &&
-    onlineUsers.push({
-      userId,
-      socketId: socket.id
-    });
-
+    if (userId !== null) {
+      !onlineUsers.some((user) => user.userId == userId) &&
+      onlineUsers.push({
+        userId,
+        socketId: socket.id
+      });
+    }
     console.log("onlineUsers", onlineUsers);
 
     io.emit('getOnlineUsers', onlineUsers);
