@@ -35,7 +35,8 @@ export const ChatList = ({
               chat={chat}
               user={user}
               key={chat.id} 
-              isOnline={onlineUsers?.some((onlineUser) => onlineUser.userId == user.id)}/>
+              onlineUsers={onlineUsers}
+            />
           </div>
         )
       }

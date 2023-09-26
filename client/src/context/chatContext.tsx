@@ -55,7 +55,9 @@ export const ChatContextProvider = ({ children }: {
 
   useEffect(() => {
     if (socket == null) return;
-    socket?.emit('addNewUser', user?.id);
+    if (user) {
+      socket?.emit('addNewUser', user?.id);
+    }
     socket.on('getOnlineUsers', (res) => {
       setOnlineUsers(res);
     })
