@@ -8,7 +8,7 @@ let onlineUsers = [];
 io.on('connection', (socket) => {
   console.log("New connection", socket.id);
 
-  // listen for new connection
+  // listen for new connection and add new user to online users
   socket.on('addNewUser', (userId) => {
     if (userId !== null) {
       !onlineUsers.some((user) => user.userId == userId) &&
@@ -21,6 +21,13 @@ io.on('connection', (socket) => {
 
     io.emit('getOnlineUsers', onlineUsers);
   });
+
+  // remove user from online user when socket is disconnected
+  socket.on('disconnect', () => {
+    onlineUsers = onlineUsers.filter((user) => user.socketId !== socket.id);
+
+    io.emit("getOnlineUsers", onlineUsers);
+  })
 });
 
 // start websocket server on port 4000
