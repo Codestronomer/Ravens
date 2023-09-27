@@ -5,7 +5,6 @@ export interface Chat {
   updatedAt: string;
   __v: number;
 }
-
 export interface errorType {
   error: boolean
   MessageType: string
@@ -13,6 +12,7 @@ export interface errorType {
 
 export interface MessageType {
     senderId: string
+    chatId: string
     text: string
     id: string,
     createdAt: string

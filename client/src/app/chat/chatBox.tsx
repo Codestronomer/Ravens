@@ -4,8 +4,9 @@ import Image from 'next/image';
 import InputEmoji from 'react-input-emoji'
 import React, { useContext, useState }   from 'react';
 import styles from './chat.module.css';
+import { ChatContext } from '@/context/chatContext';
 import SendIcon from '../../../public/send-alt-svg.svg';
-import { ChatContext, ChatContextType } from '@/context/chatContext';
+import { ChatContextType, MessageType } from '@/context';
 import { AuthContext, AuthContextType, User } from '@/context/authContext';
 import ChatImage from '../../../public/undraw/undraw_new_message_re_fp03.svg';
 
@@ -21,16 +22,16 @@ const ChatBox = () => {
           <div className={styles.messageNav}>
             {/* Display the names of all recipients */}
             <h3>
-              {recipientUsers.map((recipientUser) => recipientUser.username).join(", ")}
+              {recipientUsers.map((recipientUser: User) => recipientUser.username).join(", ")}
             </h3>
           </div>
           <div className={styles.messages}>
             {messages &&
-              messages.map((message) => {
+              messages.map((message: MessageType, index: number) => {
                 const isOwnMessage = message.senderId === user.id;
                 return (
                   <div
-                    key={message.id}
+                    key={index}
                     className={
                       isOwnMessage ? styles.messageRight : styles.messageLeft
                     }

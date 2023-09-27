@@ -7,7 +7,6 @@ import {
   Chat,
   errorType,
   MessageType,
-  ChatContextType,
   ClientToServerEvents,
   ServerToClientEvents,
 } from '.';
@@ -36,7 +35,15 @@ export const ChatContextProvider = ({ children }: {
   const [isMessagesLoading, setMessagesLoading] = useState(false);
   const [messagesError, setMessagesError] = useState(null);
   const [sendMessageError, setSendMessageError] = useState(null);
-  const [newMessage, setNewMessage] = useState(null);
+  const [newMessage, setNewMessage] = useState<MessageType>({
+    id: '',
+    text: '',
+    chatId: '',
+    senderId: '',
+    createdAt: '',
+    updatedAt: '',
+    __v: 0,
+  });
 
   // web socket state
   const [socket, setSocket] = useState<Socket | null>(null);
@@ -44,6 +51,7 @@ export const ChatContextProvider = ({ children }: {
 
   console.log("online", onlineUsers);
 
+  // create connection to web socket
   useEffect(() => {
     const newSocket: Socket<ServerToClientEvents, ClientToServerEvents> = io("http://localhost:4000");
     setSocket(newSocket);
@@ -53,17 +61,50 @@ export const ChatContextProvider = ({ children }: {
     }
   }, [user]);
 
+  // add user to the socket
   useEffect(() => {
-    if (socket == null) return;
-    if (user) {
-      socket?.emit('addNewUser', user?.id);
-    }
+    if (!user || !socket) return;
+    
+    socket?.emit('addNewUser', user?.id);
+
     socket.on('getOnlineUsers', (res) => {
       setOnlineUsers(res);
-    })
+    });
+
+    return () => {
+      socket.off('getOnlineUsers');
+    };
   }, [socket, user]);
 
-  console.log("MessageType", messages);
+  // send Message
+  useEffect(() => {
+    if (socket == null) return;
+
+    // Find the recipient user object
+    const recipientUser = currentChat?.members?.find((member) => member.id !== user?.id);
+
+    const recipientId = recipientUser?._id;
+
+    socket.emit('sendMessage', {...newMessage, recipientId});
+  }, [newMessage, user, currentChat]);
+
+  // recieve message
+  useEffect(() => {
+    if (socket == null) return;
+
+    socket.on('getMessage', (response: MessageType) => {
+      console.log("M response", response);
+      if (currentChat?.id != response.chatId) return;
+
+      setMessages((prev) => [...prev, response]);
+    });
+
+    return () => {
+      socket.off('getMessage');
+    };
+
+  }, [currentChat, socket]);
+
   console.log("MessageType loading", isMessagesLoading);
   console.log("MessageType error", messagesError);
 
