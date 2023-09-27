@@ -80,12 +80,18 @@ export const ChatContextProvider = ({ children }: {
   useEffect(() => {
     if (socket == null) return;
 
-    // Find the recipient user object
-    const recipientUser = currentChat?.members?.find((member) => member.id !== user?.id);
+    // Ensure that both the user and currentChat are available
+    if (user && currentChat) {
+      console.log("user", user);
+      // Filter out the user's own member object from currentChat.members
+      const recipientUser = currentChat.members.find((member) => member._id !== user.id);
 
-    const recipientId = recipientUser?._id;
+      console.log("recipient", recipientUser);
 
-    socket.emit('sendMessage', {...newMessage, recipientId});
+      if (recipientUser) {
+        socket.emit('sendMessage', { ...newMessage, recipientId: recipientUser._id });
+      }
+    };
   }, [newMessage, user, currentChat]);
 
   // recieve message
