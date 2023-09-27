@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import styles from './chat.module.css';
 import ChatBox from './chatBox';
-import { ChatContext, ChatContextType } from '@/context/chatContext';
 import Nav from '@/components/nav';
 import ChatView from './chatView';
 

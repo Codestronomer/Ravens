@@ -24,6 +24,7 @@
   padding: 20px;
   border-radius: 8px;
   background-color: rgb(46, 44, 44);
+  max-height: 500px;
 }
 
 .view {
@@ -167,15 +168,15 @@
   flex-direction: column;
   justify-content: space-evenly;
   gap: 5px;
+  overflow-y: scroll;
 }
 
 .messageNav {
-  background-color: rgb(68, 67, 67);
+  border-bottom: 2px solid #5E4291;
   padding: 10px;
   height: 60px;
   display: flex;
   flex-direction: row;
-  border-radius: 8px;
   justify-content: space-around;
 }
 

@@ -5,6 +5,7 @@ import ChatItem from './ChatItem';
 import styles from './chat.module.css'
 import { User } from '@/context/authContext';
 import { socketUser, errorType, Chat } from '@/context';
+import LoadingSpinner from '@/components/loadingSpinner';
 
 interface ChatListProps {
   user: User
@@ -27,7 +28,7 @@ export const ChatList = ({
   console.log("chatError", chatError);
   return (
     <>
-      { isChatLoading && <div> ....Loading chats</div>}
+      { isChatLoading && <div><LoadingSpinner /></div>}
       { userChats && userChats.map((chat: Chat) => {
         return (
           <div key={chat.id} onClick={() => updateCurrentChat(chat)}>
