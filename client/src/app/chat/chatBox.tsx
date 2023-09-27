@@ -2,19 +2,32 @@
 import moment from 'moment';
 import Image from 'next/image';
 import InputEmoji from 'react-input-emoji'
-import React, { useContext, useState }   from 'react';
+import React, { useContext, useState, useEffect, createRef } from 'react';
 import styles from './chat.module.css';
 import { ChatContext } from '@/context/chatContext';
 import SendIcon from '../../../public/send-alt-svg.svg';
 import { ChatContextType, MessageType } from '@/context';
 import { AuthContext, AuthContextType, User } from '@/context/authContext';
 import ChatImage from '../../../public/undraw/undraw_new_message_re_fp03.svg';
+import LoadingSpinner from '@/components/loadingSpinner';
 
 const ChatBox = () => {
+  const scroll = createRef<HTMLDivElement>();
   const [message, setMessage] = useState("");
   const { user } = useContext(AuthContext) as AuthContextType;
-  const { messages, isMessagesLoading, messagesError, currentChat, sendMessage } = useContext(ChatContext) as ChatContextType;
+  const {
+    messages,
+    currentChat,
+    sendMessage,
+    messagesError,
+    isMessagesLoading,
+  } = useContext(ChatContext) as ChatContextType;
   const recipientUsers = currentChat?.members?.filter((member: User) => member.id !== user.id);
+
+  useEffect(() => {
+    scroll.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [messages, scroll]);
+
   return (
     <>
       {recipientUsers && recipientUsers.length > 0 ? (
@@ -25,24 +38,34 @@ const ChatBox = () => {
               {recipientUsers.map((recipientUser: User) => recipientUser.username).join(", ")}
             </h3>
           </div>
-          <div className={styles.messages}>
-            {messages &&
-              messages.map((message: MessageType, index: number) => {
-                const isOwnMessage = message.senderId === user.id;
-                return (
-                  <div
-                    key={index}
-                    className={
-                      isOwnMessage ? styles.messageRight : styles.messageLeft
-                    }
-                  >
-                    <p>{message?.text}</p>
-                    <span className={styles.messageDate}>
-                      {moment(message?.createdAt).calendar()}
-                    </span>
-                  </div>
-                );
-              })}
+          <div className={styles.messagesOverlay}>
+            {isMessagesLoading && (
+              <div className={styles.loadingSpinnerOverlay}>
+                <LoadingSpinner />
+              </div>
+            )}
+            <div className={styles.messagesContainer}>
+              <div className={styles.messages}>
+                {messages &&
+                  messages.map((message: MessageType, index: number) => {
+                    const isOwnMessage = message.senderId === user.id;
+                    return (
+                      <div
+                        key={index}
+                        className={
+                          isOwnMessage ? styles.messageRight : styles.messageLeft
+                        }
+                        ref={scroll}
+                      >
+                        <p>{message?.text}</p>
+                        <span className={styles.messageDate}>
+                          {moment(message?.createdAt).calendar()}
+                        </span>
+                      </div>
+                    );
+                  })}
+              </div>
+            </div>
           </div>
           <form className={styles.messageForm}>
             {/* className={styles.textInput} */}

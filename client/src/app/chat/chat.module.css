@@ -82,6 +82,23 @@
   flex-direction: column;
 }
 
+/* Scrollbar Track */
+.chatList::-webkit-scrollbar {
+  width: 6px; /* Width of the scrollbar track */
+}
+
+/* Scrollbar Handle (Thumb) */
+.chatList::-webkit-scrollbar-thumb {
+  background: #888; /* Color of the scrollbar thumb */
+  border-radius: 3px; /* Rounded corners of the scrollbar thumb */
+}
+
+/* Scrollbar Handle (Thumb) on Hover */
+.chatList::-webkit-scrollbar-thumb:hover {
+  background: #555; /* Color of the scrollbar thumb on hover */
+}
+
+
 .chat {
   gap: 10px;
   width: 100%;
@@ -163,12 +180,51 @@
   background-color: greenyellow;
 }
 
+/* Loading spinner overlay styles */
+.messagesOverlay {
+  position: relative;
+}
+
+.loadingSpinnerOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2; /* Ensure it's on top of messages */
+}
+
+.messagesContainer {
+  max-height: 370px; /* Adjust to your preferred maximum height */
+  overflow-y: scroll;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+/* Scrollbar Track */
+.messagesContainer::-webkit-scrollbar {
+  width: 6px; /* Width of the scrollbar track */
+}
+
+/* Scrollbar Handle (Thumb) */
+.messagesContainer::-webkit-scrollbar-thumb {
+  background: #888; /* Color of the scrollbar thumb */
+  border-radius: 3px; /* Rounded corners of the scrollbar thumb */
+}
+
+/* Scrollbar Handle (Thumb) on Hover */
+.messagesContainer::-webkit-scrollbar-thumb:hover {
+  background: #555; /* Color of the scrollbar thumb on hover */
+}
+
 .messages {
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
   gap: 5px;
-  overflow-y: scroll;
 }
 
 .messageNav {
@@ -189,21 +245,21 @@
 }
 
 .messageLeft {
-  background-color: #5E4291;
   height: auto;
-  width: fit-content;
   padding: 10px;
+  width: fit-content;
   border-radius: 5px;
   margin-right: 300px;
+  background-color: gray;
 }
 
 .messageRight {
-  background-color: gray;
   height: auto;
   padding: 10px;
+  margin-left: 80%;
   width: fit-content;
   border-radius: 5px;
-  margin-left: 80%;
+  background-color: #5E4291;
 }
 
 .messageDate {
