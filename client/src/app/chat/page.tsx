@@ -3,6 +3,7 @@ import styles from './chat.module.css';
 import ChatBox from './chatBox';
 import Nav from '@/components/nav';
 import ChatView from './chatView';
+import Notification from './notification';
 
 const Chat = ({ children } : { children: React.ReactNode }) => {
 
@@ -13,6 +14,7 @@ const Chat = ({ children } : { children: React.ReactNode }) => {
       <div className={styles.chatLayout}>
         <div className={styles.chatLeft}>
           <h1>Chats</h1>
+          <Notification />
           <div className={styles.chatList}>
             <ChatView />
           </div>

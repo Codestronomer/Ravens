@@ -10,6 +10,12 @@ export interface errorType {
   MessageType: string
 }
 
+export interface NotificationType {
+  senderId: string
+  date: string
+  isRead: boolean
+}
+
 export interface MessageType {
     senderId: string
     chatId: string
@@ -30,13 +36,14 @@ export interface ChatContextType {
   onlineUsers: socketUser[]
   isMessagesLoading: boolean
   chatError: errorType | null
-  updateCurrentChat: (chat: Chat) => void;
+  notifications: NotificationType[];
   sendMessage: (
     message: string,
     sender: User,
     currentChatId: string,
     setMessage: (message: string) => void,
   ) => void;
+  updateCurrentChat: (chat: Chat) => void;
   createChat: (firstId: string, secondId: string) => void;
 }
 

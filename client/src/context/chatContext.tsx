@@ -7,6 +7,7 @@ import {
   Chat,
   errorType,
   MessageType,
+  NotificationType,
   ClientToServerEvents,
   ServerToClientEvents,
 } from '.';
@@ -31,10 +32,10 @@ export const ChatContextProvider = ({ children }: {
   const [chatError, setChatError] = useState<errorType | null>(null);
 
   // messages states
-  const [messages, setMessages] = useState<MessageType[]>([]);
-  const [isMessagesLoading, setMessagesLoading] = useState(false);
   const [messagesError, setMessagesError] = useState(null);
+  const [messages, setMessages] = useState<MessageType[]>([]);
   const [sendMessageError, setSendMessageError] = useState(null);
+  const [isMessagesLoading, setMessagesLoading] = useState(false);
   const [newMessage, setNewMessage] = useState<MessageType>({
     id: '',
     text: '',
@@ -45,9 +46,10 @@ export const ChatContextProvider = ({ children }: {
     __v: 0,
   });
 
-  // web socket state
-  const [socket, setSocket] = useState<Socket | null>(null);
+  // web socket states
   const [onlineUsers, setOnlineUsers] = useState([]);
+  const [socket, setSocket] = useState<Socket | null>(null);
+  const [notifications, setNotifications] = useState<NotificationType[]>([]);
 
   console.log("online", onlineUsers);
 
@@ -94,24 +96,33 @@ export const ChatContextProvider = ({ children }: {
     };
   }, [newMessage, user, currentChat]);
 
-  // recieve message
+  // recieve message and notification
   useEffect(() => {
     if (socket == null) return;
 
     socket.on('getMessage', (response: MessageType) => {
-      console.log("M response", response);
       if (currentChat?.id != response.chatId) return;
 
       setMessages((prev) => [...prev, response]);
     });
 
+    socket.on('getNotification', (response) => {
+      const isChatOpen = currentChat?.members.some((member) => response.senderId == member._id);
+
+      if (isChatOpen) {
+        setNotifications((prev) => [{...response, isRead: true}, ...prev]);
+      } else {
+        setNotifications((prev) => [response, ...prev]);
+      }
+    })
+
     return () => {
       socket.off('getMessage');
+      socket.off('getNotification');
     };
 
   }, [currentChat, socket]);
 
-  console.log("MessageType loading", isMessagesLoading);
   console.log("MessageType error", messagesError);
 
   // Get persisted user data from local storage when the component mounts
@@ -243,6 +254,7 @@ export const ChatContextProvider = ({ children }: {
       sendMessage,
       messagesError,
       isChatLoading,
+      notifications,
       updateCurrentChat,
       isMessagesLoading,
     }}>
