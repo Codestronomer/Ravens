@@ -51,6 +51,8 @@ export const ChatContextProvider = ({ children }: {
   const [socket, setSocket] = useState<Socket | null>(null);
   const [notifications, setNotifications] = useState<NotificationType[]>([]);
 
+  console.log("notifications", notifications);
+
   console.log("online", onlineUsers);
 
   // create connection to web socket

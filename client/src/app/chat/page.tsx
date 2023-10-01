@@ -13,8 +13,10 @@ const Chat = ({ children } : { children: React.ReactNode }) => {
     <div className={styles.chats}>
       <div className={styles.chatLayout}>
         <div className={styles.chatLeft}>
-          <h1>Chats</h1>
-          <Notification />
+          <div className={styles.chatLeftHeader}>
+            <h1>Ravens</h1>
+            <Notification />
+          </div>
           <div className={styles.chatList}>
             <ChatView />
           </div>

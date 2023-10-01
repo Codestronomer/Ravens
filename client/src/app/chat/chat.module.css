@@ -18,6 +18,11 @@
   background-color: rgb(46, 44, 44);
 }
 
+.chatLeftHeader {
+  display: flex;
+  justify-content: space-between;
+}
+
 .chatRight {
   width: 60%;
   margin: 40px;
@@ -139,13 +144,13 @@
 }
 
 .chatNotification {
-  position: relative;
-  background-color: #5E4291;
-  border-radius: 50%;
   width: 50%;
-  padding-bottom: 50%;
   text-align: center;
+  position: relative;
+  border-radius: 50%;
+  padding-bottom: 50%;
   align-self: flex-end;
+  background-color: #5E4291;
 }
 
 .chatInfoChild span {
@@ -303,4 +308,101 @@
 }
 .chatBoxImg {
   width: 50%;
+}
+
+.notificationsIcon {
+  position: relative;
+  height: fit-content;
+  width: 40px;
+}
+
+.notificationCount {
+  top: 0;
+  right: 0;
+  width: 50%;
+  padding: 3px;
+  font-size: 9px;
+  color: black;
+  font-weight: 600;
+  border-radius: 50%;
+  text-align: center;
+  position: absolute;
+  height: fit-content;
+  background-color: white;
+}
+
+.notificationsBox {
+  z-index: 2;
+  width: 230px;
+  padding: 10px;
+  position: fixed;
+  overflow-y: auto;
+  max-height: 150px;
+  border-radius: 5px;
+  background-color: #5E4291;
+}
+
+/* Scrollbar Track */
+.notificationsBox::-webkit-scrollbar {
+  width: 6px; /* Width of the scrollbar track */
+}
+
+/* Scrollbar Handle (Thumb) */
+.notificationsBox::-webkit-scrollbar-thumb {
+  background: #888; /* Color of the scrollbar thumb */
+  border-radius: 3px; /* Rounded corners of the scrollbar thumb */
+}
+
+/* Scrollbar Handle (Thumb) on Hover */
+.notificationsBox::-webkit-scrollbar-thumb:hover {
+  background: #555; /* Color of the scrollbar thumb on hover */
+}
+
+.notificationHeader {
+  z-index: 4;
+  display: flex;
+  width: 200px;
+  position: fixed;
+  flex-direction: row;
+  background-color: #5E4291;
+  justify-content: space-between;
+  box-shadow: 0px 5px 0px 80% black;
+}
+
+.notificationHeader h3 {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.notificationsBox span {
+  font-size: 10px;
+}
+
+.notificationSection {
+  margin-top: 20px;
+}
+
+.notification {
+  opacity: 80%;
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 5px;
+  margin: 5px;
+  border-bottom: 1px solid white;
+}
+
+.unreadNotification {
+  margin: 5px;
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 5px;
+  border-bottom: 1px solid white;
+}
+
+.notificationMessage {
+  font-size: 12px;
+}
+
+.notificationDate {
+  font-size: 10px;
 }
