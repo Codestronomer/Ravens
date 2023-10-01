@@ -1,13 +1,13 @@
 'use client'
-import React, { useState, useContext } from 'react';
-import Image from 'next/image';
-import styles from './chat.module.css';
-import NotificationUnread from '../../../public/notificationUnread.svg';
-import { ChatContext } from '@/context/chatContext';
-import { ChatContextType } from '@/context';
-import { AuthContext, AuthContextType } from '@/context/authContext';
-import { filterUnreadNotifications } from '@/services/unreadNotification';
 import moment from 'moment';
+import Image from 'next/image';
+import React, { useState, useContext } from 'react';
+import { ChatContextType } from '@/context';
+import { ChatContext } from '@/context/chatContext';
+import styles from './notification.module.css';
+import { AuthContext, AuthContextType } from '@/context/authContext';
+import NotificationUnread from '../../../public/notificationUnread.svg';
+import { filterUnreadNotifications } from '@/services/unreadNotification';
 
 function Notification() {
   const [isOpen, setIsOpen] = useState(false);
