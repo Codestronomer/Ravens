@@ -109,15 +109,26 @@ export const ChatContextProvider = ({ children }: {
     });
 
     socket.on('getNotification', (response) => {
+      // check if the new notification is from an opened Chat.
       const isChatOpen = currentChat?.members.some((member) => response.senderId === member._id);
 
-      if (response) {
+      if (response && response.senderId) {
         if (isChatOpen) {
-          setNotifications((prev) => [{...response, isRead: true}, ...prev]);
-          console.log("setN1", notifications);
+          setNotifications((prev: NotificationType[]) => {
+            // Mark all previous notifications of the currentChat as read
+            const updatedPrevNotification = prev.map((notification: NotificationType) => { 
+              if (currentChat?.members.some((member) => notification.senderId === member._id)) {
+                return {...notification, isRead: true };
+              }
+              return notification;
+            });
+
+            // Add the new notification with isRead set to True
+            return [{...response, isRead: true}, ...updatedPrevNotification]
+          });
         } else {
+          // for a closed chat, add the new notification
           setNotifications((prev) => [response, ...prev]);
-          console.log("setN2", notifications);
         }
       }
     })

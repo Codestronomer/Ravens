@@ -3,7 +3,7 @@ import styles from './chat.module.css';
 import ChatBox from './chatBox';
 import Nav from '@/components/nav';
 import ChatView from './chatView';
-import Notification from './notification';
+import Notification from '../../components/notification';
 
 const Chat = ({ children } : { children: React.ReactNode }) => {
 

@@ -16,7 +16,7 @@ function Notification() {
 
   const unreadNotifications = filterUnreadNotifications(notifications);
   const modifiedNotifications = notifications.map((notification) => {
-    const sender = publicChats.find((user) => user._id === notification.senderId);
+    const sender = publicChats.find((user) => user?._id === notification.senderId);
 
     return {
       ...notification,
