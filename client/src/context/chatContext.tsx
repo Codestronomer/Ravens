@@ -258,6 +258,27 @@ export const ChatContextProvider = ({ children }: {
 
   }, []);
 
+  const markAllNotificationsAsRead = useCallback((notifications: NotificationType[]) => {
+    const modifiedNotifications = notifications.map((notification: NotificationType) => {
+      return { ...notification, isRead: true }
+    });
+
+    setNotifications(modifiedNotifications);
+  }, []);
+
+  const markNotificationAsRead = useCallback((notification: NotificationType, user: User, userChats: Chat[]) => {
+    // find the chat for the notification
+    const desiredChat = userChats.find((chat: Chat) => {
+      const chatMembers = [notification.senderId, user.id];
+      const isDesiredChat = chat?.members.every((member) => {
+        return chatMembers.includes(member);
+      })
+
+      return isDesiredChat;
+    })
+    if (desiredChat) setCurrentChat(desiredChat);
+  }, []);
+
   // Provide chat related data through the context
   return (
     <ChatContext.Provider value = {{
@@ -274,6 +295,8 @@ export const ChatContextProvider = ({ children }: {
       notifications,
       updateCurrentChat,
       isMessagesLoading,
+      markNotificationAsRead,
+      markAllNotificationsAsRead,
     }}>
       {children}
     </ChatContext.Provider>

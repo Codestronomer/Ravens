@@ -45,6 +45,8 @@ export interface ChatContextType {
   ) => void;
   updateCurrentChat: (chat: Chat) => void;
   createChat: (firstId: string, secondId: string) => void;
+  markAllNotificationsAsRead: (Notifications: NotificationType[]) => void;
+  markNotificationAsRead: (notification: NotificationType, user: User, userChats: Chat[]) => void;
 }
 
 interface socketUser {

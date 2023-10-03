@@ -12,7 +12,7 @@ import { filterUnreadNotifications } from '@/services/unreadNotification';
 function Notification() {
   const [isOpen, setIsOpen] = useState(false);
   const { user } = useContext(AuthContext) as AuthContextType;
-  const { notifications, userChats, publicChats } = useContext(ChatContext) as ChatContextType;
+  const { notifications, userChats, publicChats, markAllNotificationsAsRead } = useContext(ChatContext) as ChatContextType;
 
   const unreadNotifications = filterUnreadNotifications(notifications);
   const modifiedNotifications = notifications.map((notification) => {
@@ -40,7 +40,7 @@ function Notification() {
         <div className={styles.notificationsBox}>
           <div className={styles.notificationHeader}>
             <h3>Notifications</h3>
-            <div className={styles.markRead}>
+            <div className={styles.markRead} onClick={() => markAllNotificationsAsRead(notifications)}>
               <span>
                 Mark all as read
               </span>
