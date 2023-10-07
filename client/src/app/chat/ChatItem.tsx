@@ -15,7 +15,7 @@ const ChatItem = ({ chat, user, onlineUsers }: { chat: Chat, user: User, onlineU
   ?.filter((member: User) => member.username !== user?.username)
   .find(Boolean); // Find the first non-null member
 
-  const { currentChat, notifications } = useContext(ChatContext) as ChatContextType;
+  const { currentChat, notifications, markUserNotificationsAsRead } = useContext(ChatContext) as ChatContextType;
 
   // get unread notifications
   const unreadNotifications = filterUnreadNotifications(notifications);
@@ -26,7 +26,14 @@ const ChatItem = ({ chat, user, onlineUsers }: { chat: Chat, user: User, onlineU
   });
 
   return (
-    <div className={currentChat?.id == chat?.id ? styles.chatActive : styles.chat}>
+    <div
+      className={currentChat?.id == chat?.id ? styles.chatActive : styles.chat}
+      onClick={() => {
+        if (unreadNotifications?.length !== 0) {
+          markUserNotificationsAsRead(notifications, chatUserNotifications);
+        }
+      }}
+    >
       <div className={styles.chatImg}>
         <Image
           src={ProfileImage}

@@ -294,6 +294,28 @@ export const ChatContextProvider = ({ children }: {
     }
   }, []);
 
+  const markUserNotificationsAsRead = useCallback(
+    (notifications: NotificationType[], userNotifications: NotificationType[]) => {
+      
+      const modifiedNotifications = notifications.map((notification: NotificationType) => {
+
+        // Find the corresponding userNotification
+        const userNotification = userNotifications.find(
+          (userNotifn) => (userNotifn.senderId == notification.senderId)
+        );
+
+        // If userNotification is found, mark it as read, otherwise use the original notification
+        const modifiedNotification = userNotification
+          ? {...userNotification, isRead: true }
+          : notification;
+        
+        return modifiedNotification;
+      });
+
+      // update notification state
+      setNotifications(modifiedNotifications);
+  }, []);
+
   // Provide chat related data through the context
   return (
     <ChatContext.Provider value = {{
@@ -312,6 +334,7 @@ export const ChatContextProvider = ({ children }: {
       isMessagesLoading,
       markNotificationAsRead,
       markAllNotificationsAsRead,
+      markUserNotificationsAsRead,
     }}>
       {children}
     </ChatContext.Provider>

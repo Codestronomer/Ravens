@@ -37,6 +37,12 @@ export interface ChatContextType {
   isMessagesLoading: boolean
   chatError: errorType | null
   notifications: NotificationType[];
+  markNotificationAsRead: (
+    user: User,
+    userChats: Chat[],
+    notification: NotificationType,
+    notifications: NotificationType[]
+  ) => void;
   sendMessage: (
     message: string,
     sender: User,
@@ -45,13 +51,8 @@ export interface ChatContextType {
   ) => void;
   updateCurrentChat: (chat: Chat) => void;
   createChat: (firstId: string, secondId: string) => void;
-  markAllNotificationsAsRead: (Notifications: NotificationType[]) => void;
-  markNotificationAsRead: (
-    user: User,
-    userChats: Chat[],
-    notification: NotificationType,
-    notifications: NotificationType[]
-  ) => void;
+  markAllNotificationsAsRead: (notifications: NotificationType[]) => void;
+  markUserNotificationsAsRead: (notifications: NotificationType[], user: User) => void;
 }
 
 interface socketUser {
