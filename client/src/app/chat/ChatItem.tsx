@@ -3,18 +3,28 @@ import Image from 'next/image';
 import React, { useContext } from 'react';
 import styles from './chat.module.css';
 import { User } from '@/context/authContext';
-import { Chat, ChatContextType, socketUser } from '@/context';
+import { Chat, ChatContextType, NotificationType, socketUser } from '@/context';
 import { ChatContext } from '@/context/chatContext';
 import ProfileImage from '@/../public/John.jpg';
+import { filterUnreadNotifications } from '@/services/unreadNotification';
 
 const ChatItem = ({ chat, user, onlineUsers }: { chat: Chat, user: User, onlineUsers: socketUser[] }) => {
 
-  const { currentChat } = useContext(ChatContext) as ChatContextType;
-
- const recipientUser = chat.members
+  // retrieve chat recipient
+  const recipientUser = chat.members
   ?.filter((member: User) => member.username !== user?.username)
   .find(Boolean); // Find the first non-null member
-  
+
+  const { currentChat, notifications } = useContext(ChatContext) as ChatContextType;
+
+  // get unread notifications
+  const unreadNotifications = filterUnreadNotifications(notifications);
+
+  // get unread notifications for the chat recipient
+  const chatUserNotifications = unreadNotifications?.filter((notification: NotificationType) => {
+    return notification?.senderId == recipientUser?._id
+  });
+
   return (
     <div className={currentChat?.id == chat?.id ? styles.chatActive : styles.chat}>
       <div className={styles.chatImg}>
@@ -33,9 +43,9 @@ const ChatItem = ({ chat, user, onlineUsers }: { chat: Chat, user: User, onlineU
         </div>
         <div className={styles.chatInfoChild}>
           <p>12/2/2022</p>
-          {currentChat?.id !== chat?.id && 
+          {currentChat?.id !== chat?.id && chatUserNotifications.length > 0 &&
             <div className={styles.chatNotification}>
-              <span>2</span>
+              <span>{chatUserNotifications?.length}</span>
             </div>
           }
         </div>

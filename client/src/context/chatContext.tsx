@@ -266,17 +266,32 @@ export const ChatContextProvider = ({ children }: {
     setNotifications(modifiedNotifications);
   }, []);
 
-  const markNotificationAsRead = useCallback((notification: NotificationType, user: User, userChats: Chat[]) => {
+  const markNotificationAsRead = useCallback((
+    user: User,
+    userChats: Chat[],
+    notification: NotificationType,
+    notifications: NotificationType[],
+  ) => {
     // find the chat for the notification
-    const desiredChat = userChats.find((chat: Chat) => {
+    const desiredChat = userChats?.find((chat) => {
       const chatMembers = [notification.senderId, user.id];
-      const isDesiredChat = chat?.members.every((member) => {
-        return chatMembers.includes(member);
-      })
+      const isMatch = chat?.members.every((member) => chatMembers.includes(member?._id));
+      return isMatch;
+    });
 
-      return isDesiredChat;
-    })
-    if (desiredChat) setCurrentChat(desiredChat);
+    // if desired Chat is found, mark notification as read and update the conversation window.
+    if (desiredChat) {
+      const mNotifications = notifications.map((el) => {
+        if (notification.senderId == el.senderId) {
+          return {...notification, isRead: true};
+        } else {
+          return el
+        }
+      });
+
+      updateCurrentChat(desiredChat);
+      setNotifications(mNotifications);
+    }
   }, []);
 
   // Provide chat related data through the context

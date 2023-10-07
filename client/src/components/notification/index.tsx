@@ -12,7 +12,13 @@ import { filterUnreadNotifications } from '@/services/unreadNotification';
 function Notification() {
   const [isOpen, setIsOpen] = useState(false);
   const { user } = useContext(AuthContext) as AuthContextType;
-  const { notifications, userChats, publicChats, markAllNotificationsAsRead } = useContext(ChatContext) as ChatContextType;
+  const {
+    userChats,
+    publicChats,
+    notifications,
+    markNotificationAsRead,
+    markAllNotificationsAsRead,
+  } = useContext(ChatContext) as ChatContextType;
 
   const unreadNotifications = filterUnreadNotifications(notifications);
   const modifiedNotifications = notifications.map((notification) => {
@@ -49,10 +55,23 @@ function Notification() {
           <div className={styles.notificationSection}>
             {modifiedNotifications?.length === 0 ? <span>No notifications yet...</span> : null}
             {modifiedNotifications && modifiedNotifications.map((notification, index) => {
-              return <div key={index} className={notification.isRead ? styles.notification : styles.unreadNotification}>
-                <div className={styles.notificationMessage}>{`${notification.senderName} sent you a message...`}</div>
-                <div className={styles.notificationDate}>{moment(notification.date).calendar()}</div>
-              </div>
+              return (
+                <div
+                  key={index}
+                  onClick={() => {
+                    markNotificationAsRead(
+                      user, 
+                      userChats,
+                      notification,
+                      notifications
+                    )
+                    setIsOpen(false);}}
+                  className={notification.isRead ? styles.notification : styles.unreadNotification}
+                >
+                  <div className={styles.notificationMessage}>{`${notification.senderName} sent you a message...`}</div>
+                  <div className={styles.notificationDate}>{moment(notification.date).calendar()}</div>
+                </div>
+              )
             })}
           </div>
         </div>

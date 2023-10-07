@@ -75,6 +75,7 @@
   margin: 5px;
   opacity: 80%;
   display: flex;
+  cursor: pointer;
   padding-bottom: 5px;
   flex-direction: column;
   border-bottom: 1px solid white;
@@ -83,6 +84,7 @@
 .unreadNotification {
   margin: 5px;
   display: flex;
+  cursor: pointer;
   padding-bottom: 5px;
   flex-direction: column;
   border-bottom: 1px solid white;

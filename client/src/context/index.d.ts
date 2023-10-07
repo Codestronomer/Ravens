@@ -27,7 +27,7 @@ export interface MessageType {
 }
 
 export interface ChatContextType {
-  userChats: any
+  userChats: Chat[]
   currentChat: Chat
   isChatLoading: boolean
   messages: MessageType[]
@@ -46,7 +46,12 @@ export interface ChatContextType {
   updateCurrentChat: (chat: Chat) => void;
   createChat: (firstId: string, secondId: string) => void;
   markAllNotificationsAsRead: (Notifications: NotificationType[]) => void;
-  markNotificationAsRead: (notification: NotificationType, user: User, userChats: Chat[]) => void;
+  markNotificationAsRead: (
+    user: User,
+    userChats: Chat[],
+    notification: NotificationType,
+    notifications: NotificationType[]
+  ) => void;
 }
 
 interface socketUser {
