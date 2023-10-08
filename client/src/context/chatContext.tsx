@@ -323,6 +323,7 @@ export const ChatContextProvider = ({ children }: {
       userChats,
       chatError,
       createChat,
+      newMessage,
       onlineUsers,
       publicChats,
       currentChat,

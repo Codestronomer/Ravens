@@ -1,5 +1,5 @@
+import { Chat } from '@/context';
 import { User } from '@/context/authContext';
-import { Chat } from '@/context/chatContext';
 import { axiosGet, baseUrl } from '@/services/backend';
 import React, { useState, useEffect } from 'react';
 

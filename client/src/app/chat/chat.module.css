@@ -15,7 +15,8 @@
   display: flex;
   border-radius: 8px;
   flex-direction: column;
-  background-color: rgb(46, 44, 44);
+  /* background-color: rgb(46, 44, 44); */
+  background-color: #fff;
 }
 
 .chatLeftHeader {
@@ -29,6 +30,7 @@
   padding: 20px;
   border-radius: 8px;
   background-color: rgb(46, 44, 44);
+  /* background-color: #000000; */
   max-height: 500px;
 }
 
@@ -228,7 +230,7 @@
 .messages {
   display: flex;
   flex-direction: column;
-  justify-content: space-evenly;
+  justify-content: space-between;
   gap: 5px;
 }
 
@@ -252,18 +254,26 @@
 .messageLeft {
   height: auto;
   padding: 10px;
+  max-width: 60%; /* Adjust the maximum width as needed */
   width: fit-content;
   border-radius: 5px;
-  margin-right: 300px;
+  align-self: flex-start;
+  margin-right: 40px; /* Adjust the margin for spacing */
+  word-wrap: break-word; /* Wrap text within the specified max-width */
   background-color: gray;
 }
 
 .messageRight {
   height: auto;
   padding: 10px;
-  margin-left: 80%;
+  max-width: 60%; /* Adjust the maximum width as needed */
+  margin-left: 40px; /* Adjust the margin for spacing */
   width: fit-content;
   border-radius: 5px;
+  text-align: left;
+  align-self: flex-end;
+  float: left;
+  word-wrap: break-word; /* Wrap text within the specified max-width */
   background-color: #5E4291;
 }
 

@@ -1,11 +1,8 @@
-import Image from 'next/image'
-import { useContext } from 'react'
+import Link from 'next/link'
 import { AppProps } from 'next/app'
 import { Auth } from './auth'
 import Nav from '@/components/nav'
 import styles from './page.module.css'
-import Link from 'next/link'
-
 
 export default function Home() {
   return (

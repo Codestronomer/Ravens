@@ -82,7 +82,7 @@ body {
   max-width: 100vw;
   overflow-x: hidden;
   background-color: #000000;
-  background-image: url('../../public/Sprinkle.svg');
+  /* background-image: url('../../public/Sprinkle.svg'); */
 }
 
 body {

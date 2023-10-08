@@ -2,6 +2,7 @@
 import React, { useContext } from 'react';
 import { ChatContextProvider } from "@/context/chatContext"
 import { AuthContextProvider, AuthContext, AuthContextType } from "@/context/authContext"
+import { ThemeProvider } from '@/context/themeContext';
 
 export function Provider({ children }: { children: React.ReactNode }) {
   const { user } = useContext(AuthContext) as AuthContextType;
@@ -9,7 +10,9 @@ export function Provider({ children }: { children: React.ReactNode }) {
   return <>
     <AuthContextProvider>
       <ChatContextProvider user={user}>
-        {children}
+        <ThemeProvider>
+          {children}
+        </ThemeProvider>
       </ChatContextProvider>
     </AuthContextProvider>
   </>

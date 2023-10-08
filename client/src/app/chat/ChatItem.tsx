@@ -1,12 +1,14 @@
 'use client'
+import moment from 'moment';
 import Image from 'next/image';
 import React, { useContext } from 'react';
 import styles from './chat.module.css';
 import { User } from '@/context/authContext';
-import { Chat, ChatContextType, NotificationType, socketUser } from '@/context';
+import { Chat, ChatContextType, MessageType, NotificationType, socketUser } from '@/context';
 import { ChatContext } from '@/context/chatContext';
 import ProfileImage from '@/../public/John.jpg';
 import { filterUnreadNotifications } from '@/services/unreadNotification';
+import useFetchLatestMessage from '@/hook/useFetchLatestMessage';
 
 const ChatItem = ({ chat, user, onlineUsers }: { chat: Chat, user: User, onlineUsers: socketUser[] }) => {
 
@@ -24,6 +26,15 @@ const ChatItem = ({ chat, user, onlineUsers }: { chat: Chat, user: User, onlineU
   const chatUserNotifications = unreadNotifications?.filter((notification: NotificationType) => {
     return notification?.senderId == recipientUser?._id
   });
+
+  // get latest message
+  const { latestMessage } = useFetchLatestMessage(chat);
+
+  const truncateText = (text: String) => {
+    if (text?.length > 20) return text.substring(0, 20) + '...';
+
+    return text;
+  }
 
   return (
     <div
@@ -46,10 +57,10 @@ const ChatItem = ({ chat, user, onlineUsers }: { chat: Chat, user: User, onlineU
       <div className={styles.chatInfo}>
         <div className={styles.chatInfoChild}>
           <h3>{recipientUser?.username}</h3>
-          <p>Hello</p>
+          <p>{latestMessage?.text && truncateText(latestMessage?.text)}</p>
         </div>
         <div className={styles.chatInfoChild}>
-          <p>12/2/2022</p>
+          <p>{moment(latestMessage?.createdAt).calendar()}</p>
           {currentChat?.id !== chat?.id && chatUserNotifications.length > 0 &&
             <div className={styles.chatNotification}>
               <span>{chatUserNotifications?.length}</span>

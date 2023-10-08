@@ -26,10 +26,16 @@ export interface MessageType {
     __v: number
 }
 
+export interface ThemeContextType {
+  theme: string
+  toggleTheme: () => {}
+}
+
 export interface ChatContextType {
   userChats: Chat[]
   currentChat: Chat
   isChatLoading: boolean
+  newMessage: MessageType
   messages: MessageType[]
   publicChats: Array<User>
   messagesError: errorType
