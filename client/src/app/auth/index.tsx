@@ -18,10 +18,20 @@ export function Auth() {
 
   return (
     <div ref={parent}>
-      <h2 className={styles.welcome}>Welcome 👋</h2>
       { isLogin ? <Login /> : <Register />}
       <p className={styles.authSwitch} onClick={handleClick}>{
-          isLogin ? "Don't have an account? Sign up" : "Already have an account? Login"
+          isLogin ? 
+          <div className={styles.authSwitchText}>
+            <div>{"Don't have an account?"}</div>
+            <div className={styles.authSwitchTextMain}>{"Sign up"}</div>
+          </div>
+          : 
+          <div className={styles.authSwitchText}>
+            <div>
+              {"Already have an account?"}
+            </div>
+            <div className={styles.authSwitchTextMain}>{"Login"}</div>
+          </div>
         }
       </p>
     </div>

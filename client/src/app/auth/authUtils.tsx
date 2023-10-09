@@ -41,24 +41,15 @@ export const GetUsername: React.FC<userNameProps> = ({ setIsValid, setUsername, 
 
   return <>
     <form onSubmit={handleFormSubmit} className={styles.auth}>
-      {
-        isRegister ? 
-          <label 
-            className={`styles.description ${theme == 'dark' ? 'dark' : ''}`}
-            style={{
-              backgroundColor: `var(--background-color)`,
-              color: `var(--text-color)`,
-            }}
-          >Enter a username to get started</label>
-        :
-          <label
-            className={`styles.description ${theme == 'dark' ? 'dark' : ''}`}
-            style={{
-              backgroundColor: `var(--background-color)`,
-              color: `var(--text-color)`,
-            }}
-          >Enter your username to continue</label>
-      }
+      <label 
+        className={`${styles.description} ${theme == 'dark' ? 'dark' : ''}`}
+        style={{
+          backgroundColor: `var(--background-color)`,
+          color: `var(--text-color)`,
+        }}
+      >
+        Username
+      </label>
       <input 
         className={styles.userInput}
         required={true}
@@ -66,7 +57,7 @@ export const GetUsername: React.FC<userNameProps> = ({ setIsValid, setUsername, 
         onChange={handleUsername}
       >
       </input>
-      {isValidUsername && <p>Username is already taken</p>}
+      {isValidUsername && <p className={styles.usernameError}>Username is already taken</p>}
     </form>
   </>
 
@@ -97,12 +88,7 @@ export const GetPassword: React.FC<passwordProps> = ({
     <>
       <form onSubmit={handleFormSubmit} className={styles.auth}>
       <label 
-        className={`styles.description ${theme == 'dark' ? 'dark' : ''}`}
-        style={{
-          backgroundColor: `var(--background-color)`,
-          color: `var(--text-color)`,
-          textAlign: 'left',
-        }}
+        className={styles.description}
       >Password</label>
       <input
         className={styles.userInput}

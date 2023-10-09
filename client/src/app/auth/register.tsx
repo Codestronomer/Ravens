@@ -31,24 +31,30 @@ export function Register(): React.FunctionComponentElement<HTMLBodyElement> {
   }, [isValid]);
 
   return (
-    <div>
-      <GetUsername
-        userInfo={userInfo}
-        setUsername={updateUserInfo}
-        setIsValid={handleNext}
-        isRegister={true}
-      />
-      <GetPassword
-        isRegister={true}
-        userInfo={userInfo}
-        setPassword={updateUserInfo}
-        handleUser={registerUser}
-        isLoading={isLoading}
-      />
-      {
-        registerError && registerError.error && 
-        <ErrorModal onClose={handleCloseError} errorMessage={registerError.message} />
-      }
+    <div className={styles.authComponent}>
+      <div className={styles.formInfo}>
+        <h2 className={styles.welcome}>Welcome 👋</h2>
+        <p>Enter a username to get started</p>
+      </div>
+      <div className={styles.authForm}>
+        <GetUsername
+          userInfo={userInfo}
+          setUsername={updateUserInfo}
+          setIsValid={handleNext}
+          isRegister={true}
+        />
+        <GetPassword
+          isRegister={true}
+          userInfo={userInfo}
+          setPassword={updateUserInfo}
+          handleUser={registerUser}
+          isLoading={isLoading}
+        />
+        {
+          registerError && registerError.error && 
+          <ErrorModal onClose={handleCloseError} errorMessage={registerError.message} />
+        }
+      </div>
     </div>
   )
 }

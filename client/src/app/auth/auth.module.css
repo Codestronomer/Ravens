@@ -3,8 +3,30 @@
   width: 100%;
   display: flex;
   font-size: 12px;
-  text-align: left;
+  text-align: center;
   flex-direction: column;
+}
+
+.authComponent {
+  gap: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.authForm {
+  gap: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.formInfo {
+  font-size: 15px;
+  text-align: center;
+  color: var(--text-color);
+}
+
+.formInfo p {
+  font-size: 10px;
 }
 
 .description {
@@ -15,15 +37,25 @@
   max-width: var(--max-width);
   width: 100%;
   font-family: var(--font-mono);
+  color: var(--text-color);
+  background-color: var(--background-color);
 }
 
 .userInput {
-  border: none;
-  height: 40px;
   width: 100%;
-  border-radius: 5px;
-  padding: 5px;
   outline: 0px;
+  height: 40px;
+  border: none;
+  padding: 5px;
+  border-radius: 5px;
+  border: 2px solid gray;
+  color: var(--text-color);
+  background-color: var(--background-color);
+}
+
+.usernameError {
+  font-size: 10px;
+  color: red;
 }
 
 .userSubmit {
@@ -36,11 +68,26 @@
 }
 
 .authSwitch {
+  width: 70%;
+  margin: auto;
+  margin-top: 20px;
   font-size: 13px;
-  text-decoration: underline;
-  margin: 15px;
-  opacity: 70%;
   cursor: pointer;
+  font-weight: 700;
+  text-decoration: none;
+  color: var(--text-color);
+}
+
+.authSwitchText {
+  gap: 10px;
+  opacity: 70%;
+  display: flex;
+  flex-direction: row;
+
+}
+
+.authSwitchTextMain {
+  color: #5E4291;
 }
 
 .auth-container {

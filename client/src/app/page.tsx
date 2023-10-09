@@ -12,6 +12,7 @@ import { ThemeContextType } from '@/context';
 
 export default function Home() {
   const { theme } = useContext(Theme) as ThemeContextType;
+  const { toggleTheme } = useContext(Theme) as ThemeContextType;
 
   return (
     <main className={`${styles.main} ${theme == 'dark' ? 'dark' : ''}`} 
@@ -34,6 +35,7 @@ export default function Home() {
       </div>
       <div className={`${styles.right}`}>
         <div className={styles.toggle}>
+          <button onClick={() => toggleTheme()}>Toggle Theme</button>
         </div>
         <div className={styles.rightImage}>
           <Image src={SideImage} height={300} width={300} alt='raven-image' />
