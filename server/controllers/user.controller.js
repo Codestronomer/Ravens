@@ -39,7 +39,7 @@ async function verifyUsername(req, res) {
 
   try {
     // Check if the username exists in the database
-    const existingUser = await User.findOne({ username });
+    const existingUser = await UserModel.findOne({ username });
 
     if (existingUser) {
       // Username already exists
