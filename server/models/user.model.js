@@ -18,6 +18,9 @@ const UserSchema = new mongoose.Schema({
     minLength: 5,
     maxLength: 1024,
   },
+  image: {
+    type: String,
+  }
 }, { timestamps: true }, { toJSON: {virtuals: true }}, { toObject: {virtuals: true }});
 
 // bcrypt salt rounds

@@ -34,6 +34,26 @@ async function getUser(req, res) {
   }
 };
 
+async function verifyUsername(req, res) {
+  const { username } = req.params;
+
+  try {
+    // Check if the username exists in the database
+    const existingUser = await User.findOne({ username });
+
+    if (existingUser) {
+      // Username already exists
+      return res.json({ exists: true });
+    } else {
+      // Username doesn't exist
+      return res.json({ exists: false });
+    }
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ error: 'Internal Server Error' });
+  }
+};
+
 async function register(req, res) {
   try {
     const { username, password } = req.body;
@@ -107,4 +127,5 @@ export {
   getUser,
   register,
   getUsers,
+  verifyUsername,
 };
