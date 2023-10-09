@@ -18,6 +18,7 @@ export function Auth() {
 
   return (
     <div ref={parent}>
+      <h2 className={styles.welcome}>Welcome 👋</h2>
       { isLogin ? <Login /> : <Register />}
       <p className={styles.authSwitch} onClick={handleClick}>{
           isLogin ? "Don't have an account? Sign up" : "Already have an account? Login"

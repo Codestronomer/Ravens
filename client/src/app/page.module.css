@@ -1,37 +1,41 @@
 .main {
-  display: grid;
-  place-items: center;
+  display: flex;
+  flex-direction: row;
   height: 100vh;
 }
 
-.home {
+.left {
+  gap: 40px;
+  width: 50%;
+  padding: 50px;
   display: flex;
-  flex-direction: row;
-  margin: auto;
-  gap: 10px;
-  justify-content: space-evenly;
+  color: black;
   text-align: center;
-  background-color: #FFFFFF;
-  color:black;
-  border-radius: 8px;
-  padding: 20px;
-  box-shadow: 2px 2px 5px white;
+  flex-direction: column;
+  justify-content: center;
+  background-color: var(--main-left-color);
 }
 
-.homeLeft {
+.brandHeader {
+  color: #5E4291
 }
 
-.description a {
+.form {
   display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.right {
+  width: 50%;
+  padding: 50px;
   justify-content: center;
   align-items: center;
-  gap: 0.5rem;
+  background-color: var(--main-right-color);
 }
 
-.description p {
-  position: relative;
-  margin: 0;
-  padding: 1rem;
+.rightImage {
+  margin: 20%;
 }
 
 .code {

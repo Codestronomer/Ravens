@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import styles from './auth.module.css';
 import { useRouter } from 'next/navigation';
-import { UserInfo } from '@/context/authContext';
+import { AuthContext, AuthContextType, UserInfo } from '@/context/authContext';
 import { Theme } from '@/context/themeContext';
 import { ThemeContextType } from '@/context';
 
@@ -24,10 +24,14 @@ export const GetUsername: React.FC<userNameProps> = ({ setIsValid, setUsername, 
 
   // get theme
   const { theme } = useContext(Theme) as ThemeContextType;
+  const { checkIsValidUsername, isValidUsername } = useContext(AuthContext) as AuthContextType;
 
   const handleUsername = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
     setUsername({ ...userInfo, username: e.target.value });
+    if (isRegister) {
+      checkIsValidUsername(e.target.value);
+    }
   };
 
   const handleFormSubmit = (e: React.FormEvent) => {
@@ -62,6 +66,7 @@ export const GetUsername: React.FC<userNameProps> = ({ setIsValid, setUsername, 
         onChange={handleUsername}
       >
       </input>
+      {isValidUsername && <p>Username is already taken</p>}
     </form>
   </>
 

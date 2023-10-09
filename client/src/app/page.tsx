@@ -14,22 +14,29 @@ export default function Home() {
   const { theme } = useContext(Theme) as ThemeContextType;
 
   return (
-    <main className={styles.main}>
-      <Nav />
-      <div 
-        className={`${styles.home} ${theme == 'dark' ? 'dark' : ''}`}
+    <main className={`${styles.main} ${theme == 'dark' ? 'dark' : ''}`} 
+      style={{
+        backgroundColor: `var(--background-color)`,
+        color: `var(--text-color)`,
+      }}
+    >
+      <div className={`${styles.left}`}
+
         style={{
-          backgroundColor: `var(--background-color)`,
-          color: `var(--text-color)`,
+          backgroundColor: `var(--left-color)`,
         }}
       >
-        <div className={`${styles.homeLeft}`}>
-          <Image src={SideImage} height={330} width={330} alt='raven-image' />
-        </div>
-        <div className={`${styles.homeRight}`}>
-          <h1 className={styles.welcome}>Welcome 👋</h1>
+        <div className={styles.brandHeader}><h1>Raven</h1></div>
+        <div className={styles.form}>
           <Auth />
           <Link href="/chat">Chat</Link>
+        </div>
+      </div>
+      <div className={`${styles.right}`}>
+        <div className={styles.toggle}>
+        </div>
+        <div className={styles.rightImage}>
+          <Image src={SideImage} height={300} width={300} alt='raven-image' />
         </div>
       </div>
     </main>

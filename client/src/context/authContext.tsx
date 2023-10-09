@@ -1,5 +1,5 @@
 'use client'
-import { axiosPost, baseUrl } from '@/services/backend';
+import { axiosGet, axiosPost, baseUrl } from '@/services/backend';
 import React, { 
   useState,
   useEffect,
@@ -27,15 +27,17 @@ export interface errorType {
 // Define the auth context type
 export interface AuthContextType {
   user: User
+  isLoading: boolean
   userInfo: UserInfo
-  updateUserInfo: Function
-  registerUser: Function
   loginUser: Function
+  registerUser: Function
+  updateUserInfo: Function
+  isValidUsername: boolean
+  loginError: errorType | null
+  registerError: errorType | null
+  checkIsValidUsername: (username: string) => void;
   setLoginError: (error: errorType | null) => void;
   setRegisterError: (error: errorType | null) => void;
-  registerError: errorType | null
-  loginError: errorType | null
-  isLoading: boolean
 }
 
 // Define auth context
@@ -49,13 +51,14 @@ export const AuthContextProvider = (
     token: "",
     username: "",
   });
-  const [registerError, setRegisterError] = useState<errorType | null>(null);
-  const [loginError, setLoginError] = useState<errorType | null>(null);
-  const [isLoading, setIsLoading] = useState(false);
   const [userInfo, setUserInfo] = useState<UserInfo>({
     username: "",
     password: ""
   });
+  const [isLoading, setIsLoading] = useState(false);
+  const [isValidUsername, setIsValidUsername] = useState(true);
+  const [loginError, setLoginError] = useState<errorType | null>(null);
+  const [registerError, setRegisterError] = useState<errorType | null>(null);
 
   // update user info state
   const updateUserInfo = useCallback((info: UserInfo) => {
@@ -102,6 +105,23 @@ export const AuthContextProvider = (
     setIsLoading(false);
   }, [userInfo]);
 
+  // check if User exists
+  const checkIsValidUsername = useCallback(async (username: string) => {
+    setLoginError(null);
+
+    if (username) {
+      console.log("here");
+      const response = await axiosGet(`${baseUrl}/users/verify-username/${username}`);
+
+      // if request returned an error
+      if (response?.error) {
+        return setLoginError(response);
+      }
+
+      setIsValidUsername(response.exists);
+    }
+  }, []);
+
   // Get persisted user data from local storage when the component mounts
   useEffect(() => {
     const persistedUser = localStorage.getItem('user');
@@ -120,7 +140,9 @@ export const AuthContextProvider = (
     registerError,
     setLoginError,
     updateUserInfo,
+    isValidUsername,
     setRegisterError,
+    checkIsValidUsername,
   }
 
   return (

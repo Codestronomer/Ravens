@@ -9,6 +9,8 @@
 
   --background-color: #F3F3F2;
   --text-color: #111111;
+  --main-left-color: #FFFFFF;
+  --main-right-color: #F4F4F4;
 
   --primary-glow: conic-gradient(
     from 180deg at 50% 50%,
@@ -45,6 +47,8 @@
 .dark {
   --background-color: #111111;
   --text-color: #F3F3F2;
+  --main-left-color: #111111;
+  --main-right-color: #212121;
 }
 
 @media (prefers-color-scheme: dark) {
