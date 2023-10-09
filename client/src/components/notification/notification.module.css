@@ -2,6 +2,7 @@
   width: 40px;
   position: relative;
   height: fit-content;
+  cursor: pointer;
 }
 
 .notificationCount {
@@ -24,6 +25,7 @@
   width: 230px;
   padding: 10px;
   position: fixed;
+  cursor: pointer;
   overflow-y: auto;
   max-height: 150px;
   border-radius: 5px;

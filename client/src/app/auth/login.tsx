@@ -35,23 +35,19 @@ export function Login(): React.FunctionComponentElement<HTMLBodyElement> {
 
   return (
     <div>
-      {!isValid ? (
-        <GetUsername
-          userInfo={userInfo}
-          setUsername={updateUserInfo}
-          setIsValid={handleNext}
-          isRegister={false}
-        />
-      ) : (
-        <GetPassword
-          userInfo={userInfo}
-          setPassword={updateUserInfo}
-          handleUser={handleUser}
-          isRegister={false}
-          isLoading={isLoading}
-        />
-      )}
-
+      <GetUsername
+        userInfo={userInfo}
+        setUsername={updateUserInfo}
+        setIsValid={handleNext}
+        isRegister={false}
+      />
+      <GetPassword
+        userInfo={userInfo}
+        setPassword={updateUserInfo}
+        handleUser={handleUser}
+        isRegister={false}
+        isLoading={isLoading}
+      />
       {
         loginError && loginError.error && 
         <ErrorModal onClose={handleCloseError} errorMessage={loginError.message} />

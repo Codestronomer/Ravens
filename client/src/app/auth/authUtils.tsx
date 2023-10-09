@@ -62,7 +62,6 @@ export const GetUsername: React.FC<userNameProps> = ({ setIsValid, setUsername, 
         onChange={handleUsername}
       >
       </input>
-      <button className={styles.userSubmit} type='submit'>Enter</button>
     </form>
   </>
 
@@ -97,6 +96,7 @@ export const GetPassword: React.FC<passwordProps> = ({
         style={{
           backgroundColor: `var(--background-color)`,
           color: `var(--text-color)`,
+          textAlign: 'left',
         }}
       >Password</label>
       <input

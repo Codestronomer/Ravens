@@ -6,17 +6,19 @@
 
 .home {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   margin: auto;
-  gap: 5px;
-  align-items: center;
-  justify-content: center;
+  gap: 10px;
+  justify-content: space-evenly;
   text-align: center;
   background-color: #FFFFFF;
   color:black;
   border-radius: 8px;
-  padding: 10px;
+  padding: 20px;
   box-shadow: 2px 2px 5px white;
+}
+
+.homeLeft {
 }
 
 .description a {
