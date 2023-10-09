@@ -43,7 +43,7 @@ function Notification() {
         )}
       </div>
       {isOpen && 
-        <div className={styles.notificationsBox}>
+        <div className={styles.notificationsBox} style={{'color': 'white'}}>
           <div className={styles.notificationHeader}>
             <h3>Notifications</h3>
             <div className={styles.markRead} onClick={() => markAllNotificationsAsRead(notifications)}>

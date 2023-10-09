@@ -12,7 +12,8 @@
   align-items: center;
   justify-content: center;
   text-align: center;
-  background-color: #000000;
+  background-color: #FFFFFF;
+  color:black;
   border-radius: 8px;
   padding: 10px;
   box-shadow: 2px 2px 5px white;
@@ -70,10 +71,6 @@
     padding: 1rem 2.5rem;
   }
 
-  .card h2 {
-    margin-bottom: 0.5rem;
-  }
-
   .center {
     padding: 8rem 0 6rem;
   }
@@ -85,28 +82,6 @@
 
   .description {
     font-size: 0.8rem;
-  }
-
-  .description a {
-    padding: 1rem;
-  }
-
-  .description p,
-  .description div {
-    display: flex;
-    justify-content: center;
-    position: fixed;
-    width: 100%;
-  }
-
-  .description p {
-    align-items: center;
-    inset: 0 0 auto;
-    padding: 2rem 1rem 1.4rem;
-    border-radius: 0;
-    border: none;
-    background-clip: padding-box;
-    backdrop-filter: blur(24px);
   }
 
   .description div {

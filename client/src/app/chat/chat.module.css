@@ -29,8 +29,7 @@
   margin: 40px;
   padding: 20px;
   border-radius: 8px;
-  background-color: rgb(46, 44, 44);
-  /* background-color: #000000; */
+  background-color: #fff;
   max-height: 500px;
 }
 
@@ -140,7 +139,6 @@
 
 .chatInfoChild p {
   opacity: 80%;
-  color: white;
   font-size: 10px;
   font-weight: 500;
 }
@@ -205,7 +203,8 @@
 }
 
 .messagesContainer {
-  max-height: 370px; /* Adjust to your preferred maximum height */
+  max-height: 360px; /* Adjust to your preferred maximum height */
+  height: 360px;
   overflow-y: scroll;
   padding-top: 10px;
   padding-bottom: 10px;

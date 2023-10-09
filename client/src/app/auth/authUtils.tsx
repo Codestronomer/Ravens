@@ -1,7 +1,9 @@
-import React, { Dispatch, SetStateAction } from 'react';
+import React, { useContext } from 'react';
 import styles from './auth.module.css';
 import { useRouter } from 'next/navigation';
 import { UserInfo } from '@/context/authContext';
+import { Theme } from '@/context/themeContext';
+import { ThemeContextType } from '@/context';
 
 interface userNameProps {
   userInfo: UserInfo
@@ -20,6 +22,9 @@ interface passwordProps {
 
 export const GetUsername: React.FC<userNameProps> = ({ setIsValid, setUsername, userInfo, isRegister }) => {
 
+  // get theme
+  const { theme } = useContext(Theme) as ThemeContextType;
+
   const handleUsername = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
     setUsername({ ...userInfo, username: e.target.value });
@@ -34,9 +39,21 @@ export const GetUsername: React.FC<userNameProps> = ({ setIsValid, setUsername, 
     <form onSubmit={handleFormSubmit} className={styles.auth}>
       {
         isRegister ? 
-          <label className={styles.description}>Enter a username to get started</label>
+          <label 
+            className={`styles.description ${theme == 'dark' ? 'dark' : ''}`}
+            style={{
+              backgroundColor: `var(--background-color)`,
+              color: `var(--text-color)`,
+            }}
+          >Enter a username to get started</label>
         :
-          <label className={styles.description}>Enter your username to contine</label>
+          <label
+            className={`styles.description ${theme == 'dark' ? 'dark' : ''}`}
+            style={{
+              backgroundColor: `var(--background-color)`,
+              color: `var(--text-color)`,
+            }}
+          >Enter your username to continue</label>
       }
       <input 
         className={styles.userInput}
@@ -59,6 +76,9 @@ export const GetPassword: React.FC<passwordProps> = ({
     isRegister
   }) => {
 
+  // get theme
+  const { theme } = useContext(Theme) as ThemeContextType;
+
   const handlePassword = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
     setPassword({...userInfo, password: e.target.value});
@@ -72,7 +92,13 @@ export const GetPassword: React.FC<passwordProps> = ({
   return (
     <>
       <form onSubmit={handleFormSubmit} className={styles.auth}>
-      <label className={styles.description}>Password</label>
+      <label 
+        className={`styles.description ${theme == 'dark' ? 'dark' : ''}`}
+        style={{
+          backgroundColor: `var(--background-color)`,
+          color: `var(--text-color)`,
+        }}
+      >Password</label>
       <input
         className={styles.userInput}
         placeholder="Enter a strong password"

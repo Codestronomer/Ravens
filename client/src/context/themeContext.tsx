@@ -8,17 +8,17 @@ export const ThemeProvider = ({ children }: {children: React.ReactNode }) => {
     localStorage.getItem('theme') || 'light'
   );
 
-  const toggleTheme = useCallback(() => {
+  const toggleTheme = () => {
     if (theme == 'light') {
       setTheme('dark')
     } else {
       setTheme('light')
     }
-  }, [])
+  };
 
   useEffect(() => {
     localStorage.setItem('theme', theme);
-  }, [theme])
+  }, [theme]);
 
   return (
     <Theme.Provider value={{

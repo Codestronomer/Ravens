@@ -4,6 +4,8 @@ import { Login } from "./login";
 import { Register } from "./register";
 import styles from './auth.module.css';
 import { useAutoAnimate } from '@formkit/auto-animate/react';
+
+
 export function Auth() {
   const [isLogin, setIsLogin] = useState(false);
   const [parent] = useAutoAnimate();

@@ -6,14 +6,16 @@ import React, { useContext, useState, useEffect, createRef } from 'react';
 import styles from './chat.module.css';
 import { ChatContext } from '@/context/chatContext';
 import SendIcon from '../../../public/send-alt-svg.svg';
-import { ChatContextType, MessageType } from '@/context';
+import { ChatContextType, MessageType, ThemeContextType } from '@/context';
 import { AuthContext, AuthContextType, User } from '@/context/authContext';
 import ChatImage from '../../../public/undraw/undraw_new_message_re_fp03.svg';
 import LoadingSpinner from '@/components/loadingSpinner';
+import { Theme } from '@/context/themeContext';
 
 const ChatBox = () => {
   const scroll = createRef<HTMLDivElement>();
   const [message, setMessage] = useState("");
+  const { theme } = useContext(Theme) as ThemeContextType;
   const { user } = useContext(AuthContext) as AuthContextType;
   const {
     messages,
@@ -22,7 +24,7 @@ const ChatBox = () => {
     messagesError,
     isMessagesLoading,
   } = useContext(ChatContext) as ChatContextType;
-  const recipientUsers = currentChat?.members?.filter((member: User) => member.id !== user.id);
+  const recipientUsers = currentChat?.members?.filter((member) => member._id !== user.id);
 
   useEffect(() => {
     scroll.current?.scrollIntoView({ behavior: 'smooth' });
@@ -31,7 +33,11 @@ const ChatBox = () => {
   return (
     <>
       {recipientUsers && recipientUsers.length > 0 ? (
-        <div className={styles.conversation}>
+        <div className={`styles.conversation ${theme == 'dark' ? 'dark' : ''}`}
+            style={{
+              backgroundColor: `var(--background-color)`,
+              color: `var(--text-color)`,
+            }}>
           <div className={styles.messageNav}>
             {/* Display the names of all recipients */}
             <h3>
