@@ -2,17 +2,16 @@
 import Link from 'next/link'
 import Image from 'next/image';
 import { useContext } from 'react';
-import { AppProps } from 'next/app'
-import { Auth } from './auth'
-import Nav from '@/components/nav'
-import styles from './page.module.css'
+import { AppProps } from 'next/app';
+import { Auth } from './auth';
+import ThemeToggle from '@/components/themeToggle';
+import styles from './page.module.css';
 import SideImage from '../../public/work-chat-not-css.svg'
 import { Theme } from '@/context/themeContext';
 import { ThemeContextType } from '@/context';
 
 export default function Home() {
   const { theme } = useContext(Theme) as ThemeContextType;
-  const { toggleTheme } = useContext(Theme) as ThemeContextType;
 
   return (
     <main className={`${styles.main} ${theme == 'dark' ? 'dark' : ''}`} 
@@ -21,10 +20,10 @@ export default function Home() {
         color: `var(--text-color)`,
       }}
     >
-      <div className={`${styles.left}`}
+      <div className={`${styles.left} ${theme == 'dark' ? 'dark' : ''}`}
 
         style={{
-          backgroundColor: `var(--left-color)`,
+          backgroundColor: `var(--background-color)`,
         }}
       >
         <div className={styles.brandHeader}><h1>Raven</h1></div>
@@ -33,9 +32,14 @@ export default function Home() {
           <Link href="/chat">Chat</Link>
         </div>
       </div>
-      <div className={`${styles.right}`}>
-        <div className={styles.toggle}>
-          <button onClick={() => toggleTheme()}>Toggle Theme</button>
+      <div 
+        className={`${styles.right} ${theme == 'dark' ? 'dark' : ''}`}
+        style={{
+          backgroundColor: `var(--main-right)`,
+        }}
+      >
+        <div className={styles.rightTop}>
+          <ThemeToggle />
         </div>
         <div className={styles.rightImage}>
           <Image src={SideImage} height={300} width={300} alt='raven-image' />

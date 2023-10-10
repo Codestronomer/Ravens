@@ -87,20 +87,22 @@ export const GetPassword: React.FC<passwordProps> = ({
   return (
     <>
       <form onSubmit={handleFormSubmit} className={styles.auth}>
-      <label 
-        className={styles.description}
-      >Password</label>
-      <input
-        className={styles.userInput}
-        placeholder="Enter a strong password"
-        required={true}
-        type="password"
-        autoComplete="new-password"
-        aria-autocomplete="list"
-        onChange={handlePassword}
-      />
-      <button className={styles.userSubmit} type="submit">
-          {isLoading ? (isRegister ? 'Creating Your Account' : 'Logging In') : isRegister ? 'Create Account' : 'Login In'}
+        <label 
+          className={styles.description}
+        >
+          Password
+        </label>
+        <input
+          className={styles.userInput}
+          placeholder="Enter a strong password"
+          required={true}
+          type="password"
+          autoComplete="new-password"
+          aria-autocomplete="list"
+          onChange={handlePassword}
+        />
+        <button className={styles.userSubmit} type="submit">
+          {isLoading ? (isRegister ? 'Creating Your Account' : 'Logging In') : isRegister ? 'Sign Up' : 'Login In'}
         </button>
       </form>
     </>

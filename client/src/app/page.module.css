@@ -13,7 +13,7 @@
   text-align: center;
   flex-direction: column;
   justify-content: center;
-  background-color: var(--main-left-color);
+  background-color: var(--main-left);
 }
 
 .brandHeader {
@@ -33,7 +33,11 @@
   padding: 50px;
   justify-content: center;
   align-items: center;
-  background-color: var(--main-right-color);
+  background-color: var(--main-right);
+}
+
+.rightTop {
+  margin-left: 400px;
 }
 
 .rightImage {

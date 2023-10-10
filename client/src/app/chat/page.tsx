@@ -2,7 +2,7 @@
 import React, { useContext } from 'react';
 import styles from './chat.module.css';
 import ChatBox from './chatBox';
-import Nav from '@/components/nav';
+import Nav from '@/components/themeToggle';
 import ChatView from './chatView';
 import Notification from '../../components/notification';
 import { ThemeContextType } from '@/context';

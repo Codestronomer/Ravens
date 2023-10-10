@@ -1,0 +1,45 @@
+.darkModeToggle {
+  width: 80px;
+  height: 30px;
+}
+
+/* Button for toggling dark mode */
+.toggleButton {
+  width: 100%;
+  height: 100%;
+  border: 2px solid #111111;
+  border-radius: 15px;
+  padding: 2px;
+  display: flex;
+  outline: none;
+  cursor: pointer;
+  background-color: var(--toggle-color);
+}
+
+.lightModeIcon {
+  width: 25px;
+  height: 21px;
+  background-color: #fff;
+  border-radius: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center; /* Center the icon */
+  transition: transform 0.3s ease;
+  background-color: var(--toggle-day-color);
+  top: 0;
+  left: 0;
+}
+
+.darkModeIcon {
+  width: 25px;
+  height: 20px;
+  background-color: var(--toggle-night-color);
+  border-radius: 15px;
+  display: flex;
+  justify-content: center;
+  transition: transform 0.3s ease;
+}
+
+.darkModeIcon {
+  transform: translateX(100%);
+}

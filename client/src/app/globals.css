@@ -9,8 +9,12 @@
 
   --background-color: #F3F3F2;
   --text-color: #111111;
-  --main-left-color: #FFFFFF;
-  --main-right-color: grey;
+  --main-left: #F3F3F2;
+  --main-right: #F7FCFE;
+  --toggle-color: #FFFFFF;
+  --toggle-night-color: white;
+  --toggle-day-color: #5E4291;
+
 
   --primary-glow: conic-gradient(
     from 180deg at 50% 50%,
@@ -47,8 +51,15 @@
 .dark {
   --background-color: #111111;
   --text-color: #F3F3F2;
-  --main-left-color: #111111;
-  --main-right-color: #212121;
+  --main-left: #111111;
+  --main-right: #212121;
+  --toggle-color: #111111;
+  --toggle-night-color: #5E4291;
+  --toggle-day-color: #111111;
+}
+
+* {
+  transition: all 0.3s ease-in-out;
 }
 
 @media (prefers-color-scheme: dark) {
