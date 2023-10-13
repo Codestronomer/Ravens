@@ -30,7 +30,6 @@ export default function Home() {
         <div className={styles.brandHeader}><h1>Raven</h1></div>
         <div className={styles.form}>
           <Auth />
-          <AppearanceSelector />
           <Link href="/chat">Chat</Link>
         </div>
       </div>

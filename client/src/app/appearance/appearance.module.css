@@ -1,0 +1,76 @@
+.main {
+  padding: 50px;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-color);
+  background-color: var(--background-color);
+}
+
+.rightTop {
+  position: absolute;
+  right: 50px;
+  top: 50px;
+}
+
+.brandHeader {
+  font-size: 30px;
+  color: #5E2491;
+  font-weight: 600;
+}
+
+.container {
+  width: 450px;
+  height: 300px;
+  margin: auto;
+  border-radius: 10px;
+  border: 1px solid rgb(182, 180, 180);
+  padding-top: 30px;
+}
+
+.currentImage {
+  width: 50px;
+  padding: 2px;
+  height: 50px;
+  margin: auto;
+  border-radius: 50%;
+  position: relative;
+  border: 2px dotted rgb(182, 180, 180);
+}
+
+.containerText {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 18 px;
+  font-weight: 600;
+  line-height: 31px;
+  letter-spacing: 0em;
+  margin-bottom: 20px;
+}
+
+.images {
+  gap: 10px;
+  margin: 40px;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.image {
+  position: relative;
+  width: 40px;
+}
+
+.selected {
+  position:absolute;
+  background-color: #5E2491;
+  border-radius: 50%;
+  width: 15px;
+  height: 15px;
+  right: 0px;
+  bottom: 8px;
+}
