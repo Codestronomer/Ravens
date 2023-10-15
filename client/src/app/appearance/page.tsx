@@ -1,5 +1,5 @@
 'use client'
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import Image, { StaticImageData } from 'next/image';
 import Avatar1 from '../../../public/avatars/avatar1.svg';
 import Avatar2 from '../../../public/avatars/avatar2.svg';
@@ -14,16 +14,12 @@ import Avatar11 from '../../../public/avatars/avatar11.svg';
 import Avatar12 from '../../../public/avatars/avatar12.svg';
 import Avatar13 from '../../../public/avatars/avatar13.svg';
 import Avatar14 from '../../../public/avatars/avatar14.svg';
+import ImageSelected from '../../../public/imageSelected.svg';
 import ProfileImage from '../../../public/user-svgrepo-com.svg';
 import styles from './appearance.module.css';
 import ThemeToggle from '@/components/themeToggle';
-
-const avatars = [
-    Avatar1, Avatar2, Avatar3,
-    Avatar4, Avatar5, Avatar6, 
-    Avatar8, Avatar9, Avatar10, 
-    Avatar11, Avatar12, Avatar13, Avatar14
-  ];
+import { Theme } from '@/context/themeContext';
+import { ThemeContextType } from '@/context';
 
 type ImageDictionary = {
   [key: string]: StaticImageData;
@@ -51,6 +47,7 @@ interface ImageDataType {
 }
 
 const AppearanceSelector = () => {
+  const { theme } = useContext(Theme) as ThemeContextType;
   const [currentImage, setCurrentImage] = useState<ImageDataType>({
     image: ProfileImage,
     key: 'zero'
@@ -72,38 +69,61 @@ const AppearanceSelector = () => {
   }
 
   return (
-    <div className={styles.main}>
+    <div 
+      className={`${styles.main} ${theme == 'dark' ? 'dark' : ''} `} 
+      style={{
+        backgroundColor: `var(--background-color)`,
+        color: `var(--text-color)`,
+      }}
+    >
       <div className={styles.rightTop}>
           <ThemeToggle />
        </div>
       <div className={styles.brandHeader}>
         Raven
       </div>
-      <div>
+      <div className={styles.mainContainer}>
         <div className={styles.containerText}>{"Let's personalize your experience!"}</div>
         <div className={styles.container}>
-          <div className={styles.currentImage}>
-            <div className={currentImage.key != 'zero' ? styles.selected : ''}></div>
+          <div className={currentImage.key === 'zero' ? styles.currentImage : styles.currentImageSelected}>
+            {
+              currentImage.key !== 'zero' && (
+                <div className={styles.selected}>
+                  <Image src={ImageSelected} alt='selected-icon' />
+                </div>
+              )
+            }
             <Image 
               src={currentImage.image}
               alt='profileImage'
               height={42}
-              width={42} />
+              width={42}
+            />
           </div>
+          <span className={styles.avatarText}>Choose your avatar</span>
           <div className={styles.images}>
             {Object.keys(imageDictionary).map((key) => {
               return (
                 <div 
                   key={key} 
                   onClick={() => handleImage(key)} 
-                  className={styles.image}
+                  className={currentImage.key == key ? styles.imageSelected : styles.image}
                 >
-                  <div className={currentImage.key == key ? styles.selected : ''}></div>
+                  {
+                    currentImage.key == key && (
+                      <div className={styles.selected}>
+                        <Image src={ImageSelected} alt='selected-icon' />
+                      </div>
+                    )
+                  }
                   <Image src={getImageByKey(key)} alt={`Avatar ${key}`} />
                 </div>
               )
             })}
           </div>
+        </div>
+        <div className={styles.submitButton}>
+          <span>Next</span>
         </div>
       </div>
     </div>

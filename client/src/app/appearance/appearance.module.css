@@ -3,12 +3,12 @@
   height: 100vh;
   display: flex;
   flex-direction: column;
-  gap: 40px;
+  gap: 20px;
   text-align: center;
   align-items: center;
   justify-content: center;
-  color: var(--text-color);
-  background-color: var(--background-color);
+  /* color: var(--text-color);
+  background-color: var(--background-color); */
 }
 
 .rightTop {
@@ -21,6 +21,12 @@
   font-size: 30px;
   color: #5E2491;
   font-weight: 600;
+}
+
+.mainContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
 }
 
 .container {
@@ -42,6 +48,16 @@
   border: 2px dotted rgb(182, 180, 180);
 }
 
+.currentImageSelected {
+  width: 50px;
+  padding: 2px;
+  height: 50px;
+  margin: auto;
+  border-radius: 50%;
+  position: relative;
+  border: 2px solid #5612C4;
+}
+
 .containerText {
   font-family: 'DM Sans', sans-serif;
   font-size: 18 px;
@@ -51,8 +67,15 @@
   margin-bottom: 20px;
 }
 
+.avatarText {
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
 .images {
-  gap: 10px;
+  gap: 12px;
   margin: 40px;
   display: flex;
   flex-wrap: wrap;
@@ -65,12 +88,36 @@
   width: 40px;
 }
 
+.imageSelected {
+  position: relative;
+  border-radius: 50%;
+  height: 49px;
+  border: 2px solid #5612C4;
+  transition: 0s ease-in;
+}
+
 .selected {
   position:absolute;
-  background-color: #5E2491;
-  border-radius: 50%;
-  width: 15px;
-  height: 15px;
+  width: 10px;
+  height: 10px;
   right: 0px;
-  bottom: 8px;
+  bottom: 7px;
+}
+
+.selectedCurrent {
+  position:absolute;
+  right: 1px;
+  bottom: 7px;
+}
+
+.submitButton {
+  gap: 12px;
+  width: 450px;
+  display: flex;
+  padding: 10px 25px;
+  align-items: center;
+  border-radius: 12px;
+  background: #5612C4;
+  justify-content: center;
+  color: white;
 }
