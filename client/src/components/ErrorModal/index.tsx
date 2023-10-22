@@ -3,7 +3,7 @@ import styles from './errorModal.module.css';
 
 interface ErrorModalProps {
   onClose: () => void;
-  errorMessage: string;
+  errorMessage: string | undefined;
 }
 
 const ErrorModal: React.FC<ErrorModalProps> = ({ onClose, errorMessage }) => {

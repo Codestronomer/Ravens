@@ -4,18 +4,21 @@ import React, { useState, useEffect, useContext } from 'react';
 import ErrorModal from '@/components/ErrorModal';
 import { GetUsername, GetPassword } from './authUtils';
 import styles from './auth.module.css';
+import Link from 'next/link';
 
 export function Login(): React.FunctionComponentElement<HTMLBodyElement> {
   const [isValid, setIsValid] = useState(false);
+  const [loginSuccess, setLoginSuccess] = useState<boolean>(false)
   const authContext = useContext(AuthContext) as AuthContextType;
 
   const {
+    user,
     userInfo,
-    updateUserInfo,
     loginUser,
-    loginError,
     isLoading,
+    loginError,
     setLoginError,
+    updateUserInfo,
   } = authContext;
   
   // Switch to next route
@@ -28,13 +31,28 @@ export function Login(): React.FunctionComponentElement<HTMLBodyElement> {
   };
 
   const handleUser = () => {
-    loginUser();
+    const isLoggedIn = loginUser()
+    if (isLoggedIn == true) {
+      setLoginSuccess(isLoggedIn);
+    }
   }
 
   useEffect(() => {
   }, [isValid]);
 
   return (
+    (loginSuccess ? 
+      <div className={styles.authComponent}>
+        <div className={styles.formInfo}>
+          <h3 className={styles.welcome}>Welcome back, {user.username}👋</h3>
+        </div>
+        <Link href="chat">
+          <button className={styles.userSubmit}>
+            Continue to chat
+          </button>
+        </Link>
+      </div>
+    :
     <div className={styles.authComponent}>
       <div className={styles.formInfo}>
         <h2 className={styles.welcome}>Welcome back👋</h2>
@@ -60,5 +78,6 @@ export function Login(): React.FunctionComponentElement<HTMLBodyElement> {
         }
       </div>
     </div>
+    )
   )
 }

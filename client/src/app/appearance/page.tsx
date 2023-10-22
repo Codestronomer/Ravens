@@ -20,6 +20,9 @@ import styles from './appearance.module.css';
 import ThemeToggle from '@/components/themeToggle';
 import { Theme } from '@/context/themeContext';
 import { ThemeContextType } from '@/context';
+import { AuthContext, AuthContextType } from '@/context/authContext';
+import { axiosPost, baseUrl } from '@/services/backend';
+import { Router } from 'next/router';
 
 type ImageDictionary = {
   [key: string]: StaticImageData;
@@ -47,7 +50,9 @@ interface ImageDataType {
 }
 
 const AppearanceSelector = () => {
+  const router = Router()
   const { theme } = useContext(Theme) as ThemeContextType;
+  const { user } = useContext(AuthContext) as AuthContextType;
   const [currentImage, setCurrentImage] = useState<ImageDataType>({
     image: ProfileImage,
     key: 'zero'
@@ -66,6 +71,18 @@ const AppearanceSelector = () => {
     const image = imageDictionary[key];
 
     setCurrentImage({image, key});
+  }
+
+  const handleClick = async (key: string) => {
+    if (key) {
+      const response = await axiosPost(`${baseUrl}/users/${user.id}/avatar`, { key });
+
+      if (response.error) {
+        console.log(response.error);
+      }
+
+      
+    }
   }
 
   return (
@@ -122,7 +139,7 @@ const AppearanceSelector = () => {
             })}
           </div>
         </div>
-        <div className={styles.submitButton}>
+        <div className={styles.submitButton} onClick={() => handleClick(currentImage.key)}>
           <span>Next</span>
         </div>
       </div>

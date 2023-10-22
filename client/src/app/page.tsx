@@ -3,7 +3,7 @@ import Link from 'next/link'
 import Image from 'next/image';
 import { useContext } from 'react';
 import { AppProps } from 'next/app';
-import { Auth } from './auth';
+import { AuthenticationMain } from './auth';
 import ThemeToggle from '@/components/themeToggle';
 import styles from './page.module.css';
 import SideImage from '../../public/work-chat-not-css.svg'
@@ -29,8 +29,7 @@ export default function Home() {
       >
         <div className={styles.brandHeader}><h1>Raven</h1></div>
         <div className={styles.form}>
-          <Auth />
-          <Link href="/chat">Chat</Link>
+          <AuthenticationMain />
         </div>
       </div>
       <div 

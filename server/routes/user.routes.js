@@ -4,6 +4,7 @@ import {
   getUser,
   getUsers,
   register,
+  updateAvatar,
   verifyUsername,
 } from '../controllers/user.controller.js';
 
@@ -14,6 +15,7 @@ router.get('/', getUsers);
 router.get('/:id', getUser);
 router.post('/login', login);
 router.post('/register', register);
+router.put('/:id/avatar', updateAvatar);
 router.get('/verify-username/:username', verifyUsername);
 
 export default router;

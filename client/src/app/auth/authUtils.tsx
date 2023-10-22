@@ -102,7 +102,7 @@ export const GetPassword: React.FC<passwordProps> = ({
           onChange={handlePassword}
         />
         <button className={styles.userSubmit} type="submit">
-          {isLoading ? (isRegister ? 'Creating Your Account' : 'Logging In') : isRegister ? 'Sign Up' : 'Login In'}
+          {isLoading ? (isRegister ? 'Creating Your Account' : 'Logging In') : isRegister ? 'Sign Up' : 'Log In'}
         </button>
       </form>
     </>

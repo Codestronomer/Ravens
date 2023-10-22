@@ -115,6 +115,27 @@ async function login(req, res) {
   }
 }
 
+async function updateAvatar(req, res) {
+  try {
+    const avatar = req.body.key;
+    const userId = req.params.id;
+
+    let user = await UserModel.findById(userId);
+
+    if (!user) {
+      return res.status(404).json({ message: 'User with the provided ID does not exists'});
+    }
+
+    user.image = avatar;
+
+    user = await user.save();
+
+    return res.status(200).json({ message: 'User update successful', user });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ message: error.message })
+  }
+}
 const sanitizeUser = (username, password) => {
   username = username.toLowerCase();
   password = username.toLowerCase()
@@ -127,5 +148,6 @@ export {
   getUser,
   register,
   getUsers,
+  updateAvatar,
   verifyUsername,
 };

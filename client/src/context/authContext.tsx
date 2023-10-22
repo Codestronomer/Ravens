@@ -19,25 +19,26 @@ export interface UserInfo {
   password: string
 }
 
-export interface errorType {
+export interface ErrorType {
   error: boolean
   message: string
 }
 
 // Define the auth context type
 export interface AuthContextType {
-  user: User
-  isLoading: boolean
-  userInfo: UserInfo
-  loginUser: Function
-  registerUser: Function
-  updateUserInfo: Function
-  isValidUsername: boolean
-  loginError: errorType | null
-  registerError: errorType | null
+  user: User;
+  isLoading: boolean;
+  userInfo: UserInfo;
+  isSuccessful: boolean;
+  isValidUsername: boolean;
+  loginError: ErrorType | null;
+  registerError: ErrorType | null;
+  loginUser: (userInfo: UserInfo) => void;
+  updateUserInfo: (info: UserInfo) => void;
+  registerUser: (userInfo: UserInfo) => void;
   checkIsValidUsername: (username: string) => void;
-  setLoginError: (error: errorType | null) => void;
-  setRegisterError: (error: errorType | null) => void;
+  setLoginError: (error: ErrorType | null) => void;
+  setRegisterError: (error: ErrorType | null) => void;
 }
 
 // Define auth context
@@ -55,55 +56,65 @@ export const AuthContextProvider = (
     username: "",
     password: ""
   });
+
+  const [isSuccessful, setIsSuccessful] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isValidUsername, setIsValidUsername] = useState(true);
-  const [loginError, setLoginError] = useState<errorType | null>(null);
-  const [registerError, setRegisterError] = useState<errorType | null>(null);
+  const [loginError, setLoginError] = useState<ErrorType | null>(null);
+  const [registerError, setRegisterError] = useState<ErrorType | null>(null);
 
   // update user info state
   const updateUserInfo = useCallback((info: UserInfo) => {
     setUserInfo(info);
   }, []);
 
-  // function to register user
-  const registerUser = useCallback(async () => {
+  // Function to register user
+  const registerUser = useCallback(async (userInfo: UserInfo) => {
     setIsLoading(true);
     setRegisterError(null);
 
-    const response = await axiosPost(`${baseUrl}/users/register`, userInfo);
-    // if request returned an error
-    if (response?.error) {
-      return setRegisterError(response);
+    try {
+      const response = await axiosPost(`${baseUrl}/users/register`, userInfo);
+
+      // Check for errors
+      if (response?.error) {
+        setRegisterError(response);
+      } else {
+        localStorage.setItem('user', JSON.stringify(response));
+        setUser(response);
+        setIsSuccessful(true);
+      }
+    } catch (error) {
+      // Handle network or other errors
+      console.error(error);
+    } finally {
+      setIsLoading(false);
     }
+  }, [setRegisterError, setUser]);
 
-    setIsLoading(false);
-
-    console.log(response);
-    
-    // save user information
-    localStorage.setItem('user', JSON.stringify(response));
-    setUser(response);
-  }, [userInfo]);
-
-  // function to login user
-  const loginUser = useCallback(async () => {
+  // Function to login user
+  const loginUser = useCallback(async (userInfo: UserInfo) => {
     setIsLoading(true);
     setLoginError(null);
 
-    const response = await axiosPost(`${baseUrl}/users/login`, userInfo);
+    try {
+      const response = await axiosPost(`${baseUrl}/users/login`, userInfo);
 
-    // if request returned an error
-    if (response?.error) {
+      // Check for errors
+      if (response?.error) {
+        setLoginError(response);
+      } else {
+        localStorage.setItem('user', JSON.stringify(response));
+        setUser(response);
+        setIsSuccessful(true);
+      }
+    } catch (error) {
+      // Handle network or other errors
+      console.error(error);
+    } finally {
       setIsLoading(false);
-      return setLoginError(response);
     }
-
-    
-    // save user information
-    localStorage.setItem('user', JSON.stringify(response));
-    setUser(response);
-    setIsLoading(false);
-  }, [userInfo]);
+  }, [setLoginError, setUser, ]);
 
   // check if User exists
   const checkIsValidUsername = useCallback(async (username: string) => {
@@ -137,6 +148,7 @@ export const AuthContextProvider = (
     loginUser,
     loginError,
     registerUser,
+    isSuccessful,
     registerError,
     setLoginError,
     updateUserInfo,
