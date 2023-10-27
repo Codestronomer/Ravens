@@ -11,6 +11,7 @@ import { AuthContext, AuthContextType, User } from '@/context/authContext';
 import ChatImage from '../../../public/undraw/undraw_new_message_re_fp03.svg';
 import LoadingSpinner from '@/components/loadingSpinner';
 import { Theme } from '@/context/themeContext';
+import useProfileAvatar from '@/hook/useProfileAvatar';
 
 const ChatBox = () => {
   const scroll = createRef<HTMLDivElement>();
@@ -25,6 +26,9 @@ const ChatBox = () => {
     isMessagesLoading,
   } = useContext(ChatContext) as ChatContextType;
   const recipientUsers = currentChat?.members?.filter((member) => member._id !== user.id);
+
+  // get chat avatar
+  const profileImage = useProfileAvatar(recipientUsers?.at(0).image);
 
   useEffect(() => {
     scroll.current?.scrollIntoView({ behavior: 'smooth' });
@@ -43,6 +47,7 @@ const ChatBox = () => {
             <h3>
               {recipientUsers.map((recipientUser: User) => recipientUser.username).join(", ")}
             </h3>
+            <Image src={profileImage} alt="chat image" />
           </div>
           <div className={styles.messagesOverlay}>
             {isMessagesLoading && (

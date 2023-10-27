@@ -68,3 +68,29 @@ export async function axiosPost(url: string, body: any) {
     return { error: true, message: error?.message };
   }
 }
+
+export async function axiosPut(url: string, body: any) {
+  try {
+    const response = await axios.put(url,
+      body, {
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      }
+    );
+
+    if (response.status >= 400) {
+      let message;
+      if (response.data.message) {
+        message = response.data.message;
+      } else {
+        message = response.statusText;
+      }
+      return { error: true, message };
+    }
+
+    return response.data;
+  } catch (error: any) {
+    return { error: true, message: error?.message };
+  }
+}

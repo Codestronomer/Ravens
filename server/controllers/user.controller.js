@@ -9,7 +9,7 @@ async function getUsers(req, res) {
     const users = await UserModel.find();
 
     const updatedUsers = users.map((user) => {
-      return { ...user.toObject(), id: user._id }; // Add 'id' property
+      return { username: user.username, id: user._id, image: user?.image }; // Add 'id' property
     });
 
     return res.status(200).json(updatedUsers);
@@ -28,7 +28,7 @@ async function getUser(req, res) {
       return res.status(404).json({ message: 'User with the provided id does not exist' });
     }
 
-    return res.status(200).json(user);
+    return res.status(200).json({ username: user.username, id: user._id, image: user?.image });
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }
@@ -84,7 +84,7 @@ async function register(req, res) {
 
     const token = signJwt(_.omit(user.toObject(), 'password'));
 
-    return res.status(200).json({ username: user.username, id: user._id, token });
+    return res.status(200).json({ username: user.username, id: user._id, token, image: user?.image });
   } catch(error) {
     console.log(error.message);
     return res.status(500).json({ message: error.message });
@@ -108,7 +108,7 @@ async function login(req, res) {
     // create auth token
     const token = signJwt(_.omit(user.toObject(), 'password'));
 
-    return res.status(200).json({ username: user.username, id: user._id, token });
+    return res.status(200).json({ username: user.username, id: user._id, token, image: user?.image });
   } catch (error) {
     console.log(error);
     return res.status(500).json({ message: error.message });

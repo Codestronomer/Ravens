@@ -12,6 +12,7 @@ export interface User {
   id: string
   username: string
   token: string
+  image: string
 }
 
 export interface UserInfo {
@@ -49,6 +50,7 @@ export const AuthContextProvider = (
   ) => {
   const [user, setUser] = useState<User>({
     id: "",
+    image: "",
     token: "",
     username: "",
   });

@@ -9,6 +9,7 @@ import { ChatContext } from '@/context/chatContext';
 import ProfileImage from '@/../public/John.jpg';
 import { filterUnreadNotifications } from '@/services/unreadNotification';
 import useFetchLatestMessage from '@/hook/useFetchLatestMessage';
+import useProfileAvatar from '@/hook/useProfileAvatar';
 
 const ChatItem = ({ chat, user, onlineUsers }: { chat: Chat, user: User, onlineUsers: socketUser[] }) => {
 
@@ -36,6 +37,9 @@ const ChatItem = ({ chat, user, onlineUsers }: { chat: Chat, user: User, onlineU
     return text;
   }
 
+  // get chat avatar
+  const profileImage = useProfileAvatar(recipientUser?.image);
+
   return (
     <div
       className={currentChat?.id == chat?.id ? styles.chatActive : styles.chat}
@@ -47,7 +51,7 @@ const ChatItem = ({ chat, user, onlineUsers }: { chat: Chat, user: User, onlineU
     >
       <div className={styles.chatImg}>
         <Image
-          src={ProfileImage}
+          src={profileImage}
           alt="profile image"
           height={50}
           width={50}

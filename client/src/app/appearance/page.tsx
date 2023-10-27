@@ -21,10 +21,11 @@ import ThemeToggle from '@/components/themeToggle';
 import { Theme } from '@/context/themeContext';
 import { ThemeContextType } from '@/context';
 import { AuthContext, AuthContextType } from '@/context/authContext';
-import { axiosPost, baseUrl } from '@/services/backend';
-import { Router } from 'next/router';
+import { axiosPut, baseUrl } from '@/services/backend';
+import { useRouter } from 'next/navigation';
+import ErrorModal from '@/components/ErrorModal';
 
-type ImageDictionary = {
+export type ImageDictionary = {
   [key: string]: StaticImageData;
 };
 
@@ -50,7 +51,7 @@ interface ImageDataType {
 }
 
 const AppearanceSelector = () => {
-  const router = Router()
+  const router = useRouter();
   const { theme } = useContext(Theme) as ThemeContextType;
   const { user } = useContext(AuthContext) as AuthContextType;
   const [currentImage, setCurrentImage] = useState<ImageDataType>({
@@ -75,13 +76,14 @@ const AppearanceSelector = () => {
 
   const handleClick = async (key: string) => {
     if (key) {
-      const response = await axiosPost(`${baseUrl}/users/${user.id}/avatar`, { key });
+      const response = await axiosPut(`${baseUrl}/users/${user.id}/avatar`, { key });
 
       if (response.error) {
         console.log(response.error);
+      } else {
+        router.push('/chat');
       }
 
-      
     }
   }
 

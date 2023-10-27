@@ -47,6 +47,7 @@
   height: 40px;
   border: none;
   padding: 5px;
+  cursor: grab;
   border-radius: 5px;
   border: 2px solid gray;
   color: var(--text-color);
