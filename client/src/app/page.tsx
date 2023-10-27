@@ -9,7 +9,6 @@ import styles from './page.module.css';
 import SideImage from '../../public/work-chat-not-css.svg'
 import { Theme } from '@/context/themeContext';
 import { ThemeContextType } from '@/context';
-import AppearanceSelector from '@/components/appearance';
 
 export default function Home() {
   const { theme } = useContext(Theme) as ThemeContextType;
@@ -22,7 +21,6 @@ export default function Home() {
       }}
     >
       <div className={`${styles.left} ${theme == 'dark' ? 'dark' : ''}`}
-
         style={{
           backgroundColor: `var(--background-color)`,
         }}

@@ -17,18 +17,34 @@ export function AuthenticationMain() {
     setIsRegister(!isRegister); // Toggle between register and login
   }
 
-  console.log("success", isSuccessful);
-
   return (
     <div ref={parent}>
-      {isSuccessful || user.username.length > 2 ? (<div className={styles.formInfo}>
-            <h3 className={styles.welcome}>Welcome back, {user?.username}👋</h3>
-            <Link href="chat">
-              <button className={styles.userSubmit}>
-                Continue to chat
-              </button>
-            </Link>
-          </div>) : (
+      {isSuccessful || user.username.length > 2 ?
+        <div className={styles.formInfo}>
+            {
+              isRegister ? (
+                <>
+                  <h3 className={styles.welcome}>Welcome {user?.username}👋</h3>
+                  <Link href="appearance">
+                    <button className={styles.userSubmit}>
+                      Continue
+                    </button>
+                  </Link>
+                </>
+
+              ) : (
+                <>
+                  <h3 className={styles.welcome}>Welcome back, {user?.username}👋</h3>
+                  <Link href="chat">
+                    <button className={styles.userSubmit}>
+                      Continue to chat
+                    </button>
+                  </Link>
+                </>
+              )
+            }
+          </div>
+        : (
         <>
           <Auth isRegister={isRegister} /> {/* Use the Auth component with isRegister prop */}
           <div className={styles.authSwitch} onClick={handleClick}>
