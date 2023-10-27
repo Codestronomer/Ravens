@@ -78,7 +78,7 @@ export const Auth: React.FC<AuthProps> = ({ isRegister }) => {
           placeholder="Username"
           onChange={handleUsername}
         />
-        {isRegister && isValidUsername && (
+        {isRegister && userInfo.username?.length > 2 && isValidUsername && (
           <p className={styles.usernameError}>Username is already taken</p>
         )}
 

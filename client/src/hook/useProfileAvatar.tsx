@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Image, { StaticImageData } from 'next/image';
 import DefaultImage from '../../public/John.jpg';
+import Avatar0 from '../../public/teepee.jpg';
 import Avatar1 from '../../public/avatars/avatar1.svg';
 import Avatar2 from '../../public/avatars/avatar2.svg';
 import Avatar3 from '../../public/avatars/avatar3.svg';
@@ -18,21 +19,24 @@ import { ImageDictionary } from '@/app/appearance/page';
 
 const useProfileAvatar = (key: string) => {
 
+  console.log("key", key);
+
   const imageDictionary: ImageDictionary = {
-  one: Avatar1,
-  two: Avatar2,
-  three: Avatar3,
-  four: Avatar4,
-  five: Avatar5,
-  six: Avatar6,
-  eight: Avatar8,
-  nine: Avatar9,
-  ten: Avatar10,
-  eleven: Avatar11,
-  twelve: Avatar12,
-  thirteen: Avatar13,
-  fourteen: Avatar14,
-};
+    zero: Avatar0,
+    one: Avatar1,
+    two: Avatar2,
+    three: Avatar3,
+    four: Avatar4,
+    five: Avatar5,
+    six: Avatar6,
+    eight: Avatar8,
+    nine: Avatar9,
+    ten: Avatar10,
+    eleven: Avatar11,
+    twelve: Avatar12,
+    thirteen: Avatar13,
+    fourteen: Avatar14,
+  };
 
   // get image from image dictionary using key
   if (imageDictionary.hasOwnProperty(key)) {
