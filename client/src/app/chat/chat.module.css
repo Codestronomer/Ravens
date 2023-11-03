@@ -1,16 +1,32 @@
 .chats {
+  height: 100%;
+}
+
+
+
+.topLeft {
+  position: absolute;
+  top: 15px;
+  left: 30px;
+}
+
+.topRight {
+  position: absolute;
+  top: 10px;
+  right: 20px;
 }
 
 .chatLayout {
   display: flex;
+  overflow: hidden;
   flex-direction: row;
 }
 
 .chatLeft {
   gap: 15px;
   width: 30%;
-  margin: 40px;
-  height: 500px;
+  margin: 60px;
+  height: 450px;
   padding: 10px;
   display: flex;
   border-radius: 8px;
@@ -26,11 +42,11 @@
 
 .chatRight {
   width: 60%;
-  margin: 40px;
+  margin: 60px;
   padding: 20px;
   border-radius: 8px;
   background-color: #fff;
-  max-height: 500px;
+  max-height: 450px;
 }
 
 .view {
@@ -203,8 +219,8 @@
 }
 
 .messagesContainer {
-  max-height: 360px; /* Adjust to your preferred maximum height */
-  height: 360px;
+  max-height: 320px; /* Adjust to your preferred maximum height */
+  height: 320px;
   overflow-y: scroll;
   padding-top: 10px;
   padding-bottom: 10px;
@@ -235,11 +251,12 @@
 
 .messageNav {
   border-bottom: 2px solid #5E4291;
-  padding: 10px;
-  height: 60px;
+  padding: 0px;
+  height: 40px;
   display: flex;
-  flex-direction: row;
-  justify-content: space-around;
+  justify-content: center;
+  flex-direction: row-reverse;
+  gap: 20px;
 }
 
 .textInput {

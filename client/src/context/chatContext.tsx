@@ -157,7 +157,6 @@ export const ChatContextProvider = ({ children }: {
         setIsChatLoading(true);
         setChatError(null);
         const response = await axiosGet(`${baseUrl}/chat/${user?.id}`);
-        console.log("response", response);
 
         setIsChatLoading(false);
         if (response.error) {

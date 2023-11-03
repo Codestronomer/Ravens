@@ -6,6 +6,7 @@ import styles from './chat.module.css'
 import { User } from '@/context/authContext';
 import { socketUser, errorType, Chat } from '@/context';
 import LoadingSpinner from '@/components/loadingSpinner';
+import moment from 'moment';
 
 interface ChatListProps {
   user: User

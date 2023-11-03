@@ -53,8 +53,8 @@ const ChatItem = ({ chat, user, onlineUsers }: { chat: Chat, user: User, onlineU
         <Image
           src={profileImage}
           alt="profile image"
-          height={50}
-          width={50}
+          height={40}
+          width={40}
         />
         <div className={onlineUsers?.some((onlineUser) => onlineUser.userId == recipientUser?._id) ? styles.isOnline : ''}></div>
       </div>

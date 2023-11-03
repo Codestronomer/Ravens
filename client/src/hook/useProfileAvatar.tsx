@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Image, { StaticImageData } from 'next/image';
-import DefaultImage from '../../public/John.jpg';
 import Avatar0 from '../../public/teepee.jpg';
+import DefaultImage from '../../public/user.png';
 import Avatar1 from '../../public/avatars/avatar1.svg';
 import Avatar2 from '../../public/avatars/avatar2.svg';
 import Avatar3 from '../../public/avatars/avatar3.svg';
@@ -18,8 +18,6 @@ import Avatar14 from '../../public/avatars/avatar14.svg';
 import { ImageDictionary } from '@/app/appearance/page';
 
 const useProfileAvatar = (key: string) => {
-
-  console.log("key", key);
 
   const imageDictionary: ImageDictionary = {
     zero: Avatar0,

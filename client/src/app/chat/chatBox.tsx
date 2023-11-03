@@ -39,15 +39,16 @@ const ChatBox = () => {
       {recipientUsers && recipientUsers.length > 0 ? (
         <div className={`styles.conversation ${theme == 'dark' ? 'dark' : ''}`}
             style={{
-              backgroundColor: `var(--background-color)`,
+              backgroundColor: `var(--main-right)`,
               color: `var(--text-color)`,
-            }}>
+            }}
+        >
           <div className={styles.messageNav}>
             {/* Display the names of all recipients */}
             <h3>
               {recipientUsers.map((recipientUser: User) => recipientUser.username).join(", ")}
             </h3>
-            <Image src={profileImage} alt="chat image" />
+            <Image src={profileImage} alt="chat image" width={30} height={30} />
           </div>
           <div className={styles.messagesOverlay}>
             {isMessagesLoading && (
