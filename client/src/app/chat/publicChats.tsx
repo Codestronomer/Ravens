@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { SetStateAction } from 'react';
 import ChatPopUp from './chatPopUp';
 import styles from './chat.module.css';
 import { User } from '@/context/authContext';
@@ -8,11 +8,13 @@ function PublicChats(
   {
     chats,
     user,
+    setView,
     createChat,
     onlineUsers,
   }: {
     user: User,
     chats: User[],
+    setView: React.Dispatch<SetStateAction<string>>
     onlineUsers: socketUser[];
     createChat: (firstId: string, secondId: string) => void;
   }) {
@@ -26,6 +28,7 @@ function PublicChats(
               key={chat.id}
               chat={chat}
               user={user}
+              setView={setView}
               createChat={createChat}
               onlineUsers={onlineUsers}
             />

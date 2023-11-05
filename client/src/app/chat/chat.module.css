@@ -259,6 +259,10 @@
   gap: 20px;
 }
 
+.messageNavImage {
+  border-radius: 50%;
+}
+
 .textInput {
   height: 40px;
   width: 400px;

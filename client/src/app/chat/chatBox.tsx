@@ -48,7 +48,7 @@ const ChatBox = () => {
             <h3>
               {recipientUsers.map((recipientUser: User) => recipientUser.username).join(", ")}
             </h3>
-            <Image src={profileImage} alt="chat image" width={30} height={30} />
+            <Image src={profileImage} alt="chat image" width={30} height={30} className={styles.messageNavImage} />
           </div>
           <div className={styles.messagesOverlay}>
             {isMessagesLoading && (

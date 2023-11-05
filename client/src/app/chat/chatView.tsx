@@ -42,6 +42,7 @@ function ChatView() {
         :
         <PublicChats
           user={user}
+          setView={setView}
           chats={publicChats}
           createChat={createChat}
           onlineUsers={onlineUsers}

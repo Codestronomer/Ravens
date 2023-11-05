@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Image, { StaticImageData } from 'next/image';
 import Avatar0 from '../../public/teepee.jpg';
-import DefaultImage from '../../public/user.png';
+import DefaultImage from '../../public/user2.jpeg';
 import Avatar1 from '../../public/avatars/avatar1.svg';
 import Avatar2 from '../../public/avatars/avatar2.svg';
 import Avatar3 from '../../public/avatars/avatar3.svg';
