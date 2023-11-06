@@ -9,7 +9,7 @@ import styles from './auth.module.css';
 
 export function AuthenticationMain() {
   const [parent] = useAutoAnimate();
-  const { isSuccessful, user } = useContext(AuthContext) as AuthContextType;
+  const { isSuccessful, user, logout } = useContext(AuthContext) as AuthContextType;
   const [isRegister, setIsRegister] = useState<boolean>(false); // Rename isLogin to isRegister
 
   // Toggle between register and login
@@ -22,7 +22,7 @@ export function AuthenticationMain() {
     <div ref={parent}>
       {/* Check if user is successfully authenticated or has a username */}
       {isSuccessful || user.username.length > 2 ? (
-        <div className={styles.formInfo}>
+        <div className={styles.formInfo} ref={parent}>
            {/* Display welcome message and continue button */}
           <h3 className={styles.welcome}>{isRegister ? `Welcome ${user?.username}👋` : `Welcome back, ${user?.username}`}</h3>
           <Link href={isRegister ? "appearance" : "chat"}>
@@ -30,12 +30,15 @@ export function AuthenticationMain() {
               {isRegister ? 'Continue' : 'Continue to Chat'}
             </button>
           </Link>
+          <div className={styles.logoutLink} onClick={() => logout()}>
+            Logout
+          </div>
         </div>
       ) : (
         // User is not authenticated or registered
         <>
           <Auth isRegister={isRegister} /> {/* Use the Auth component with isRegister prop */}
-          <div className={styles.authSwitch} onClick={handleClick}>
+          <div className={styles.authSwitch} onClick={handleClick} ref={parent}>
             {
               isRegister ? 
               <div className={styles.authSwitchText}>

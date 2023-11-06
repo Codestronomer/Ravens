@@ -4,8 +4,6 @@ import React, { useContext, useEffect, useRef } from 'react';
 import { DarkModeToggle } from 'react-dark-mode-toggle-2';
 import styles from './theme.module.css';
 import { Theme } from '@/context/themeContext';
-import LightIcon from '../../../public/themeIcons/sun-svgrepo-com.svg';
-import DarkIcon from '../../../public/themeIcons/weather-clear-night-svgrepo-com.svg';
 import { ThemeContextType } from '@/context';
 
 export default function ThemeToggle() {
@@ -21,7 +19,7 @@ export default function ThemeToggle() {
     <DarkModeToggle 
       onChange={setIsDarkMode}
       isDarkMode={isDarkMode} 
-      size={70}
+      size={60}
     />   
     // // <div className={styles.darkModeToggle} onClick={() => toggleTheme()}>
     //   {/* <button className={styles.toggleButton}>

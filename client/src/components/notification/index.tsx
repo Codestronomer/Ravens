@@ -7,6 +7,7 @@ import { ChatContext } from '@/context/chatContext';
 import styles from './notification.module.css';
 import { AuthContext, AuthContextType } from '@/context/authContext';
 import NotificationUnread from '../../../public/notificationUnread.svg';
+import NotificationRead from '../../../public/notificationRead.svg';
 import { filterUnreadNotifications } from '@/services/unreadNotification';
 
 function Notification() {
@@ -35,12 +36,11 @@ function Notification() {
   return (
     <div className={styles.notifications}>
       <div className={styles.notificationsIcon} onClick={() => setIsOpen(!isOpen)}>
-        <Image src={NotificationUnread} height={40} width={40} alt={'notification-icon'} />
-        {unreadNotifications?.length === 0 ? null : (
-          <div className={styles.notificationCount}>
-            <span>{unreadNotifications.length}</span>
-          </div>
-        )}
+        {unreadNotifications?.length === 0 ?
+          <Image src={NotificationRead} height={28} width={28} alt={'notification-icon'} />
+        :
+          <Image src={NotificationUnread} height={28} width={28} alt={'notification-unread-icon'} />
+        }
       </div>
       {isOpen && 
         <div className={styles.notificationsBox} style={{'color': 'white'}}>

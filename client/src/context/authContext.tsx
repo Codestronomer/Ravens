@@ -30,6 +30,7 @@ export interface AuthContextType {
   user: User;
   isLoading: boolean;
   userInfo: UserInfo;
+  logout: () => void;
   isSuccessful: boolean;
   isValidUsername: boolean;
   loginError: ErrorType | null;
@@ -135,6 +136,15 @@ export const AuthContextProvider = (
     }
   }, []);
 
+  const logout = () => {
+    localStorage.setItem('user', "");
+    setUser({ id: "",
+      image: "",
+      token: "",
+      username: "",
+    });
+  }
+
   // Get persisted user data from local storage when the component mounts
   useEffect(() => {
     const persistedUser = localStorage.getItem('user');
@@ -145,6 +155,7 @@ export const AuthContextProvider = (
 
   const contextValue: AuthContextType = {
     user,
+    logout,
     userInfo,
     isLoading,
     loginUser,

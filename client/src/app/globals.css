@@ -7,13 +7,15 @@
 
   --foreground-rgb: 0, 0, 0;
 
-  --background-color: #F3F3F2;
+  --background-color: #dedede;
   --text-color: #111111;
   --main-left: #F3F3F2;
-  --main-right: #F7FCFE;
+  --main-right: #F3F3F2;
   --toggle-color: #FFFFFF;
   --toggle-night-color: white;
   --toggle-day-color: #5E4291;
+  --chat-right: #5E4291;
+  --chat-left: #dadada;
 
 
   --primary-glow: conic-gradient(
@@ -56,6 +58,7 @@
   --toggle-color: #111111;
   --toggle-night-color: #5E4291;
   --toggle-day-color: #111111;
+  --chat-left: gray;
 }
 
 * {

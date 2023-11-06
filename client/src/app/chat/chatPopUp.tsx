@@ -25,8 +25,8 @@ function ChatPopUp({ user, chat, onlineUsers, setView, createChat }: {
         <Image
           src={profileImage}
           alt="profile image"
-          height={50}
-          width={50}
+          height={40}
+          width={40}
         />
         <div className={onlineUsers?.some((onlineUser) => onlineUser.userId == chat?.id) ? styles.isOnline : ''}>
         </div>

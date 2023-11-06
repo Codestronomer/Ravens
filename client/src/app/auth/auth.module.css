@@ -105,3 +105,9 @@
   opacity: 0; /* Fade out when the "inactive" class is applied */
   max-height: 0; /* Collapse the container when inactive */
 }
+
+.logoutLink {
+  cursor: pointer;
+  padding: 50px;
+  text-decoration: underline;
+}

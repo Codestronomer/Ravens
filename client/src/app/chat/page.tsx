@@ -1,16 +1,18 @@
 'use client'
+import Image from 'next/image';
 import React, { useContext } from 'react';
 import styles from './chat.module.css';
 import ChatBox from './chatBox';
-import BackIcon from '../../../public/back-icon.svg'
 import ChatView from './chatView';
 import Notification from '../../components/notification';
 import { ThemeContextType } from '@/context';
 import { Theme } from '@/context/themeContext';
 import ThemeToggle from '@/components/themeToggle';
-import Image from 'next/image';
+import BackIcon from '../../../public/back-icon.svg'
+import BackIconWhite from '../../../public/back-icon-white.svg';
+import Link from 'next/link';
 
-const Chat = ({ children } : { children: React.ReactNode }) => {
+const Chat = () => {
 
   const { theme } = useContext(Theme) as ThemeContextType;
 
@@ -23,9 +25,15 @@ const Chat = ({ children } : { children: React.ReactNode }) => {
           }}
     >
       <div className={styles.chatTop}>
-        <div className={styles.topLeft}>
-          <Image src={BackIcon} alt='back-icon' width={50} height={50}  />
-        </div>
+        <Link href={"/"}>
+          <div className={styles.topLeft}>
+            {theme == 'dark' ? 
+              <Image src={BackIconWhite} alt='back-icon white' width={40} height={20} />
+            :
+              <Image src={BackIcon} alt='back-icon' width={40} height={20}  />
+            }
+          </div>
+        </Link>
         <div className={styles.topRight}>
           <ThemeToggle />
         </div>
