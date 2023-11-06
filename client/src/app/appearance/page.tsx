@@ -1,6 +1,11 @@
 'use client'
+import useDarkMode from 'use-dark-mode';
+import { useRouter } from 'next/navigation';
+import styles from './appearance.module.css';
+import ThemeToggle from '@/components/themeToggle';
 import React, { useContext, useState } from 'react';
 import Image, { StaticImageData } from 'next/image';
+import { axiosPut, baseUrl } from '@/services/backend';
 import Avatar1 from '../../../public/avatars/avatar1.svg';
 import Avatar2 from '../../../public/avatars/avatar2.svg';
 import Avatar3 from '../../../public/avatars/avatar3.svg';
@@ -16,13 +21,7 @@ import Avatar13 from '../../../public/avatars/avatar13.svg';
 import Avatar14 from '../../../public/avatars/avatar14.svg';
 import ImageSelected from '../../../public/imageSelected.svg';
 import ProfileImage from '../../../public/user-svgrepo-com.svg';
-import styles from './appearance.module.css';
-import ThemeToggle from '@/components/themeToggle';
-import { Theme } from '@/context/themeContext';
-import { ThemeContextType } from '@/context';
 import { AuthContext, AuthContextType } from '@/context/authContext';
-import { axiosPut, baseUrl } from '@/services/backend';
-import { useRouter } from 'next/navigation';
 import ErrorModal from '@/components/ErrorModal';
 
 export type ImageDictionary = {
@@ -52,7 +51,8 @@ interface ImageDataType {
 
 const AppearanceSelector = () => {
   const router = useRouter();
-  const { theme } = useContext(Theme) as ThemeContextType;
+  // const { theme } = useContext(Theme) as ThemeContextType;
+  const theme = useDarkMode(false);
   const { user } = useContext(AuthContext) as AuthContextType;
   const [currentImage, setCurrentImage] = useState<ImageDataType>({
     image: ProfileImage,
@@ -89,7 +89,7 @@ const AppearanceSelector = () => {
 
   return (
     <div 
-      className={`${styles.main} ${theme == 'dark' ? 'dark' : ''} `} 
+      className={`${styles.main} ${theme.value == true ? 'dark' : ''} `} 
       style={{
         backgroundColor: `var(--background-color)`,
         color: `var(--text-color)`,

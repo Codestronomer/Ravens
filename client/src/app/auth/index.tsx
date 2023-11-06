@@ -38,7 +38,7 @@ export function AuthenticationMain() {
         // User is not authenticated or registered
         <>
           <Auth isRegister={isRegister} /> {/* Use the Auth component with isRegister prop */}
-          <div className={styles.authSwitch} onClick={handleClick} ref={parent}>
+          <div className={styles.authSwitch} onClick={handleClick}>
             {
               isRegister ? 
               <div className={styles.authSwitchText}>

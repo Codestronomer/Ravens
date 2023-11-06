@@ -1,24 +1,22 @@
-'use client'
+"use client"
+import React from 'react';
+import Link from 'next/link';
 import Image from 'next/image';
-import React, { useContext } from 'react';
-import styles from './chat.module.css';
 import ChatBox from './chatBox';
 import ChatView from './chatView';
-import Notification from '../../components/notification';
-import { ThemeContextType } from '@/context';
-import { Theme } from '@/context/themeContext';
+import styles from './chat.module.css';
+import useDarkMode from 'use-dark-mode';
 import ThemeToggle from '@/components/themeToggle';
 import BackIcon from '../../../public/back-icon.svg'
+import Notification from '../../components/notification';
 import BackIconWhite from '../../../public/back-icon-white.svg';
-import Link from 'next/link';
 
 const Chat = () => {
-
-  const { theme } = useContext(Theme) as ThemeContextType;
+  const theme = useDarkMode(false)
 
   return (
   <>
-    <div className={`${styles.chats} ${theme == 'dark' ? 'dark' : ''}`}
+    <div className={`${styles.chats} ${theme.value == true ? 'dark' : ''}`}
           style={{
             backgroundColor: `var(--background-color)`,
             color: `var(--text-color)`,
@@ -27,7 +25,7 @@ const Chat = () => {
       <div className={styles.chatTop}>
         <Link href={"/"}>
           <div className={styles.topLeft}>
-            {theme == 'dark' ? 
+            {theme.value == true ? 
               <Image src={BackIconWhite} alt='back-icon white' width={40} height={20} />
             :
               <Image src={BackIcon} alt='back-icon' width={40} height={20}  />
@@ -40,7 +38,7 @@ const Chat = () => {
       </div>
       <div className={styles.chatLayout}>
         <div 
-          className={`${styles.chatLeft} ${theme == 'dark' ? 'dark' : ''}`}
+          className={`${styles.chatLeft} ${theme.value == true ? 'dark' : ''}`}
           style={{
             backgroundColor: `var(--main-right)`,
             color: `var(--text-color)`,
@@ -55,7 +53,7 @@ const Chat = () => {
           </div>
         </div>
         <div 
-          className={`${styles.chatRight} ${theme == 'dark' ? 'dark' : ''}`}
+          className={`${styles.chatRight} ${theme.value == true ? 'dark' : ''}`}
           style={{
             backgroundColor: `var(--main-right)`,
             color: `var(--text-color)`,

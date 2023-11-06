@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-sync-scripts */
 import './globals.css'
 import type { Metadata } from 'next'
 import { Inter, Montserrat, Bree_Serif, DM_Sans } from 'next/font/google'
@@ -21,7 +22,8 @@ export default function RootLayout({
     <html lang="en">
       <Provider>
         <body className={dm_sans.className} suppressHydrationWarning={true}>
-            {children}
+          <script src="./../../public/noflash.js" />
+          {children}
         </body>
       </Provider>
     </html>

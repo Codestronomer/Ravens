@@ -1,26 +1,22 @@
 'use client'
-import Link from 'next/link'
 import Image from 'next/image';
-import { useContext } from 'react';
-import { AppProps } from 'next/app';
+import styles from './page.module.css';
+import useDarkMode from 'use-dark-mode';
 import { AuthenticationMain } from './auth';
 import ThemeToggle from '@/components/themeToggle';
-import styles from './page.module.css';
 import SideImage from '../../public/work-chat-not-css.svg'
-import { Theme } from '@/context/themeContext';
-import { ThemeContextType } from '@/context';
 
 export default function Home() {
-  const { theme } = useContext(Theme) as ThemeContextType;
+  const theme = useDarkMode(false);
 
   return (
-    <main className={`${styles.main} ${theme == 'dark' ? 'dark' : ''}`} 
+    <main className={`${styles.main} ${theme.value == false ? '' : 'dark'}`}
       style={{
         backgroundColor: `var(--background-color)`,
         color: `var(--text-color)`,
       }}
     >
-      <div className={`${styles.left} ${theme == 'dark' ? 'dark' : ''}`}
+      <div className={`${styles.left} ${theme.value == false ? '' : 'dark'}`}
         style={{
           backgroundColor: `var(--background-color)`,
         }}
@@ -31,7 +27,7 @@ export default function Home() {
         </div>
       </div>
       <div 
-        className={`${styles.right} ${theme == 'dark' ? 'dark' : ''}`}
+        className={`${styles.right} ${theme.value == false ? '' : 'dark'}`}
         style={{
           backgroundColor: `var(--main-right)`,
         }}
