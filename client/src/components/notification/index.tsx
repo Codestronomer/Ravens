@@ -9,6 +9,7 @@ import { AuthContext, AuthContextType } from '@/context/authContext';
 import NotificationUnread from '../../../public/notificationUnread.svg';
 import NotificationRead from '../../../public/notificationRead.svg';
 import { filterUnreadNotifications } from '@/services/unreadNotification';
+import { send } from 'process';
 
 function Notification() {
   const [isOpen, setIsOpen] = useState(false);
@@ -23,7 +24,8 @@ function Notification() {
 
   const unreadNotifications = filterUnreadNotifications(notifications);
   const modifiedNotifications = notifications.map((notification) => {
-    const sender = publicChats.find((user) => user?._id === notification.senderId);
+    
+    const sender = publicChats.find((user) => user?.id == notification?.senderId);
 
     return {
       ...notification,
@@ -68,7 +70,7 @@ function Notification() {
                     setIsOpen(false);}}
                   className={notification.isRead ? styles.notification : styles.unreadNotification}
                 >
-                  <div className={styles.notificationMessage}>{`${notification.senderName} sent you a message...`}</div>
+                  <div className={styles.notificationMessage}>{`${notification?.senderName} sent you a message...`}</div>
                   <div className={styles.notificationDate}>{moment(notification.date).calendar()}</div>
                 </div>
               )

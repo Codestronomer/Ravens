@@ -86,11 +86,9 @@ export const ChatContextProvider = ({ children }: {
 
     // Ensure that both the user and currentChat are available
     if (user && currentChat) {
-      console.log("user", user);
+
       // Filter out the user's own member object from currentChat.members
       const recipientUser = currentChat.members.find((member) => member._id !== user.id);
-
-      console.log("recipient", recipientUser);
 
       if (recipientUser) {
         socket.emit('sendMessage', { ...newMessage, recipientId: recipientUser._id });
@@ -140,8 +138,6 @@ export const ChatContextProvider = ({ children }: {
 
   }, [currentChat, socket]);
 
-  console.log("MessageType error", messagesError);
-
   // Get persisted user data from local storage when the component mounts
   useEffect(() => {
     const persistedUser = localStorage.getItem('user');
@@ -167,7 +163,26 @@ export const ChatContextProvider = ({ children }: {
       }
     }
     getUserChats();
-  }, [user]);
+  }, [user, newMessage]);
+
+  // Get user chats when the component mounts and when there is a new message
+  useEffect(() => {
+    const getUserChats = async () => {
+      if (user?.id) {
+        setIsChatLoading(true);
+        setChatError(null);
+        const response = await axiosGet(`${baseUrl}/chat/${user?.id}`);
+
+        setIsChatLoading(false);
+        if (response.error) {
+            return setChatError(response);
+        }
+
+        setUserChats(response);
+      }
+    }
+    getUserChats();
+  }, [newMessage, notifications]);
 
   useEffect(() => {
     if (currentChat) {

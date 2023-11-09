@@ -1,3 +1,4 @@
+import { ChatModel } from "../models/chat.model.js";
 import MessageModel from "../models/message.model.js";
 
 // Create a message
@@ -13,6 +14,9 @@ const createMessage = async (req, res) => {
     const response = await newMessage.save();
 
     res.status(201).json({ ...response.toObject(), id: response._id }); // Use 201 for resource creation
+
+    // update chat last updated Time
+    await ChatModel.findByIdAndUpdate(chatId, { updatedAt: Date.now()});
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Internal server error" });
