@@ -1,5 +1,5 @@
 'use client'
-import { AuthContext, User, AuthContextType, errorType, UserInfo } from '@/context/authContext';
+import { AuthContext, AuthContextType } from '@/context/authContext';
 import React, { useState, useEffect, useContext } from 'react';
 import ErrorModal from '@/components/ErrorModal';
 import { GetUsername, GetPassword } from './authUtils';
@@ -30,8 +30,8 @@ export function Login(): React.FunctionComponentElement<HTMLBodyElement> {
     setLoginError(null);
   };
 
-  const handleUser = () => {
-    const isLoggedIn = loginUser()
+  const handleUser = async () => {
+    const isLoggedIn = await loginUser(userInfo)
     if (isLoggedIn == true) {
       setLoginSuccess(isLoggedIn);
     }

@@ -35,7 +35,7 @@ export interface AuthContextType {
   isValidUsername: boolean;
   loginError: ErrorType | null;
   registerError: ErrorType | null;
-  loginUser: (userInfo: UserInfo) => void;
+  loginUser: (userInfo: UserInfo) => Promise<boolean>;
   updateUserInfo: (info: UserInfo) => void;
   registerUser: (userInfo: UserInfo) => void;
   checkIsValidUsername: (username: string) => void;
@@ -106,14 +106,17 @@ export const AuthContextProvider = (
       // Check for errors
       if (response?.error) {
         setLoginError(response);
+        return false;
       } else {
         localStorage.setItem('user', JSON.stringify(response));
         setUser(response);
         setIsSuccessful(true);
+        return true;
       }
     } catch (error) {
       // Handle network or other errors
       console.error(error);
+      return false;
     } finally {
       setIsLoading(false);
     }

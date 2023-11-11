@@ -110,7 +110,7 @@ const ChatBox = () => {
             alt="start a new message"
             className={styles.chatBoxImg}
           />
-          <p>Click the &quot;+&quot; icon to start a conversation with someone</p>
+          <p>Select a conversation from &quot;messages&quot; or the &quot;Public Chats&quot; tab to get started</p>
         </div>
       )}
     </>

@@ -19,6 +19,7 @@
     "moment": "^2.29.4",
     "next": "13.4.19",
     "react": "18.2.0",
+    "react-dark-mode-toggle": "^0.2.0",
     "react-dark-mode-toggle-2": "^2.0.8",
     "react-dom": "18.2.0",
     "socket.io-client": "^4.7.2",
