@@ -45,3 +45,5 @@ io.on('connection', (socket) => {
 
 // start websocket server on port 4000
 io.listen(4000);
+
+export default io;
