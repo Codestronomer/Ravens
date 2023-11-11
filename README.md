@@ -1,18 +1,20 @@
 # Ravens
-A  modern and feature-rich real-time chat application designed to provide seamless communication experiences. Built with Node.js, Next.js, Socket.io, and MongoDB, Ravens offers a scalable and responsive solution for instant messaging.
+A  modern and feature-rich real-time chat application designed to provide seamless communication experiences. Built with Node.js, Typescript, Next.js, Socket.io, and MongoDB, Ravens offers a scalable and responsive solution for instant messaging.
 
 ![image](https://github.com/Codestronomer/Ravens/assets/56360107/c48a4749-ce70-4fa4-a2b1-c4db21861e7d)
 
 ## Features
 - Real-time Communication: Engage in real-time conversations with other users, making communication fast and efficient.
-- User Authentication: Secure your chat with user authentication to ensure that only authorized users can access the application.
+- User Authentication: Secure your chat with user authentication to ensure only authorized users can access the application.
 - User Presence: Know when other users are online with the user presence feature, enhancing the chat experience.
 - Responsive Design: Ravens is designed to work seamlessly across various devices, providing a consistent experience on desktops, tablets, and smartphones.
 - Persistent Storage: Store and retrieve chat messages with MongoDB, ensuring that conversations persist across sessions.
 
 ## Technologies Used
 - Node.js: Powering the server-side application and handling real-time communication through Socket.io.
-- Next.js: Building a dynamic and interactive user interface for an engaging chat experience.
+- React.js: Building a dynamic and interactive user interface for an engaging chat experience.
+- Next.js: Enhancing the React application with server-side rendering, routing, and other features.
+- TypeScript: Adding static typing to the project for improved code quality and development experience.
 - Socket.io: Facilitating real-time, bidirectional, and event-based communication between the server and clients.
 - MongoDB: Storing and retrieving chat messages, providing a scalable and efficient database solution.
 
