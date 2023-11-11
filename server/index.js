@@ -40,4 +40,4 @@ app.listen(port, () => [
   console.log(`Listening on ${port}: 5000`)
 ]);
 
-exports.default = app;
+export default app;
