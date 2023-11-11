@@ -2,12 +2,12 @@
 import Image from 'next/image';
 import styles from './page.module.css';
 import useDarkMode from 'use-dark-mode';
-import { AuthenticationMain } from './auth';
 import ThemeToggle from '@/components/themeToggle';
+import { AuthenticationMain } from '../components/auth';
 import SideImage from '../../public/work-chat-not-css.svg'
 
 export default function Home() {
-  const theme = useDarkMode(false);
+  const theme = useDarkMode(true);
 
   return (
     <main className={`${styles.main} ${theme.value == false ? '' : 'dark'}`}

@@ -52,7 +52,7 @@ interface ImageDataType {
 const AppearanceSelector = () => {
   const router = useRouter();
   // const { theme } = useContext(Theme) as ThemeContextType;
-  const theme = useDarkMode(false);
+  const theme = useDarkMode(true);
   const { user } = useContext(AuthContext) as AuthContextType;
   const [currentImage, setCurrentImage] = useState<ImageDataType>({
     image: ProfileImage,

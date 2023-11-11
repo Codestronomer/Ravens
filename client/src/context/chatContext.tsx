@@ -140,9 +140,12 @@ export const ChatContextProvider = ({ children }: {
 
   // Get persisted user data from local storage when the component mounts
   useEffect(() => {
-    const persistedUser = localStorage.getItem('user');
-    if (persistedUser) {
-      setUser(JSON.parse(persistedUser));
+    if (typeof window !== 'undefined' && window.localStorage) {
+      const persistedUser = localStorage.getItem('user');
+      
+      if (persistedUser) {
+        setUser(JSON.parse(persistedUser));
+      }
     }
   }, []);
 

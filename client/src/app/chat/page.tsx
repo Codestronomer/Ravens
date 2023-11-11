@@ -12,7 +12,7 @@ import Notification from '../../components/notification';
 import BackIconWhite from '../../../public/back-icon-white.svg';
 
 const Chat = () => {
-  const theme = useDarkMode(false)
+  const theme = useDarkMode(true);
 
   return (
   <>

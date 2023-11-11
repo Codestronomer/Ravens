@@ -1,11 +1,9 @@
 /* eslint-disable @next/next/no-sync-scripts */
 import './globals.css'
-import type { Metadata } from 'next'
-import { Inter, Montserrat, Bree_Serif, DM_Sans } from 'next/font/google'
+import type { Metadata } from 'next';
 import { Provider } from './provider';
+import { Inter, DM_Sans } from 'next/font/google';
 
-const montserrat = Montserrat({ subsets: ['latin']});
-const bree_Serif = Bree_Serif({ weight: "400", subsets: ['latin']});
 const dm_sans = DM_Sans({ weight: 'variable', subsets: ['latin', 'latin-ext']});
 
 export const metadata: Metadata = {

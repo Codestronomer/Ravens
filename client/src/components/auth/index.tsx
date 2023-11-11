@@ -25,11 +25,11 @@ export function AuthenticationMain() {
         <div className={styles.formInfo} ref={parent}>
            {/* Display welcome message and continue button */}
           <h3 className={styles.welcome}>{isRegister ? `Welcome ${user?.username}👋` : `Welcome back, ${user?.username}`}</h3>
-          <Link href={isRegister ? "appearance" : "chat"}>
+          <a href={isRegister ? "appearance" : "chat"}>
             <button className={styles.userSubmit}>
               {isRegister ? 'Continue' : 'Continue to Chat'}
             </button>
-          </Link>
+          </a>
           <div className={styles.logoutLink} onClick={() => logout()}>
             Logout
           </div>

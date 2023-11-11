@@ -83,7 +83,9 @@ export const AuthContextProvider = (
       if (response?.error) {
         setRegisterError(response);
       } else {
-        localStorage.setItem('user', JSON.stringify(response));
+        if (typeof window !== 'undefined' && window.localStorage) {
+          localStorage.setItem('user', JSON.stringify(response));
+        }
         setUser(response);
         setIsSuccessful(true);
       }
@@ -108,7 +110,9 @@ export const AuthContextProvider = (
         setLoginError(response);
         return false;
       } else {
-        localStorage.setItem('user', JSON.stringify(response));
+        if (typeof window !== 'undefined' && window.localStorage) {
+          localStorage.setItem('user', JSON.stringify(response));
+        }
         setUser(response);
         setIsSuccessful(true);
         return true;
@@ -140,7 +144,9 @@ export const AuthContextProvider = (
   }, []);
 
   const logout = () => {
-    localStorage.setItem('user', "");
+    if (typeof window !== 'undefined' && window.localStorage) {
+      localStorage.setItem('user', "");
+    }
     setUser({ id: "",
       image: "",
       token: "",
@@ -150,9 +156,11 @@ export const AuthContextProvider = (
 
   // Get persisted user data from local storage when the component mounts
   useEffect(() => {
-    const persistedUser = localStorage.getItem('user');
-    if (persistedUser) {
-      setUser(JSON.parse(persistedUser));
+    if (typeof window !== 'undefined' && window.localStorage) {
+      const persistedUser = localStorage.getItem('user');
+      if (persistedUser) {
+        setUser(JSON.parse(persistedUser));
+      }
     }
   }, []);
 
