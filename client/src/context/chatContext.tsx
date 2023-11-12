@@ -57,7 +57,7 @@ export const ChatContextProvider = ({ children }: {
 
   // create connection to web socket
   useEffect(() => {
-    const newSocket: Socket<ServerToClientEvents, ClientToServerEvents> = io("http://localhost:4000");
+    const newSocket: Socket<ServerToClientEvents, ClientToServerEvents> = io("https://ravens-socket-server.onrender.com:4000");
     setSocket(newSocket);
 
     return () => {
