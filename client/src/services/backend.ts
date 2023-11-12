@@ -2,7 +2,7 @@ import useSWR from 'swr';
 import axios, { AxiosResponse } from 'axios';
 import { User } from '@/context/authContext';
 
-export const baseUrl = 'http://localhost:5000';
+export const baseUrl = 'https://ravens-server.vercel.app';
 
 const fetcher = async (url: string) => await axios.get(url).then(res => res.data);
 
