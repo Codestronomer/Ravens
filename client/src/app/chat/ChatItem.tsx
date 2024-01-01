@@ -28,7 +28,15 @@ const ChatItem = ({ chat, user, onlineUsers }: { chat: Chat, user: User, onlineU
     return notification?.senderId == recipientUser?._id
   });
 
-  
+  // get latest message
+  const { latestMessage } = useFetchLatestMessage(chat);
+
+  // truncate text for latest chat message
+  const truncateText = (text: String) => {
+    if (text?.length > 20) return text.substring(0, 20) + '...';
+
+    return text;
+  }
 
   // get chat avatar
   const profileImage = useProfileAvatar(recipientUser?.image);
