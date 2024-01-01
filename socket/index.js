@@ -1,7 +1,7 @@
 import { Server } from "socket.io";
 
 // initialize websocket server
-const io = new Server({ cors: "http://localhost:3000"});
+const io = new Server({ cors: ["http://localhost:3000", "https://ravens-tau.vercel.app"]});
 
 let onlineUsers = [];
 
